@@ -1,0 +1,31 @@
+#works
+bindkey '^j' down-line-or-history
+bindkey '^k' up-line-or-history
+bindkey '^h' backward-char
+bindkey '^l' forward-char
+bindkey ^f history-incremental-search-backward
+
+
+bindkey '^[w' delete-word
+bindkey '^[d' kill-line
+
+bindkey '^[j' beginning-of-line
+bindkey '^[k' end-of-line
+bindkey '^[h' backward-word
+bindkey '^[l' forward-word
+bindkey '^[f' history-incremental-search-forward
+bindkey '^[g' beginning-of-buffer-or-history
+bindkey '^[G' end-of-buffer-or-history
+bindkey '^[x' kill-region
+
+bindkey '^[c' copy-region-as-kill
+bindkey '^[v' yank 
+bindkey ^w delete-word
+bindkey '^[w' delete-word
+
+bindkey '^n' clear-screen
+
+#/works
+
+
+

@@ -1,0 +1,4 @@
+urxvt.scrollBar:	false
+urxvt.font: xft:monospace:size=11
+URxvt.depth: 32
+URxvt.perl-ext-common:	default,matcher,resize-font,url-select,keyboard-select

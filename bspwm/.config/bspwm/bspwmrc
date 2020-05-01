@@ -1,0 +1,128 @@
+#! /bin/sh
+
+#fix cursor
+xsetroot -cursor_name left_ptr
+
+
+bspc monitor -d I II III IV V VI VII VIII IX X
+
+bspc config border_width         2
+
+if xrandr | grep " connected" | grep -qv "LVDS" ; then     #non-laptop monitor is being used
+    bspc config window_gap 12
+
+else
+    bspc config window_gap          14
+
+fi
+
+pgrep lemonbar && bspc config top_padding 20
+
+
+bspc config split_ratio          0.48
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+
+#bspc config initial_polarity     second_child #first time only
+bspc config initial_polarity     second_child
+
+
+#don't manage these
+bspc rule -a 9menu:* manage=off
+
+
+
+#default: pseudotile all
+bspc rule -a *:* state=pseudo_tiled
+
+
+
+#make these float
+
+
+
+#put these somewhere
+bspc rule -a Signal desktop='^8' follow=off focus=off
+bspc rule -a Thunderbird desktop='^6'
+
+
+
+#tile these
+
+bspc rule -a Emacs:emacs state=tiled
+bspc rule -a firefox:* state=tiled
+bspc rule -a Surf state=tiled
+bspc rule -a Xournalpp state=tiled
+
+
+
+
+#tile the first window in a desktop
+
+#mostly does what i want. third window opens up rather than down hough.
+bspc subscribe node_add | while read msg; do
+    bspc config initial_polarity     second_child
+    desk_id="$(echo "$msg" | cut -f3 -d ' ')"
+    wid="$(echo "$msg" | cut -f5 -d ' ')"
+
+    case $(bspc query -d "$desk_id" -N | wc -l) in
+	1)
+	    #make first window in desktop tile (full size)
+	    bspc node "$wid" -t tiled
+
+	    bspc config initial_polarity     first_child
+	    ;;
+	#2|3)
+	 #   bspc config initial_polarity     first_child
+	 #   ;;
+	*)
+	    #make second window in desktop tile left
+	    bspc config initial_polarity     second_child
+	    ;;
+
+#	*)
+	    #revert back from the above
+#	    bspc config initial_polarity     second_child
+	    #bspc rule -a -o *:* state=pseudo_tiled
+#	    bscp node "
+	    
+	  
+	     
+    esac
+
+
+    
+done       &
+
+#todo: pseudotile if there's another window; tile if first window in desktop
+
+#bspc rule -a Zathura:org.pwmt.zathura state=tiled
+
+
+#while true; do
+ #   if [[ $(bspc query -d focused -N | wc -l) -eq 1 ]]; then
+#	bspc config initial_polarity     first_child
+ #   else
+#	bspc config initial_polarity     second_child
+ #   fi
+#done
+
+
+#PERFORMANCEEEE
+
+bspc config initial_polarity     second_child
+	
+
+
+
+
+
+     
+
+
+
+
+
+#make these float
+bspc rule -a Pinentry-gtk-2:\* state=floating

@@ -1,0 +1,65 @@
+fontname "Ubuntu:pixelsize=14"
+color menubg  "#222222" #nice black
+color font "#fdf6e3" #sepia
+
+
+
+color selfont "#222222" 
+color menufg "#fdf6e3"
+
+
+autogroup 4 Navigator.firefox
+autogroup 8 signal.Signal
+autogroup 9
+
+
+
+sticky 	  yes
+ignore	  polybar-example_VGA-1
+ignore	  bar
+gap    	  28 6 6 6
+
+
+
+
+#keybindings :(
+bind-key 4-1	group-toggle-1
+bind-key 4-2	group-toggle-2
+bind-key 4-3	group-toggle-3
+bind-key 4-4	group-toggle-4
+bind-key 4-5	group-toggle-5
+bind-key 4-6	group-toggle-6
+bind-key 4-7	group-toggle-7
+bind-key 4-8	group-toggle-8
+bind-key 4-9	group-toggle-9
+
+bind-key 4S-1	window-movetogroup-1
+bind-key 4S-2	window-movetogroup-2
+bind-key 4S-3	window-movetogroup-3
+bind-key 4S-4	window-movetogroup-4
+bind-key 4S-5	window-movetogroup-5
+bind-key 4S-6	window-movetogroup-6
+bind-key 4S-7	window-movetogroup-7
+bind-key 4S-8	window-movetogroup-8
+bind-key 4S-9	window-movetogroup-9
+
+
+ 
+
+
+
+
+#menu
+command firefox		"urxvt& urxvt"
+command music		"wmctrl -a ncmpcpp || urxvt -e ncmpcpp"
+command fir2 		"firefox"
+
+
+
+
+#window managers
+
+
+
+wm bspwm /usr/bin/bspwm
+wm i3 /usr/bin/i3
