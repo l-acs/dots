@@ -33,7 +33,7 @@ setopt INTERACTIVE_COMMENTS
 
 #environment variables
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.scripts:$HOME/.scripts/window"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.scripts:$HOME/.scripts/window:$HOME/.scripts/sys"
 
 export EDITOR="emacsclient -t"
 #"/usr/bin/emacs -nw"
