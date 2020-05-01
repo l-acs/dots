@@ -1,8 +1,0 @@
-autogroup 4 Navigator.firefox
-autogroup 8 signal.Signal
-autogroup 9
-
-
-
-sticky yes
-ignore polybar-example_VGA-1
