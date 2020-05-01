@@ -97,7 +97,7 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	~/.scripts/window/act.sh -{f,s} '{1-9,0}'
+	~/.scripts/window/act.sh {--capturefocuscapture,-s} '{1-9,0}'
 
 
 
