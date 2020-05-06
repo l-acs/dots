@@ -168,7 +168,8 @@ super + {b, shift + b}
 
 #open emacs
 super + e
-      $VISUAL
+      eval $VISUAL
+      #$VISUAL
 
 
 
