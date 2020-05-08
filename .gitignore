@@ -1,3 +1,6 @@
 *~
 mpd/.config/mpd/state
 ncmpcpp/.config/ncmpcpp/error.log
+mpd/.config/mpd/database
+mpd/.config/mpd/pid
+mpd/.config/mpd/sticker.sql
