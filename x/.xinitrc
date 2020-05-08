@@ -8,6 +8,9 @@ wal -i ~/Documents/Pictures/Wall/red-lake-mountains-minimal.jpg  -l -a 60 -b "fd
 #no bell
 xset -b
 
+#boomer solution: no bar tmux
+tmux set -g status off
+
 #compositor
 picom -b &
 
