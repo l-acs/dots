@@ -33,7 +33,7 @@ setopt INTERACTIVE_COMMENTS
 
 #environment variables
 export XDG_CONFIG_HOME="$HOME/.config"
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.scripts:$HOME/.scripts/window:$HOME/.scripts/sys"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.scripts:$HOME/.scripts/window:$HOME/.scripts/sys:$HOME/.scripts/selectors"
 
 export EDITOR="emacsclient -t"
 #"/usr/bin/emacs -nw"
@@ -52,6 +52,7 @@ export FILEBROWSER="browse"
 export NINEFLAGS="-bg #fdf6e3 -fg #222222 -font 'UbuntuMono-R' -popup -teleport" #6A6B6D 181A26
 export MUSIC="$HOME/Music"
 export VIDEO="$HOME/Documents/Videos"
+export PICTURE="$HOME/Documents/Pictures"
 export WEB="firefox"
 
 
