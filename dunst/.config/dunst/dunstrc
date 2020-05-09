@@ -4,13 +4,13 @@ separator_color = "#586e75"
 backgound = "#222222"
 
 
-geometry = "300x60-20+30"
+geometry = "300x500+13+32"
 
 idle_threshold = 30
 show_age_threshold = 60
 
 font = Ubuntu 
-#format = "%i %s\n%b"
+format =  "%s \n %b"
 
 
 shrink = no
@@ -24,6 +24,9 @@ word_wrap = yes
 icon_position = left
 ignore_newline = no
 
+
+markup = full
+transparency = 5
 [base16_low]
     msg_urgency = low
     background = "#222222"
