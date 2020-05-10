@@ -239,6 +239,17 @@ shift + {_,super, control, alt} + Next
 #{XF86AudioRaiseVolume, XF86AudioLowerVolume}
 #	amixer sset Master {2%+, 2%-}
 
+
+#take screenshots????
+F8
+      sleep 2 && screenshot --select
+
+shift + F8
+      screenshot
+
+
+
+
 {F10, F11}
       pactl set-sink-volume @DEFAULT_SINK@ {-,+}2.5%
 	
