@@ -29,13 +29,12 @@ There are two things you can do about this warning:
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
- '(custom-enabled-themes (quote (deeper-blue))) ;will override ewal, normally
+ '(custom-enabled-themes (quote (deeper-blue)))
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (use-package ;; ewal
-      cider right-click-context markdown-mode tuareg)))
+    (kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 
