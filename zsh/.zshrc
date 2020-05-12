@@ -56,6 +56,8 @@ export PICTURE="$HOME/Documents/Pictures"
 export WEB="firefox"
 
 
+export bar="$HOME/Projects/code/lojbar/lojbar"
+
 
 #aliases & functions
 
