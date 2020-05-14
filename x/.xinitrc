@@ -30,6 +30,10 @@ dunst &
 # start mpd if not already running
 [ ! -s ~/.config/mpd/pid ] && mpd &
 
+# start mpdas if not already running
+pgrep -xU $UID mpdas || mpdas &
+
+
 #unmute?
 ~/.scripts/unmute.sh
 
