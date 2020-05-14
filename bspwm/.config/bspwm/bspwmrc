@@ -24,7 +24,6 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 
-#bspc config initial_polarity     second_child #first time only
 bspc config initial_polarity     second_child
 
 
@@ -73,21 +72,11 @@ bspc subscribe node_add | while read msg; do
 
 	    bspc config initial_polarity     first_child
 	    ;;
-	#2|3)
-	 #   bspc config initial_polarity     first_child
-	 #   ;;
 	*)
 	    #make second window in desktop tile left
 	    bspc config initial_polarity     second_child
 	    ;;
 
-#	*)
-	    #revert back from the above
-#	    bspc config initial_polarity     second_child
-	    #bspc rule -a -o *:* state=pseudo_tiled
-#	    bscp node "
-	    
-	  
 	     
     esac
 
@@ -95,34 +84,19 @@ bspc subscribe node_add | while read msg; do
     
 done       &
 
-#todo: pseudotile if there's another window; tile if first window in desktop
 
-#bspc rule -a Zathura:org.pwmt.zathura state=tiled
-
-
-#while true; do
- #   if [[ $(bspc query -d focused -N | wc -l) -eq 1 ]]; then
-#	bspc config initial_polarity     first_child
- #   else
-#	bspc config initial_polarity     second_child
- #   fi
-#done
-
-
-#PERFORMANCEEEE
 
 bspc config initial_polarity     second_child
 	
 
 
 
-
-
-     
-
-
-
-
-
 #make these float
 bspc rule -a Pinentry-gtk-2:\* state=floating
+
+
+
+
+
+# general settings
+bspc config pointer_modifier mod1
