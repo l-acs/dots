@@ -6,7 +6,6 @@
 super + Return
 	urxvt -e tmux -f ~/.config/tmux/tmux.conf
 
-# program launcher #super + @space #dmenu_run
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -42,12 +41,21 @@ super + g
 #
 
 # set the window state
-#super + {shift + t, t,@space,f}
-#	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 super + {@space, f}
       bspc node -t {\~floating, \~fullscreen}
 
-#toggle (pseudo_tiling)
+
+# not working
+# super + shift + @space
+#       if $(bspc rule -l | grep -q '*:* => state=floating') ; then \
+#       	 bspc rule -r ^$(bspc rule -l | wc -l) ; \ #remove the rule
+#       else \
+#          bspc rule -a \*:\* state=floating ; \
+#       fi   
+
+
+
+
 #if it's pseudo tiled, tile it; otherwise, pseudo tile it
 super + t
 	if [ -n "$(bspc query -N -n focused.pseudo_tiled)" ]; then \
@@ -141,23 +149,9 @@ super + {Left,Down,Up,Right}
 
 
 
-# plumb / clickbait key
-button2
-	9plumb
-
-
-
 #right click magic
-shift+button3
-	clickbait
-	#rightclick
-
-
-# clickbait key
-shift+button2
-	clickbait
-
-
+button7
+	rightclick
 
 
 
@@ -169,7 +163,6 @@ super + {b, shift + b}
 #open emacs
 super + e
       eval $VISUAL
-      #$VISUAL
 
 
 
@@ -207,12 +200,6 @@ F2
 
 
 
-
-
-
-
-
-
 #special keys
 
 XF86Calculator
@@ -235,9 +222,6 @@ shift + {_,super, control, alt} + Prior
 shift + {_,super, control, alt} + Next
     xbright -
 
-
-#{XF86AudioRaiseVolume, XF86AudioLowerVolume}
-#	amixer sset Master {2%+, 2%-}
 
 
 #take screenshots????
@@ -268,3 +252,17 @@ control + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
 #toggle space as ctrl
 super + equal
       s2cctl toggle
+
+
+
+
+
+
+
+
+# control, alt, etc :
+
+
+# reload the bar
+control + alt + b
+	killall lemonbar ; "$bar" | lemonbar -a 50 -p -f 'Ubuntu Mono' | bash
