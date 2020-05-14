@@ -34,7 +34,7 @@ There are two things you can do about this warning:
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
+    (centaur-tabs kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 
@@ -60,6 +60,15 @@ There are two things you can do about this warning:
 ;;compile with pdflatex by default
 (setq latex-run-command "pdflatex")
 
+
+;tabbed mode?
+(use-package centaur-tabs
+  :demand
+  :config
+  (centaur-tabs-mode t)
+  :bind
+  ("M-<left>" . centaur-tabs-backward)
+  ("M-<right>" . centaur-tabs-forward))
 
 
 
