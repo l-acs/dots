@@ -150,9 +150,8 @@ super + {Left,Down,Up,Right}
 
 
 #right click magic
-button7
-	rightclick
-
+~button3
+	isroot && clickbait
 
 
 #file browsers
