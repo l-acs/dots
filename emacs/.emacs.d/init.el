@@ -189,6 +189,9 @@ There are two things you can do about this warning:
 ; windows
 (define-key global-map (kbd "<C-tab>") 'other-window)
 
+; tabbed life
+(define-key global-map "\C-t" 'find-file)
+
 ;testing
 (define-key global-map "\M-e" 'execute-extended-command)
 
