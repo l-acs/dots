@@ -41,7 +41,7 @@ export VISUAL="emacsclient -create-frame --alternate-editor=''"
 #"emacs"
 export TERMINAL="urxvt -e tmux"
 
-export GTK_THEME="Adwaita:dark"
+#export GTK_THEME="Adwaita:dark"
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
 
 #for scripts
@@ -57,7 +57,7 @@ export WEB="firefox"
 
 
 export bar="$HOME/Projects/code/lojbar/lojbar"
-
+alias -g lemon="lemonbar -p -a 50 -f 'ubuntu mono'"
 
 #aliases & functions
 
@@ -127,6 +127,11 @@ alias mdl='youtube-dl -i -f bestaudio\[ext=m4a\] --embed-thumbnail -o "~/Music/%
 alias vdl-sub='youtube-dl -i -f worst -o "~/Documents/Videos/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s" --write-auto-sub'
 alias vdl='youtube-dl -i -f worst -o "~/Documents/Videos/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s"'
 
+
+
+#scrobbling
+alias love='mpc sendmessage mpdas love'
+alias unlove='mpc sendmessage mpdas unlove'
 
 
 
