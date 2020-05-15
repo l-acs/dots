@@ -7,10 +7,12 @@ backgound = "#222222"
 geometry = "300x3+13+32"
 notification_height = 70
 
+
 #prevent huge images
 max_icon_size = 60
 
 hide_duplicates_count = true #doesn't seem to work
+show_indicators = false #hide the pesky "A"
 stack_duplicates = true
 indicate_hidden = true
 
