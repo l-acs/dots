@@ -4,7 +4,18 @@ separator_color = "#586e75"
 backgound = "#222222"
 
 
-geometry = "300x500+13+32"
+geometry = "300x3+13+32"
+notification_height = 70
+
+#prevent huge images
+max_icon_size = 60
+
+hide_duplicates_count = true #doesn't seem to work
+stack_duplicates = true
+indicate_hidden = true
+
+#rounding
+corner_radius = 15
 
 idle_threshold = 30
 show_age_threshold = 60
@@ -15,14 +26,21 @@ format =  "%s \n %b"
 
 shrink = no
 separator_height = 0
-padding = 18
+padding = 10
 horizontal_padding = 18
 frame_width = 1
 sort = no
-line_height = 2
+line_height = 1
 word_wrap = yes
 icon_position = left
 ignore_newline = no
+
+
+history_length = 5
+
+
+mouse_right_click = do_action
+
 
 
 markup = full
