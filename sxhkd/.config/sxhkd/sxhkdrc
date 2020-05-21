@@ -167,7 +167,7 @@ super + e
 
 #open terminal programs
 super + {m}
-      urxvt -e {ncmpcpp}
+      {xdotool search deezer windowactivate || xdotool search ncmpcpp windowactivate || urxvt -e ncmpcpp}
 
 
 #files
