@@ -234,11 +234,11 @@ shift + F8
 
 
 {F10, F11}
-      pactl set-sink-volume @DEFAULT_SINK@ {-,+}2.5%
+      volume {-,+}
 	
 #{XF86AudioMute, shift + XF86AudioMute}
 {F12, shift + F12}
-      pactl set-sink-mute @DEFAULT_SINK@ {toggle, 1}
+      volume {toggle, mute}
 
 
 
