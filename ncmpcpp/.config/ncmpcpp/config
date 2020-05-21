@@ -336,7 +336,7 @@ user_interface = alternative
 #
 ## Available values: artist, album_artist, date, genre, composer, performer.
 ##
-media_library_primary_tag = artist
+media_library_primary_tag = album_artist
 #
 #media_library_albums_split_by_date = yes
 #
@@ -362,7 +362,7 @@ media_library_primary_tag = artist
 #
 follow_now_playing_lyrics = yes
 #
-fetch_lyrics_for_current_song_in_background = yes
+fetch_lyrics_for_current_song_in_background = no
 #
 #store_lyrics_in_song_dir = no
 #
