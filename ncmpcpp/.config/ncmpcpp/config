@@ -41,17 +41,30 @@ mpd_music_dir = ~/Music
 ## visualization or 44100:16:2 for stereo visualization. Example configuration
 ## (it has to be put into mpd.conf):
 ##
-audio_output {
-	     type          "alsa"	
-             name          "ALSA sound card"	
-##        type            "fifo"
-##        name            "Visualizer feed"
-##        path            "/tmp/mpd.fifo"
-##        format          "44100:16:2"
-}
+##
+##
+##
+## a
+# audio_output {
+# 	     type          "alsa"	
+#              name          "ALSA sound card"	
+# ##        type            "fifo"
+# ##        name            "Visualizer feed"
+# ##        path            "/tmp/mpd.fifo"
+# ##        format          "44100:16:2"
+# }
 ##
 #
 #visualizer_fifo_path = /tmp/mpd.fifo
+
+visualizer_fifo_path = "/tmp/mpd.fifo"
+visualizer_output_name = "my_fifo"
+visualizer_sync_interval = "30" 
+visualizer_in_stereo = "yes"
+visualizer_type = "spectrum"
+#visualizer_look = "+|"
+visualizer_look = "▗▕"
+#visualizer_look = "█▕"
 #
 ##
 ## Note: Below parameter is needed for ncmpcpp to determine which output
@@ -274,8 +287,6 @@ song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)
 ## notifications etc.
 ##
 execute_on_song_change = reload-cover 
-##"reload-cover && pgrep -f 'feh --scale-down -g 599x377 --image-bg black --reload=1 /home/l-acs/.scripts/output/cover.jpg' >/dev/null && wal -c && wal -q -n -i .scripts/output/cover.jpg -a 95 -e "
-#&& reload-bg"
 #
 ##
 ## Note: Custom command that will be executed each time player state
