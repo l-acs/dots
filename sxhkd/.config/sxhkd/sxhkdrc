@@ -143,8 +143,8 @@ super + alt + shift + {h,j,k,l}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
-super + {Left,Down,Up,Right}
-	bspc node -v {-20 0,0 20,0 -20,20 0}
+#super + {Left,Down,Up,Right}
+	#bspc node -v {-20 0,0 20,0 -20,20 0}
 
 
 
@@ -165,9 +165,9 @@ super + e
 
 
 
-#open terminal programs
-super + {m}
-      {xdotool search deezer windowactivate || xdotool search ncmpcpp windowactivate || urxvt -e ncmpcpp}
+#open non-duplicate programs
+super + {m,shift+f,shift+s,shift+v}
+      findoropen {deezer ncmpcpp,firefox,signal signal-desktop,vim}
 
 
 #files
@@ -242,7 +242,7 @@ shift + F8
 
 
 
-control + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
+super + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
 	mpc {volume +2, volume -2, seek 0, prev, next, toggle}
 
 
@@ -251,11 +251,6 @@ control + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
 #toggle space as ctrl
 super + equal
       s2cctl toggle
-
-
-
-
-
 
 
 
