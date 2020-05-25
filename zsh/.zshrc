@@ -41,7 +41,7 @@ export VISUAL="emacsclient -create-frame --alternate-editor=''"
 #"emacs"
 export TERMINAL="urxvt -e tmux"
 
-#export GTK_THEME="Adwaita:dark"
+export GTK_THEME="Adwaita:dark"
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
 
 #for scripts
@@ -96,6 +96,7 @@ space(){ #only a function because of quoting nightmares
 }
 
 
+
 #configurations
 alias dash="rlwrap dash"
 
@@ -133,6 +134,14 @@ alias vdl='youtube-dl -i -f worst -o "~/Documents/Videos/yt/%(uploader)s/%(uploa
 alias love='mpc sendmessage mpdas love'
 alias unlove='mpc sendmessage mpdas unlove'
 
+
+# git stuff
+alias gst='git status'
+alias gadd='git add'
+alias gcom='git commit'
+alias gpush='git push'
+alias gdiff='git diff'
+alias gls='git ls-files'
 
 
 #
