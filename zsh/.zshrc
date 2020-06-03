@@ -142,6 +142,26 @@ alias gcom='git commit'
 alias gpush='git push'
 alias gdiff='git diff'
 alias gls='git ls-files'
+alias guntracked='git ls-files --exclude-standard --others'
+function gcfg(){
+    case $# in
+	0)
+	    name='l-acs'
+	    email='lucas.sahar@mail.mcgill.ca'
+	    ;;
+	1)
+	    echo Usage: \`gcfg\` or \`gcfg NAME EMAIL\`
+	    return 1
+	    ;;
+	2)
+	    name="$1"
+	    email="$2"
+	    ;;
+    esac
+    git config user.name "$name"
+    git config user.email "$email"
+
+}
 
 
 #
