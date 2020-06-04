@@ -3,6 +3,8 @@
 
 
 (require 'package)
+
+
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
@@ -19,6 +21,18 @@ There are two things you can do about this warning:
   )
 (package-initialize)
 
+(setq package-list '(right-click-context centaur-tabs markdown-mode tuareg cider use-package kotlin-mode))
+
+(unless package-archive-contents
+  (package-refresh-contents))
+
+
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -34,7 +48,7 @@ There are two things you can do about this warning:
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (centaur-tabs kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
+    (lua-mode centaur-tabs kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 
