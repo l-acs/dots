@@ -21,16 +21,19 @@ $HOME/Projects/code/lojbar/lojbar | lemonbar -f "Ubuntu Mono" -a 50 | bash &
 udiskie -s &
 
 #right super
-xmodmap -e "keycode 135 = Super_R"
+xmodmap ~/.config/xmodmap
 
 #notifications daemon
 dunst &
 
 
 # start mpd if not already running
-[ ! -s ~/.config/mpd/pid ] && mpd &
+#[ ! -s ~/.config/mpd/pid ] && mpd &
+pgrep -xU $UID mpd || mpd &
 
 # start mpdas if not already running
+# seemingly not working?: could not connect to mpd
+# changed the mpd line 5/20/20 12:19pm, will see if that fixes it
 pgrep -xU $UID mpdas || mpdas &
 
 
