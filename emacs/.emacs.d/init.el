@@ -21,7 +21,7 @@ There are two things you can do about this warning:
   )
 (package-initialize)
 
-(setq package-list '(right-click-context centaur-tabs markdown-mode tuareg cider use-package kotlin-mode))
+(setq package-list '(right-click-context centaur-tabs markdown-mode tuareg cider use-package kotlin-mode emojify helm))
 
 (unless package-archive-contents
   (package-refresh-contents))
@@ -48,7 +48,7 @@ There are two things you can do about this warning:
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (lua-mode centaur-tabs kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
+    (helm emojify lua-mode centaur-tabs kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 
@@ -71,8 +71,22 @@ There are two things you can do about this warning:
 
 
 
+;; ido mode
+;; (ido-mode t)
+;; (setq ido-everywhere t)
+;; (setq ido-enable-flex-matching t)
+
+
+;; matching parentheses
+(show-paren-mode 1)
+
 ;;compile with pdflatex by default
 (setq latex-run-command "pdflatex")
+
+
+;; emoji globally 🌍
+(add-hook 'after-init-hook #'global-emojify-mode)
+
 
 
 ;tabbed mode?
@@ -83,6 +97,12 @@ There are two things you can do about this warning:
   :bind
   ("M-<left>" . centaur-tabs-backward)
   ("M-<right>" . centaur-tabs-forward))
+
+
+
+(use-package helm
+  :ensure t
+  :config (helm-mode 1))
 
 
 
@@ -210,8 +230,6 @@ There are two things you can do about this warning:
 (define-key global-map "\M-e" 'execute-extended-command)
 
 (define-key global-map "\C-q" 'keyboard-quit)
-
-
 
 ;</known to work>
 
