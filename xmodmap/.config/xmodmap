@@ -1,0 +1,34 @@
+! 
+! Swap super and control (left)
+! 
+
+remove Control = Control_L
+! remove mod4 = Super_L
+! remove Super = Super_L
+
+! set control to super
+keycode 37 = Super_L NoSymbol Super_L
+! set super to control
+keycode 133 = Control_L NoSymbol Control_L 
+
+
+! make it work like control again
+add Control = Control_L
+
+
+
+
+
+
+
+remove Control = Control_R
+
+
+! set Super_R (well, menu) to control
+keycode 135 = Control_R NoSymbol Control_R
+
+! set Control_R to super
+keycode 105 = Super_R NoSymbol Super_R
+
+
+add Control = Control_R

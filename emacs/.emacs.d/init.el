@@ -48,7 +48,7 @@ There are two things you can do about this warning:
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (helm emojify lua-mode centaur-tabs kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
+    (helm emojify lua-mode magit centaur-tabs kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 
@@ -150,6 +150,8 @@ There are two things you can do about this warning:
 ;(define-key global-map "\C-?" 'isearch-backward)
 
 ;for muscle memory
+(global-unset-key "\C-j")
+(global-unset-key "\C-k")
 (global-unset-key "\C-n")
 (global-unset-key "\C-p")
 (global-unset-key "\M-f")
@@ -180,6 +182,7 @@ There are two things you can do about this warning:
 ; text movement
 (define-key global-map "\M-k" 'move-end-of-line)
 (define-key global-map "\M-j" 'move-beginning-of-line)
+(local-unset-key "\C-j")
 (define-key global-map "\C-l" 'forward-char)
 (define-key global-map "\C-h" 'backward-char)
 

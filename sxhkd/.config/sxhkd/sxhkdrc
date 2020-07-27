@@ -151,7 +151,10 @@ super + alt + shift + {h,j,k,l}
 
 #right click magic
 ~button3
-	isroot && clickbait
+	isroot && \{ killall 9menu ; clickbait \}
+
+~button1
+	isroot && killall 9menu
 
 
 #file browsers
