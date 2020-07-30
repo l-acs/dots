@@ -157,6 +157,17 @@ super + alt + shift + {h,j,k,l}
 	isroot && killall 9menu
 
 
+
+# bindings sans modifier
+{~f, ~m, ~s, ~e, ~t, ~Return}
+	haswindows || {firefox, findoropen deezer ncmpcpp, rofi -show combi -combi-modi "drun\,window", eval $VISUAL, urxvt -e tmux -f ~/.config/tmux/tmux.conf, urxvt -e tmux -f ~/.config/tmux/tmux.conf}
+
+
+
+
+
+
+
 #file browsers
 super + {b, shift + b}
       {browse, pcmanfm}
@@ -210,11 +221,15 @@ XF86Calculator
 
 #page up + mod = bright up
 {super, control, alt} + Prior
-    bright + 
+     for i in $(xrandr -q | grep ' connected' | cut -f1 -d' ' ); do \
+     	 bright $i + ; \
+     done
 
 #page down + mod = bright down
 {super, control, alt} + Next
-    bright -
+     for i in $(xrandr -q | grep ' connected' | cut -f1 -d' ' ); do \
+     	 bright $i - ; \
+     done
 
 #shift + page up + mod = force bright up
 shift + {_,super, control, alt} + Prior
