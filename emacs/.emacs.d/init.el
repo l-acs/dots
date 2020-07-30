@@ -221,7 +221,8 @@ There are two things you can do about this warning:
 (define-key global-map "\C-e" 'eval-last-sexp)
 
 (define-key global-map "\C-s" 'save-buffer)
-(define-key global-map "\M-s" 'save-buffer)
+
+(define-key global-map "\M-e" 'execute-extended-command)
 
 ; windows
 (define-key global-map (kbd "<C-tab>") 'other-window)
@@ -229,9 +230,11 @@ There are two things you can do about this warning:
 ; tabbed life
 (define-key global-map "\C-t" 'find-file)
 
-;testing
-(define-key global-map "\M-e" 'execute-extended-command)
+; emoji
+(define-key global-map "\M-E" 'emojify-insert-emoji)
 
+
+;testing
 (define-key global-map "\C-q" 'keyboard-quit)
 
 ;</known to work>
