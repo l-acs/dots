@@ -26,15 +26,11 @@ xmodmap ~/.config/xmodmap
 #notifications daemon
 dunst &
 
+# start mpd and mpdas
+systemctl restart --user mpd
+(pgrep -x mpdas || mpdas -d -c ~/.config/mpdasrc)
 
-# start mpd if not already running
-#[ ! -s ~/.config/mpd/pid ] && mpd &
-pgrep -xU $UID mpd || mpd &
 
-# start mpdas if not already running
-# seemingly not working?: could not connect to mpd
-# changed the mpd line 5/20/20 12:19pm, will see if that fixes it
-pgrep -xU $UID mpdas || mpdas &
 
 
 #unmute?
