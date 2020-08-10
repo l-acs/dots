@@ -151,7 +151,7 @@ super + alt + shift + {h,j,k,l}
 
 #right click magic
 ~button3
-	(isroot || isapplication URxvt) && \{ killall 9menu ; clickbait \}
+	(isroot || isapplication URxvt) && \{ pkill 9menu || clickbait \}
 
 ~button1
 	(isroot || isapplication URxvt) && killall 9menu
@@ -243,7 +243,7 @@ shift + {_,super, control, alt} + Next
 
 #take screenshots????
 F8
-      sleep 2 && screenshot --select
+      sleep 0.2 && screenshot --select
 
 shift + F8
       screenshot
@@ -277,4 +277,4 @@ super + equal
 
 # reload the bar
 control + alt + b
-	killall lemonbar ; "$bar" | lemonbar -a 50 -p -f 'Ubuntu Mono' | bash
+	pkill -f lemonbar; pkill -f lojbar ; "$bar" | lemonbar -a 50 -p -f 'Ubuntu Mono' | bash
