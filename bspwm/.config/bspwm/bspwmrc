@@ -43,7 +43,7 @@ bspc rule -a *:* state=pseudo_tiled
 
 #put these somewhere
 bspc rule -a Signal desktop='^8' follow=off focus=off
-bspc rule -a Thunderbird desktop='^6'
+bspc rule -a Thunderbird desktop='^2'
 
 
 
@@ -53,7 +53,7 @@ bspc rule -a Emacs:emacs state=tiled
 bspc rule -a firefox:* state=tiled
 bspc rule -a Surf state=tiled
 bspc rule -a Xournalpp state=tiled
-
+bspc rule -a 'Deezloader Remix':* state=tiled
 
 
 

@@ -246,3 +246,6 @@ There are two things you can do about this warning:
 ;; backward paragraph?
 
 
+;; org
+(define-key global-map  (kbd "C-c l") 'org-store-link)
+
