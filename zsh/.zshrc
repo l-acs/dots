@@ -164,6 +164,11 @@ function gcfg(){
 }
 
 
+flac2mp3here(){
+    find . -print0 | xargs -0 -I '{}' ffmpeg -i '{}' '{}'.mp3
+}
+
+
 #
 #alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 
