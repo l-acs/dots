@@ -41,7 +41,7 @@ export VISUAL="emacsclient -create-frame --alternate-editor=''"
 #"emacs"
 export TERMINAL="urxvt -e tmux"
 
-export GTK_THEME="Adwaita:dark"
+#export GTK_THEME="Adwaita:dark"
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
 
 #for scripts
@@ -51,13 +51,13 @@ export EMAIL="thunderbird"
 export FILEBROWSER="browse"
 export NINEFLAGS="-bg #fdf6e3 -fg #222222 -font 'UbuntuMono-R' -popup -teleport" #6A6B6D 181A26
 export MUSIC="$HOME/Music"
-export VIDEO="$HOME/Documents/Videos"
-export PICTURE="$HOME/Documents/Pictures"
+export VIDEO="$HOME/Videos"
+export PICTURE="$HOME/Pictures"
 export WEB="firefox"
 
 
-export bar="$HOME/Projects/code/lojbar/lojbar"
-alias -g lemon="lemonbar -p -a 50 -f 'ubuntu mono'"
+export bar="$HOME/Projects/Programming/lojbar/lojbar"
+alias lemon="lemonbar -p -a 50 -f 'ubuntu mono'"
 
 #aliases & functions
 
@@ -94,6 +94,8 @@ cl(){
 space(){ #only a function because of quoting nightmares
 	df -h | grep sda4 | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
 }
+
+alias anon='unset HISTFILE'
 
 
 
@@ -169,6 +171,57 @@ flac2mp3here(){
 }
 
 
+# rocketchat stuff
+rc_config="$JOT_DIR/rocket_auth.txt"
+rc_url="$(cut -f2 -d' ' "$rc_config" | sed -n 1p )"
+rc_token="$(cut -f2 -d' ' "$rc_config" | sed -n 2p)"
+rc_id="$(cut -f2 -d' ' "$rc_config" | sed -n 3p)"
+
+function rocket(){
+
+    case "$#" in
+	0)
+	    echo Not enough arguments ; exit 1
+	    ;;
+	1)
+	    arg="$1"
+	    ;;
+	*)
+	    arg="$1"
+	    infix='-H "Content-type: application/json'
+	    shift 1
+	    ;;
+    esac
+#    echo $rc_token $rc_id
+#    echo $*
+    
+   curl -H "X-Auth-Token: $rc_token" \
+	-H "X-User-Id: $rc_id" \
+	$infix "$rc_url/api/v1/$arg" $*
+    
+}
+
+
+function wttr(){
+    case $* in
+	"")
+	    curl wttr.in/Montreal?u
+	    ;;
+	-h|--help|help)
+	    curl wttr.in/:help
+	    ;;
+	*)
+	    curl wttr.in/"$*"
+	    ;;
+    esac
+    
+}
+
+function soundcloudrss(){
+    echo feeds.soundcloud.com/users/soundcloud:"$(curl "$*" | grep soundcloud:// | sed 's|soundcloud://|\n|g' | sed -n 2p | cut -f1 -d\")"/sounds.rss
+}
+
+
 #
 #alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 
@@ -187,3 +240,7 @@ source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # opam configuration
 test -r /home/l-acs/.opam/opam-init/init.zsh && . /home/l-acs/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+alias battery='cat /sys/class/power_supply/BAT0/capacity'
+alias sysbright='brightnessctl set'
+ 
