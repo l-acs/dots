@@ -215,6 +215,17 @@ There are two things you can do about this warning:
 (define-key global-map "\C-w" 'kill-word)
 
 
+(defun forward-or-backward-sexp (&optional arg)
+  "Go to the matching parenthesis character if one is adjacent to point."
+  (interactive "^p")
+  (cond ((looking-at "\\s(") (forward-sexp arg))
+        ((looking-back "\\s)" 1) (backward-sexp arg))
+        ;; Now, try to succeed from inside of a bracket
+        ((looking-at "\\s)") (forward-char) (backward-sexp arg))
+        ((looking-back "\\s(" 1) (backward-char) (forward-sexp arg))))
+
+(define-key global-map "\M-0" 'forward-or-backward-sexp)
+
 ;general operations & IO
 (define-key global-map "\C-b" 'switch-to-buffer)
 (define-key global-map "\C-e" 'eval-last-sexp)
