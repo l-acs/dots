@@ -21,17 +21,17 @@ There are two things you can do about this warning:
   )
 (package-initialize)
 
-(setq package-list '(right-click-context centaur-tabs markdown-mode tuareg cider use-package kotlin-mode emojify helm))
+(setq package-list
+      '(centaur-tabs cider emojify helm kotlin-mode lua-mode magit markdown-mode right-click-context tuareg use-package))
 
-(unless package-archive-contents
-  (package-refresh-contents))
+
+;; (unless package-archive-contents
+(package-refresh-contents);)
 
 
 (dolist (package package-list)
   (unless (package-installed-p package)
     (package-install package)))
-
-
 
 
 (custom-set-variables
@@ -46,9 +46,7 @@ There are two things you can do about this warning:
  '(custom-enabled-themes (quote (deeper-blue)))
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
- '(package-selected-packages
-   (quote
-    (helm emojify lua-mode magit centaur-tabs kotlin-mode use-package cider right-click-context markdown-mode tuareg)))
+ '(package-selected-packages 'package-list)
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 
@@ -183,6 +181,7 @@ There are two things you can do about this warning:
 (define-key global-map "\M-k" 'move-end-of-line)
 (define-key global-map "\M-j" 'move-beginning-of-line)
 (local-unset-key "\C-j")
+(local-unset-key "\C-k")
 (define-key global-map "\C-l" 'forward-char)
 (define-key global-map "\C-h" 'backward-char)
 
