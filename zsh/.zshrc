@@ -137,6 +137,12 @@ alias love='mpc sendmessage mpdas love'
 alias unlove='mpc sendmessage mpdas unlove'
 
 
+# jot logs
+for i in trash grocery ideas; do
+    alias "$i"="eval jot "$i" \$(date) - "
+done
+
+
 # git stuff
 alias gst='git status'
 alias gadd='git add'
