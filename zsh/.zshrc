@@ -84,7 +84,7 @@ alias zrc="$EDITOR ~/.zshrc"
 alias token="cat $JOT_DIR/ocaml_token.txt | xsel -bi"
 alias sepia="cat $JOT_DIR/sepia.txt | xsel -bi"
 alias cover="feh --scale-down -g 599x377 --image-bg black --reload=1 .scripts/output/cover.jpg"
-
+playlists="$HOME/.config/mpd/playlists"
 
 
 
