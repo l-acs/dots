@@ -250,3 +250,4 @@ test -r /home/l-acs/.opam/opam-init/init.zsh && . /home/l-acs/.opam/opam-init/in
 alias battery='cat /sys/class/power_supply/BAT0/capacity'
 alias sysbright='brightnessctl set'
  
+alias screencast='ffmpeg -f x11grab -video_size 1920x1080 -framerate 25 -i :0 -f alsa -i default -c:v libx264 -preset ultrafast -c:a aac '
