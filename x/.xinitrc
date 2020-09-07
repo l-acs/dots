@@ -15,8 +15,8 @@ tmux set -g status off
 #compositor
 picom -b &
 
-#bar
-$HOME/Projects/code/lojbar/lojbar | lemonbar -f "Ubuntu Mono" -a 50 | bash &
+bar &
+#$HOME/Projects/code/lojbar/lojbar | lemonbar -f "Ubuntu Mono" -a 50 | bash &
 
 #usb daemon & tray icon
 udiskie -s &
