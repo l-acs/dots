@@ -210,6 +210,9 @@ F2
 
 
 
+# reload the bar
+super + F3
+	bar
 
 
 
@@ -270,11 +273,3 @@ super + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
 super + equal
       s2cctl toggle
 
-
-
-# control, alt, etc :
-
-
-# reload the bar
-control + alt + b
-	pkill -f lemonbar; pkill -f lojbar ; "$bar" | lemonbar -a 50 -p -f 'Ubuntu Mono' | bash
