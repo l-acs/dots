@@ -71,7 +71,11 @@ z(){
 #alias e="emacs"
 
 #global
-alias -g xs='$(xsel -o)'
+function _myxsel(){
+    if [ -n "$(xsel -o | tr -d '[:blank:]')" ]; then xsel; else xsel -b; fi
+}
+alias -g xs='$(_myxsel)'
+alias -g xb='$(xsel -b)'
 
 
 
