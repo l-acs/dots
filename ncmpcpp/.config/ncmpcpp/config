@@ -282,7 +282,7 @@ song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)
 ## Note: Custom command that will be executed each time song changes. Useful for
 ## notifications etc.
 ##
-execute_on_song_change = reload-cover 
+execute_on_song_change = reload-cover ; wal -c && wal -i ~/.scripts/output/cover.jpg -n -a 85 >/dev/null
 #
 ##
 ## Note: Custom command that will be executed each time player state
@@ -456,7 +456,7 @@ jump_to_now_playing_song_at_start = yes
 #
 #mouse_support = yes
 #
-#mouse_list_scroll_whole_page = yes
+mouse_list_scroll_whole_page = no
 #
 #empty_tag_marker = <empty>
 #
