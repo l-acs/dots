@@ -41,7 +41,7 @@ export VISUAL="emacsclient -create-frame --alternate-editor=''"
 #"emacs"
 export TERMINAL="urxvt -e tmux"
 
-#export GTK_THEME="Adwaita:dark"
+export GTK_THEME="Adwaita:dark"
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
 
 #for scripts

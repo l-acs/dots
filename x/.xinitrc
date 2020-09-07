@@ -2,7 +2,8 @@
 sxhkd &
 
 #~/.config/feh/.fehbg
-wal -i ~/Documents/Pictures/Wall/red-lake-mountains-minimal.jpg  -l -a 60 -b "fdf6e3"
+wal -i ~/Documents/Pictures/Wall/red-lake-mountains-minimal.jpg  -a 85 -b 111111
+#wal -i ~/Documents/Pictures/Wall/red-lake-mountains-minimal.jpg  -l -a 60 -b "fdf6e3"
 #wal -i /home/l-acs/Documents/Pictures/Wall/joshua-comet.jpg
 
 #no bell
