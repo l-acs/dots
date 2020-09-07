@@ -163,6 +163,9 @@ super + alt + shift + {h,j,k,l}
 	haswindows || {firefox, findoropen deezer ncmpcpp, rofi -show combi -combi-modi "drun\,window", eval $VISUAL, urxvt -e tmux -f ~/.config/tmux/tmux.conf, urxvt -e tmux -f ~/.config/tmux/tmux.conf}
 
 
+# kill notifications
+~Escape
+	dunstctl close-all
 
 
 
