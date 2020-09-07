@@ -220,17 +220,18 @@ def_key "*"
 def_key "8"
   toggle_visualization_type
 
-def_key "delete"
-  delete_playlist_items
+#def_key "delete"
+#  delete_playlist_items
 
 
 def_key "d"
   delete_playlist_items
 
-#
-#def_key "delete"
-#  delete_browser_items
-#
+def_key "d"
+  delete_browser_items  
+def_key "delete"
+  delete_browser_items
+
 #def_key "delete"
 #  delete_stored_playlist
 #
