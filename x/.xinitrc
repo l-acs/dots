@@ -29,7 +29,8 @@ dunst &
 
 # start mpd and mpdas
 systemctl restart --user mpd
-(pgrep -x mpdas || mpdas -d -c ~/.config/mpdasrc)
+systemctl restart --user mpdas
+#(pgrep -x mpdas || mpdas -d -c ~/.config/mpdasrc)
 
 
 
