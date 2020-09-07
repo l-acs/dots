@@ -22,7 +22,7 @@ There are two things you can do about this warning:
 (package-initialize)
 
 (setq package-list
-      '(centaur-tabs cider emojify helm kotlin-mode lua-mode magit markdown-mode right-click-context tuareg use-package))
+      '(centaur-tabs cider emojify ess ewal helm kotlin-mode lua-mode magit markdown-mode right-click-context tuareg undo-tree use-package))
 
 
 ;; (unless package-archive-contents
