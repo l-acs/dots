@@ -41,7 +41,7 @@ super + g
 #
 
 # set the window state
-super + {@space, f}
+super + {@space, shift + f}
       bspc node -t {\~floating, \~fullscreen}
 
 
@@ -183,7 +183,7 @@ super + e
 
 
 #open non-duplicate programs
-super + {m,shift+f,shift+s,shift+v}
+super + {m,f,shift+s,shift+v}
       findoropen {deezer ncmpcpp,firefox,signal signal-desktop,vim}
 
 
