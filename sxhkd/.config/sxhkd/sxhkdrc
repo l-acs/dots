@@ -151,7 +151,7 @@ super + alt + shift + {h,j,k,l}
 
 #right click magic
 ~button3
-	(isroot || isapplication URxvt -v ncmpcpp) && \{ pkill 9menu || clickbait \}
+	(isroot || isapplication URxvt -v ncmpcpp) && ( pkill 9menu || clickbait )
 
 ~button1
 	(isroot || isapplication URxvt -v ncmpcpp) && killall 9menu
