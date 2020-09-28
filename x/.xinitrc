@@ -53,6 +53,4 @@ exec bspwm
 #exec cwm -c ~/.config/cwm/cwmrc
 #exec dwm
 
-#autostart
-signal-desktop &
 
