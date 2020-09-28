@@ -33,7 +33,8 @@ systemctl restart --user mpdas
 #(pgrep -x mpdas || mpdas -d -c ~/.config/mpdasrc)
 
 
-
+# eyes!
+redshift -c ~/.config/redshift.conf
 
 #unmute?
 ~/.scripts/unmute.sh
