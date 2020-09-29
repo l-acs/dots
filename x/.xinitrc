@@ -33,7 +33,8 @@ systemctl restart --user mpdas
 #(pgrep -x mpdas || mpdas -d -c ~/.config/mpdasrc)
 
 
-
+# eyes!
+redshift -c ~/.config/redshift.conf
 
 #unmute?
 ~/.scripts/unmute.sh
@@ -52,6 +53,4 @@ exec bspwm
 #exec cwm -c ~/.config/cwm/cwmrc
 #exec dwm
 
-#autostart
-signal-desktop &
 

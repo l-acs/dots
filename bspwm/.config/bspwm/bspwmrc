@@ -4,7 +4,8 @@
 xsetroot -cursor_name left_ptr
 
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor ^1 -d i ii iii iv v vi vii viii ix
+bspc monitor ^2 -d m
 
 bspc config border_width         2
 
@@ -49,12 +50,13 @@ bspc rule -a Thunderbird desktop='^2'
 
 #tile these
 
+bspc rule -a 'Deezloader Remix':* state=tiled
 bspc rule -a Emacs:emacs state=tiled
 bspc rule -a firefox:* state=tiled
+bspc rule -a Signal state=tiled
 bspc rule -a Surf state=tiled
 bspc rule -a Xournalpp state=tiled
-bspc rule -a 'Deezloader Remix':* state=tiled
-
+bspc rule -a Zathura state=tiled
 
 
 #tile the first window in a desktop
