@@ -14,15 +14,18 @@ separator_color = "#586e75"
 backgound = "#222222"
 
 
-geometry = "300x3+13+32"
+geometry = "300x3-13+32"
 notification_height = 70
 alignment = center
+
+#monitor = 1 #second monitor
+follow = keyboard
 
 
 #prevent huge images
 max_icon_size = 60
 
-hide_duplicates_count = true #doesn't seem to work
+hide_duplicate_count = true
 show_indicators = false #hide the pesky "A"
 stack_duplicates = true
 indicate_hidden = true
