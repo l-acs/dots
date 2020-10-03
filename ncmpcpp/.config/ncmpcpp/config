@@ -294,9 +294,9 @@ execute_on_song_change = reload-cover ; pkill wal ; ( pgrep -f -x 'feh .*reload.
 #
 #playlist_show_mpd_host = no
 #
-#playlist_show_remaining_time = no
+playlist_show_remaining_time = no
 #
-#playlist_shorten_total_times = no
+playlist_shorten_total_times = yes
 #
 #playlist_separate_albums = no
 #
@@ -337,7 +337,8 @@ progressbar_look = ••
 #
 ## Available values: classic, alternative.
 ##
-user_interface = alternative
+user_interface = classic
+#alternative
 #
 #data_fetching_delay = yes
 #
@@ -433,7 +434,7 @@ jump_to_now_playing_song_at_start = yes
 #
 #display_bitrate = no
 #
-#display_remaining_time = no
+display_remaining_time = no
 #
 ## Available values: none, basic, extended, perl.
 ##
@@ -484,7 +485,7 @@ mouse_list_scroll_whole_page = no
 #
 #search_engine_default_search_mode = 1
 #
-external_editor = /usr/bin/emacs -nw
+external_editor = emacsclient -t
 #
 ## Note: set to yes if external editor is a console application.
 ##
