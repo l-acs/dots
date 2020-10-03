@@ -107,8 +107,18 @@ super + shift + {comma, period}
       bspc desktop -f {prev,next}.local.!occupied
 
 # focus the last node/desktop
-super + {grave,Tab}
-	bspc {node,desktop} -f last
+#super + {grave,Tab}
+#	bspc {node,desktop} -f last
+
+# cycle through nodes in desktop
+alt + {_, shift+} Tab
+    bspc node -f {next,prev}.local.leaf
+
+# cycle through desktops in desktop
+super + {_, shift+} Tab
+    bspc desktop -f {next,prev}.local.occupied
+
+
 
 # focus the older or newer node in the focus history
 super + {o,i}
