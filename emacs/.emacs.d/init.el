@@ -245,6 +245,10 @@ There are two things you can do about this warning:
 ;testing
 (define-key global-map "\C-q" 'keyboard-quit)
 
+;; give escape expected behavior
+(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+(define-key key-translation-map (kbd "C-<escape>") (kbd "ESC"))
+
 ;</known to work>
 
 
