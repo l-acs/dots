@@ -7,7 +7,7 @@ xsetroot -cursor_name left_ptr
 bspc monitor ^1 -d i ii iii iv v vi vii viii ix
 bspc monitor ^2 -d m
 
-bspc config border_width         2
+bspc config border_width         1
 
 if xrandr | grep " connected" | grep -qv "LVDS" ; then     #non-laptop monitor is being used
     bspc config window_gap 10
