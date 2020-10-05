@@ -22,7 +22,7 @@ There are two things you can do about this warning:
 (package-initialize)
 
 (setq package-list
-      '(centaur-tabs cider emojify ess ewal helm kotlin-mode lua-mode magit markdown-mode right-click-context tuareg undo-tree use-package))
+      '(centaur-tabs cider emojify ess ewal helm kotlin-mode lua-mode magit markdown-mode tuareg undo-tree use-package))
 
 
 ;; (unless package-archive-contents
@@ -61,8 +61,6 @@ There are two things you can do about this warning:
 
 (setq vc-follow-symlinks t)
 
-;;enable right-click menu
-(right-click-context-mode 1)
 
 ;;update files automatically when changed on disk
 (global-auto-revert-mode t)
