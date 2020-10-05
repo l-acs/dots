@@ -22,7 +22,7 @@ There are two things you can do about this warning:
 (package-initialize)
 
 (setq package-list
-      '(centaur-tabs cider emojify ess ewal helm kotlin-mode lua-mode magit markdown-mode tuareg undo-tree use-package))
+      '(centaur-tabs cider emojify ess helm kotlin-mode lua-mode magit markdown-mode tuareg undo-tree use-package))
 
 
 ;; (unless package-archive-contents
@@ -66,13 +66,6 @@ There are two things you can do about this warning:
 (global-auto-revert-mode t)
 
 
-
-;; ido mode
-;; (ido-mode t)
-;; (setq ido-everywhere t)
-;; (setq ido-enable-flex-matching t)
-
-
 ;; matching parentheses
 (show-paren-mode 1)
 
@@ -102,48 +95,12 @@ There are two things you can do about this warning:
 
 
 
-;<works>
-;; (use-package ewal
-;;   :init (setq ewal-use-built-in-always-p nil
-;;               ewal-use-built-in-on-failure-p t
-;;               ewal-built-in-palette "sexy-material"))
-;</works>
-
-
-;; (use-package ewal-spacemacs-themes     
-;;   :init (progn
-;;           (setq spacemacs-theme-underline-parens t
-;;                 my:rice:font (font-spec
-;;                               :family "Source Code Pro"
-;;                               :weight 'semi-bold
-;;                               :size 11.0))
-;;           (show-paren-mode +1)
-;;           (global-hl-line-mode)
-;;           (set-frame-font my:rice:font nil t)
-;;           (add-to-list  'default-frame-alist
-;;                         `(font . ,(font-xlfd-name my:rice:font))))
-;;   :config (progn
-;;             (load-theme 'ewal-spacemacs-modern t)
-;;             (enable-theme 'ewal-spacemacs-modern)))
-;; (use-package ewal-evil-cursors
-;;   :after (ewal-spacemacs-themes)
-;;   :config (ewal-evil-cursors-get-colors
-;;            :apply t :spaceline t))
-;; (use-package spaceline
-;;   :after (ewal-evil-cursors winum)
-;;   :init (setq powerline-default-separator nil)
-;;   :config (spaceline-spacemacs-theme))
 
 
 
-; key bindings: wish me luck!
 
+; key bindings
 
-
-;(define-key global-map "\C-z" 'undo)
-;(define-key global-map "\C-Z" 'redo)
-;(define-key global-map "\C-/" 'isearch-forward)
-;(define-key global-map "\C-?" 'isearch-backward)
 
 ;for muscle memory
 (global-unset-key "\C-j")
@@ -160,14 +117,10 @@ There are two things you can do about this warning:
 (global-unset-key "\M-v")
 (global-unset-key "\C-v")
 (global-unset-key "\M-s")
-;(global-unset-key "\C-x\C-s")
-;(global-unset-key "\C-xu")
-;(global-unset-key "\C-xk")
+
 
 
 ;<known to work>
-
-
 
 (define-key global-map "\C-f" 'isearch-forward)
 (define-key global-map "\M-f" 'isearch-backward)
@@ -240,10 +193,6 @@ There are two things you can do about this warning:
 
 ; emoji
 (define-key global-map "\M-E" 'emojify-insert-emoji)
-
-
-;testing
-(define-key global-map "\C-q" 'keyboard-quit)
 
 ;; give escape expected behavior
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
