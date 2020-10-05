@@ -34,7 +34,7 @@ systemctl restart --user mpdas
 
 
 # eyes!
-redshift -c ~/.config/redshift.conf
+redshift -c ~/.config/redshift.conf &
 
 #unmute?
 ~/.scripts/unmute.sh
