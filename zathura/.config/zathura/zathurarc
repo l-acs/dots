@@ -1,0 +1,26 @@
+# # set selection-clipboard clipboard
+# # midnight mode
+# map <S-F1> feedkeys ":set recolor-lightcolor \#002b36<Return>"
+# map <S-F2> feedkeys ":set recolor-darkcolor \#839496<Return>"
+# map ! feedkeys "<S-F1><F2>"
+# # amber on dark slate
+# map <S-F3> feedkeys ":set recolor-lightcolor \#0a0a12<Return>"
+# map <S-F4> feedkeys ":set recolor-darkcolor \#ff9900<Return>"
+# map @ feedkeys "<S-F3><F4>"
+# # green on black
+# map <S-F6> feedkeys ":set recolor-lightcolor #000000<Return>"
+# map <S-F7> feedkeys ":set recolor-darkcolor \#00B800<Return>"
+# map \# feedkeys "<S-F6><F7>"
+# # original (black on white)
+# map <S-F8> feedkeys ":set recolor-lightcolor \#ffffff<Return>"
+# map <S-F9> feedkeys ":set recolor-darkcolor \#000000<Return>"
+# map $ feedkeys "<S-F8><F9>"
+
+map u feedkeys <S-J>
+map i feedkeys <S-K>
+
+map r recolor
+map R reload
+map <C-r> rotate
+
+set recolor true
