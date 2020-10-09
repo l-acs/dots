@@ -61,6 +61,10 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  )
 
+;; use org in *scratch*
+(setq initial-major-mode 'org-mode)
+(setq initial-scratch-message "Welcome to GNU Emacs!\n\n")
+
 
 ;; follow symlinks
 (setq vc-follow-symlinks t)
