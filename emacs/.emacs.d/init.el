@@ -131,13 +131,15 @@ There are two things you can do about this warning:
 (global-unset-key "\M-v")
 (global-unset-key "\C-v")
 (global-unset-key "\M-s")
+(define-key ctl-x-map "u" 'nil)
+(define-key ctl-x-map "k" 'nil)
 
 
 
-;<known to work>
 
-(define-key global-map "\C-f" 'isearch-forward)
-(define-key global-map "\M-f" 'isearch-backward)
+;; searching
+(define-key global-map "\C-f" 'isearch-forward-regexp)
+(define-key global-map "\M-f" 'isearch-backward-regexp)
 (define-key isearch-mode-map "\C-f" 'isearch-repeat-forward)
 (define-key isearch-mode-map "\M-f" 'isearch-repeat-backward)
 
@@ -154,8 +156,6 @@ There are two things you can do about this warning:
 (define-key global-map "\C-k" 'previous-line)
 (define-key global-map "\M-l" 'forward-word)
 (define-key global-map "\M-h" 'backward-word)
-
-
 
 (define-key global-map "\M-g" 'beginning-of-buffer)
 (define-key global-map "\M-G" 'end-of-buffer)
@@ -189,19 +189,19 @@ There are two things you can do about this warning:
 
 (define-key global-map "\M-0" 'forward-or-backward-sexp)
 
-;general operations & IO
-(define-key global-map "\C-b" 'switch-to-buffer)
+(define-key global-map "\C-z" 'undo)
+
+
+;; elisp
 (define-key global-map "\C-e" 'eval-last-sexp)
-
-(define-key global-map "\C-s" 'save-buffer)
-
 (define-key global-map "\M-e" 'execute-extended-command)
 
-; windows
+;; windows, buffers, and files
 (define-key global-map (kbd "<C-tab>") 'other-window)
-
-
-;; tabbed life
+(define-key global-map (kbd "C-x k") 'kill-current-buffer)
+(define-key global-map (kbd "C-x C-k") 'kill-buffer)
+(define-key global-map "\C-b" 'switch-to-buffer)
+(define-key global-map "\C-s" 'save-buffer)
 (define-key global-map "\C-t" 'find-file)
 
 ;; emoji
@@ -211,8 +211,9 @@ There are two things you can do about this warning:
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 (define-key key-translation-map (kbd "C-<escape>") (kbd "ESC"))
 
-;</known to work>
 
+;; centaur
+(define-key global-map (kbd "C-x <right>") 'centaur-tabs-forward-tab)
 
 ;; org
 (define-key global-map  (kbd "C-c l") 'org-store-link)
