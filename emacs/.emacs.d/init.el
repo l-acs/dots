@@ -46,6 +46,9 @@ There are two things you can do about this warning:
  '(custom-enabled-themes (quote (deeper-blue)))
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
+ '(message-kill-buffer-query nil)
+ '(org-support-shift-select t)
+ '(org-todo-keywords '((sequence "⭕" "🔵" "▶" "⏩" "✅")))
  '(package-selected-packages 'package-list)
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
@@ -77,6 +80,8 @@ There are two things you can do about this warning:
 (add-hook 'after-init-hook #'global-emojify-mode)
 
 
+;; use org-indent-mode
+(add-hook 'org-mode-hook 'org-indent-mode)
 
 ;tabbed mode?
 (use-package centaur-tabs
@@ -201,12 +206,35 @@ There are two things you can do about this warning:
 ;</known to work>
 
 
-
-
-;; paragraph?			
-;; backward paragraph?
-
-
 ;; org
 (define-key global-map  (kbd "C-c l") 'org-store-link)
+
+(define-key org-mode-map (kbd "M-e") nil)
+(define-key org-mode-map (kbd "M-h") nil)
+(define-key org-mode-map (kbd "C-j") nil)
+
+(define-key org-mode-map (kbd "M-<right>") nil)
+(define-key org-mode-map (kbd "M-S-<right>") nil)
+(define-key org-mode-map (kbd "M-<left>") nil)
+(define-key org-mode-map (kbd "M-S-<left>") nil)
+(define-key org-mode-map (kbd "M-{") nil)
+(define-key org-mode-map (kbd "M-}") nil)
+(define-key org-mode-map (kbd "C-<up>") nil)
+(define-key org-mode-map (kbd "C-<down>") nil)
+
+(define-key org-mode-map (kbd "C-<tab>") nil)
+
+(define-key org-mode-map "\M-[" 'org-metaleft)
+(define-key org-mode-map "\M-{" 'org-shiftmetaleft)
+(define-key org-mode-map "\M-]" 'org-metaright)
+(define-key org-mode-map "\M-}" 'org-shiftmetaright)
+
+(define-key org-mode-map (kbd "C-<up>") 'org-forward-element)
+(define-key org-mode-map (kbd "C-<down>") 'org-backward-element)
+
+(define-key org-mode-map (kbd "C-`") 'org-force-cycle-archived)
+
+
+
+
 
