@@ -17,7 +17,7 @@ There are two things you can do about this warning:
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
   ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
   ;; and `package-pinned-packages`. Most users will not need or want to do this.
-  ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+  ;; (add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
   )
 (package-initialize)
 
@@ -62,17 +62,18 @@ There are two things you can do about this warning:
  )
 
 
+;; follow symlinks
 (setq vc-follow-symlinks t)
 
 
-;;update files automatically when changed on disk
+;; update files automatically when changed on disk
 (global-auto-revert-mode t)
 
 
 ;; matching parentheses
 (show-paren-mode 1)
 
-;;compile with pdflatex by default
+;; compile with pdflatex by default
 (setq latex-run-command "pdflatex")
 
 
@@ -83,7 +84,9 @@ There are two things you can do about this warning:
 ;; use org-indent-mode
 (add-hook 'org-mode-hook 'org-indent-mode)
 
-;tabbed mode?
+
+
+;; tabbed mode?
 (use-package centaur-tabs
   :demand
   :config
@@ -104,10 +107,10 @@ There are two things you can do about this warning:
 
 
 
-; key bindings
+;; key bindings
 
 
-;for muscle memory
+;; for muscle memory
 (global-unset-key "\C-j")
 (global-unset-key "\C-k")
 (global-unset-key "\C-n")
@@ -133,7 +136,7 @@ There are two things you can do about this warning:
 (define-key isearch-mode-map "\M-f" 'isearch-repeat-backward)
 
 
-; text movement
+;; text movement
 (define-key global-map "\M-k" 'move-end-of-line)
 (define-key global-map "\M-j" 'move-beginning-of-line)
 (local-unset-key "\C-j")
@@ -155,10 +158,9 @@ There are two things you can do about this warning:
 
 
 
-;text manipulation
+;; text manipulation
 
 (define-key global-map "\C-a" 'mark-whole-buffer)
-
 
 (define-key global-map "\M-x" 'kill-region)
 (define-key global-map "\M-c" 'kill-ring-save)
@@ -169,7 +171,6 @@ There are two things you can do about this warning:
 (define-key global-map "\M-d" 'kill-line)
 (define-key global-map "\M-w" 'kill-word)
 (define-key global-map "\C-w" 'kill-word)
-
 
 (defun forward-or-backward-sexp (&optional arg)
   "Go to the matching parenthesis character if one is adjacent to point."
@@ -193,10 +194,11 @@ There are two things you can do about this warning:
 ; windows
 (define-key global-map (kbd "<C-tab>") 'other-window)
 
-; tabbed life
+
+;; tabbed life
 (define-key global-map "\C-t" 'find-file)
 
-; emoji
+;; emoji
 (define-key global-map "\M-E" 'emojify-insert-emoji)
 
 ;; give escape expected behavior
