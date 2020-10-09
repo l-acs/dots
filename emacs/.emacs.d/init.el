@@ -65,6 +65,8 @@ There are two things you can do about this warning:
 (setq initial-major-mode 'org-mode)
 (setq initial-scratch-message "Welcome to GNU Emacs!\n\n")
 
+;; put newlines at end of files
+(setq require-final-newline t)
 
 ;; follow symlinks
 (setq vc-follow-symlinks t)
