@@ -1,7 +1,3 @@
-(menu-bar-mode -1)
-
-
-
 (require 'package)
 
 
@@ -26,7 +22,8 @@ There are two things you can do about this warning:
 
 
 ;; (unless package-archive-contents
-(package-refresh-contents);)
+(package-refresh-contents)
+;; )
 
 
 (dolist (package package-list)
@@ -43,7 +40,8 @@ There are two things you can do about this warning:
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
- '(custom-enabled-themes (quote (deeper-blue)))
+ '(custom-enabled-themes '(deeper-blue))
+ '(helm-completion-style 'emacs)
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(message-kill-buffer-query nil)
@@ -55,10 +53,7 @@ There are two things you can do about this warning:
 
 
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+
  )
 
 ;; use org in *scratch*
@@ -90,6 +85,8 @@ There are two things you can do about this warning:
 ;; use org-indent-mode
 (add-hook 'org-mode-hook 'org-indent-mode)
 
+;; enable downcase-region
+(put 'downcase-region 'disabled nil)
 
 
 ;; tabbed mode?
@@ -242,8 +239,6 @@ There are two things you can do about this warning:
 (define-key org-mode-map (kbd "C-<down>") 'org-backward-element)
 
 (define-key org-mode-map (kbd "C-`") 'org-force-cycle-archived)
-
-
 
 
 
