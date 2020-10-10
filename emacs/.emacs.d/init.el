@@ -145,8 +145,6 @@ There are two things you can do about this warning:
 (defun def-keymap (keymap pairlist)
   ""
   (mapc (lambda (l)
-	  ""
-	  (interactive)
 	  (define-key keymap (car l) (car (cdr l))))
        pairlist))
 
@@ -171,7 +169,7 @@ There are two things you can do about this warning:
 ;; searching
 (def-keymap isearch-mode-map
   (list
-   '("\C-f" 'isearch-repeat-forward) '("\M-f" 'isearch-repeat-backward)))
+   '("\C-f" isearch-repeat-forward) '("\M-f" isearch-repeat-backward)))
 
 (def-keymap global-map
   (list
