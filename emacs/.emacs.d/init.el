@@ -83,7 +83,39 @@ There are two things you can do about this warning:
 
 
 ;; use org-indent-mode
-(add-hook 'org-mode-hook 'org-indent-mode)
+;; and org keybinds
+
+(setq org-unset
+      (append
+       (list "\M-e" "\M-h" "\C-j")
+       (mapcar 'kbd
+	       (list "M-<right>" "M-S-<right>" "M-<left>" "M-S-<left>" "M-{" "M-}" "C-<up>" "C-<down>" "C-<tab>"))))
+
+(setq org-bindings
+      (list
+       "\M-[" 'org-metaleft "\M-{" 'org-shiftmetaleft
+       "\M-[" 'org-metaleft  "\M-{" 'org-shiftmetaleft
+       "\M-]" 'org-metaright "\M-}" 'org-shiftmetaright
+       (kbd "C-<up>") 'org-forward-element
+       (kbd "C-<down>") 'org-backward-element
+       (kbd "C-`") 'org-force-cycle-archived
+       "\M-[" 'org-metaleft "\M-{" 'org-shiftmetaleft
+       "\M-]" 'org-metaright "\M-}" 'org-shiftmetaright
+       (kbd "C-<up>") 'org-forward-element
+       (kbd "C-<down>") 'org-backward-element
+       (kbd "C-`") 'org-force-cycle-archived))
+
+(defun my-org-stuff ()
+  "Turn on indent mode, unbind some keys, bind some keys"
+  (progn 
+    (org-indent-mode)
+    (mapc 'local-unset-key org-unset)
+    (mapc (lambda (s)
+	(apply 'local-set-key s))
+      (seq-partition org-bindings 2))))
+
+(add-hook 'org-mode-hook 'my-org-stuff)
+
 
 ;; enable downcase-region
 (put 'downcase-region 'disabled nil)
@@ -99,7 +131,6 @@ There are two things you can do about this warning:
   ("M-<right>" . centaur-tabs-forward))
 
 
-
 (use-package helm
   :ensure t
   :config (helm-mode 1))
@@ -109,71 +140,24 @@ There are two things you can do about this warning:
 
 
 
-
 ;; key bindings
 
+(defun def-keymap (keymap pairlist)
+  ""
+  (mapc (lambda (l)
+	  ""
+	  (interactive)
+	  (define-key keymap (car l) (car (cdr l))))
+       pairlist))
 
 ;; for muscle memory
-(global-unset-key "\C-j")
-(global-unset-key "\C-k")
-(global-unset-key "\C-n")
-(global-unset-key "\C-p")
-(global-unset-key "\M-f")
-(global-unset-key "\M-b")
-(global-unset-key "\C-f")
-(global-unset-key "\C-b")
-(global-unset-key "\C-a")
-(global-unset-key "\C-e")
-(global-unset-key "\M-a")
-(global-unset-key "\M-v")
-(global-unset-key "\C-v")
-(global-unset-key "\M-s")
-(define-key ctl-x-map "u" 'nil)
-(define-key ctl-x-map "k" 'nil)
+(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\M-s" "\C-t"))
+(mapc 'global-unset-key global-unsets)
 
+(def-keymap ctl-x-map
+  (list
+   '("u" nil) '("k" nil)))
 
-
-
-;; searching
-(define-key global-map "\C-f" 'isearch-forward-regexp)
-(define-key global-map "\M-f" 'isearch-backward-regexp)
-(define-key isearch-mode-map "\C-f" 'isearch-repeat-forward)
-(define-key isearch-mode-map "\M-f" 'isearch-repeat-backward)
-
-
-;; text movement
-(define-key global-map "\M-k" 'move-end-of-line)
-(define-key global-map "\M-j" 'move-beginning-of-line)
-(local-unset-key "\C-j")
-(local-unset-key "\C-k")
-(define-key global-map "\C-l" 'forward-char)
-(define-key global-map "\C-h" 'backward-char)
-
-(define-key global-map "\C-j" 'next-line)
-(define-key global-map "\C-k" 'previous-line)
-(define-key global-map "\M-l" 'forward-word)
-(define-key global-map "\M-h" 'backward-word)
-
-(define-key global-map "\M-g" 'beginning-of-buffer)
-(define-key global-map "\M-G" 'end-of-buffer)
-
-
-
-
-
-;; text manipulation
-
-(define-key global-map "\C-a" 'mark-whole-buffer)
-
-(define-key global-map "\M-x" 'kill-region)
-(define-key global-map "\M-c" 'kill-ring-save)
-(define-key global-map "\M-v" 'yank)
-
-
-(define-key global-map "\C-d" 'delete-char)
-(define-key global-map "\M-d" 'kill-line)
-(define-key global-map "\M-w" 'kill-word)
-(define-key global-map "\C-w" 'kill-word)
 
 (defun forward-or-backward-sexp (&optional arg)
   "Go to the matching parenthesis character if one is adjacent to point."
@@ -184,61 +168,49 @@ There are two things you can do about this warning:
         ((looking-at "\\s)") (forward-char) (backward-sexp arg))
         ((looking-back "\\s(" 1) (backward-char) (forward-sexp arg))))
 
-(define-key global-map "\M-0" 'forward-or-backward-sexp)
+;; searching
+(def-keymap isearch-mode-map
+  (list
+   '("\C-f" 'isearch-repeat-forward) '("\M-f" 'isearch-repeat-backward)))
 
-(define-key global-map "\C-z" 'undo)
+(def-keymap global-map
+  (list
+   '("\C-f" isearch-forward-regexp) '("\M-f" isearch-forward-regexp)
+   
+   ;; text movement
+   '("\M-k" move-end-of-line) '("\M-j" move-beginning-of-line)
+   '("\C-l" forward-char) '("\C-h" backward-char)
+   '("\C-j" next-line) '("\C-k" previous-line)
+   '("\M-l" forward-word) '("\M-h" backward-word)
+   '("\M-g" beginning-of-buffer) '("\M-G" end-of-buffer)
 
+   ;; text manipulation
+   '("\C-a" mark-whole-buffer) '("\M-x" kill-region)
+   '("\M-c" kill-ring-save) '("\M-v" yank)
+   '("\C-d" delete-char) '("\M-d" kill-line)
+   '("\M-w" kill-word) '("\C-w" kill-word)
+   '("\M-0" forward-or-backward-sexp)
+   '("\C-z" undo)
 
-;; elisp
-(define-key global-map "\C-e" 'eval-last-sexp)
-(define-key global-map "\M-e" 'execute-extended-command)
+   ;; elisp
+   '("\C-e" eval-last-sexp) '("\M-e" execute-extended-command)
 
-;; windows, buffers, and files
-(define-key global-map (kbd "<C-tab>") 'other-window)
-(define-key global-map (kbd "C-x k") 'kill-current-buffer)
-(define-key global-map (kbd "C-x C-k") 'kill-buffer)
-(define-key global-map "\C-b" 'switch-to-buffer)
-(define-key global-map "\C-s" 'save-buffer)
-(define-key global-map "\C-t" 'find-file)
+   ;; windows, buffers, and files
+   (list (kbd "<C-tab>") 'other-window) (list (kbd "C-x k") 'kill-current-buffer)
+   (list (kbd "C-x C-k") 'kill-buffer) '("\C-b" switch-to-buffer)
+   '("\C-s" save-buffer) '("\C-t" find-file)
 
-;; emoji
-(define-key global-map "\M-E" 'emojify-insert-emoji)
+   ;; emoji
+   '("\M-E" emojify-insert-emoji)
+   
+   ;; centaur
+   (list (kbd "C-x <right>") 'centaur-tabs-forward-tab)
+
+   ;; org
+   (list (kbd "C-c l") 'org-store-link)))
 
 ;; give escape expected behavior
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
-(define-key key-translation-map (kbd "C-<escape>") (kbd "ESC"))
-
-
-;; centaur
-(define-key global-map (kbd "C-x <right>") 'centaur-tabs-forward-tab)
-
-;; org
-(define-key global-map  (kbd "C-c l") 'org-store-link)
-
-(define-key org-mode-map (kbd "M-e") nil)
-(define-key org-mode-map (kbd "M-h") nil)
-(define-key org-mode-map (kbd "C-j") nil)
-
-(define-key org-mode-map (kbd "M-<right>") nil)
-(define-key org-mode-map (kbd "M-S-<right>") nil)
-(define-key org-mode-map (kbd "M-<left>") nil)
-(define-key org-mode-map (kbd "M-S-<left>") nil)
-(define-key org-mode-map (kbd "M-{") nil)
-(define-key org-mode-map (kbd "M-}") nil)
-(define-key org-mode-map (kbd "C-<up>") nil)
-(define-key org-mode-map (kbd "C-<down>") nil)
-
-(define-key org-mode-map (kbd "C-<tab>") nil)
-
-(define-key org-mode-map "\M-[" 'org-metaleft)
-(define-key org-mode-map "\M-{" 'org-shiftmetaleft)
-(define-key org-mode-map "\M-]" 'org-metaright)
-(define-key org-mode-map "\M-}" 'org-shiftmetaright)
-
-(define-key org-mode-map (kbd "C-<up>") 'org-forward-element)
-(define-key org-mode-map (kbd "C-<down>") 'org-backward-element)
-
-(define-key org-mode-map (kbd "C-`") 'org-force-cycle-archived)
-
-
-
+(def-keymap key-translation-map
+  (list
+   (list (kbd "ESC") (kbd "C-g"))
+   (list (kbd "C-<escape>") (kbd "ESC"))))
