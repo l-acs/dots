@@ -74,8 +74,8 @@ z(){
 function _myxsel(){
     if [ -n "$(xsel -o | tr -d '[:blank:]')" ]; then xsel; else xsel -b; fi
 }
-alias -g xs='$(_myxsel)'
-alias -g xb='$(xsel -b)'
+alias -g xs='"$(_myxsel)"'
+alias -g xb='"$(xsel -b)"'
 
 
 
