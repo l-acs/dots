@@ -53,41 +53,14 @@ bspc rule -a Thunderbird desktop='^2'
 bspc rule -a 'Deezloader Remix':* state=tiled
 bspc rule -a Emacs:emacs state=tiled
 bspc rule -a firefox:* state=tiled
+bspc rule -a Mumble:mumble state=tiled
+bspc rule -a Rocket.Chat:rocket.chat state=tiled
 bspc rule -a Signal state=tiled
 bspc rule -a Surf state=tiled
 bspc rule -a URxvt:urxvt state=tiled
 bspc rule -a Xournalpp state=tiled
 bspc rule -a Zathura state=tiled
-
-
-#tile the first window in a desktop
-
-#mostly does what i want. third window opens up rather than down hough.
-
-#omit for performance
-# bspc subscribe node_add | while read msg; do
-#     bspc config initial_polarity     second_child
-#     desk_id="$(echo "$msg" | cut -f3 -d ' ')"
-#     wid="$(echo "$msg" | cut -f5 -d ' ')"
-
-#     case $(bspc query -d "$desk_id" -N | wc -l) in
-# 	1)
-# 	    #make first window in desktop tile (full size)
-# 	    bspc node "$wid" -t tiled
-
-# 	    bspc config initial_polarity     first_child
-# 	    ;;
-# 	*)
-# 	    #make second window in desktop tile left
-# 	    bspc config initial_polarity     second_child
-# 	    ;;
-
-	     
-#     esac
-
-
-    
-# done       &
+bspc rule -a Zoom state=tiled
 
 
 
@@ -105,3 +78,6 @@ bspc rule -a Pinentry-gtk-2:\* state=floating
 
 # general settings
 bspc config pointer_modifier mod1
+
+
+bspc config external_rules_command ~/.config/bspwm/ext.sh
