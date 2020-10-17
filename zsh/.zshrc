@@ -45,14 +45,14 @@ export GTK_THEME="Adwaita:dark"
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
 
 #for scripts
-export JOT_DIR="$HOME/Documents/Notes"
-export TD_DIR="$HOME/Documents/Days"
+export JOT_DIR="$HOME/doc/notes"
+export TD_DIR="$HOME/doc/days"
 export EMAIL="thunderbird"
 export FILEBROWSER="browse"
 export NINEFLAGS="-bg #fdf6e3 -fg #222222 -font 'UbuntuMono-R' -popup -teleport" #6A6B6D 181A26
-export MUSIC="$HOME/Music"
-export VIDEO="$HOME/Videos"
-export PICTURE="$HOME/Pictures"
+export MUSIC="$HOME/music"
+export VIDEO="$HOME/videos"
+export PICTURE="$HOME/pictures"
 export WEB="firefox"
 
 
