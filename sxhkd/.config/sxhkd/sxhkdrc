@@ -214,7 +214,7 @@ super + {m,f,shift+s,shift+v}
 
 #cover art, notes, manpdf
 super + shift + {a,n, p, y}
-      {feh --scale-down -g 599x377 --image-bg black --reload=1 $HOME/.scripts/output/cover.jpg,jot, zathura $HOME/.scripts/output/man.pdf, td}
+      {feh --auto-zoom --keep-zoom-vp $HOME/.scripts/output/cover.jpg,jot, zathura $HOME/.scripts/output/man.pdf, td}
 
 
 
