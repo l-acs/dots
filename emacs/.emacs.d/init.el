@@ -212,3 +212,8 @@ There are two things you can do about this warning:
   (list
    (list (kbd "ESC") (kbd "C-g"))
    (list (kbd "C-<escape>") (kbd "ESC"))))
+
+
+
+
+(set-face-attribute 'default nil :height 140)
