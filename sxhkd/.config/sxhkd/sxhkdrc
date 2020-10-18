@@ -4,7 +4,7 @@
 
 # terminal emulator
 super + Return
-	urxvt -e tmux -f ~/.config/tmux/tmux.conf
+	eval ${TERMINAL}
 
 
 # make sxhkd reload its configuration files:
