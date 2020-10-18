@@ -56,7 +56,7 @@ export PICTURE="$HOME/pictures"
 export WEB="firefox"
 
 
-export bar="$HOME/Projects/Programming/lojbar/lojbar"
+export bar="$HOME/projects/code/lojbar/lojbar"
 alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Font Awesome 5 Brands' -f 'Font Awesome 5 Free Solid'"
 
 #aliases & functions
