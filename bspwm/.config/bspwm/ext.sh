@@ -17,9 +17,10 @@ if [ "$instance" = zoom ] ; then
     esac
 fi
 
-# case "$class" in
-#     Lutris|Liferea)
-# 	eval "$consequences"
-# 	[ "$state" ] || echo "state=pseudo_tiled"
-# 	;;
-# esac
+case "$class" in
+    "firefox")
+    #eval "$consequences"
+    #[ "$state" ] || echo "state=pseudo_tiled"
+	[ $(pgrep -f 'firefox .*-childID.*' | wc -l) -gt 1 ]  || echo 'desktop=^4'
+	;;
+esac
