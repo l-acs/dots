@@ -182,8 +182,8 @@ super + alt + shift + {h,j,k,l}
 
 
 # bindings sans modifier
-{~f, ~m, ~s, ~e, ~t, ~Return}
-	haswindows || {firefox, findoropen deezer ncmpcpp, rofi -show combi -combi-modi "drun\,window", eval $VISUAL, urxvt -e tmux -f ~/.config/tmux/tmux.conf, urxvt -e tmux -f ~/.config/tmux/tmux.conf}
+#{~f, ~m, ~s, ~e, ~t, ~Return}
+#	haswindows || {firefox, findoropen deezer -t ncmpcpp, rofi -show combi -combi-modi "drun\,window", eval $VISUAL, urxvt -e tmux -f ~/.config/tmux/tmux.conf, urxvt -e tmux -f ~/.config/tmux/tmux.conf}
 
 
 # kill notifications
