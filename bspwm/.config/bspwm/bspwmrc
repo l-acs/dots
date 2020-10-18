@@ -43,6 +43,7 @@ bspc rule -a *:* state=pseudo_tiled
 
 
 #put these somewhere
+bspc rule -a Rocket.Chat:rocket.chat desktop='^9' follow=off focus=off
 bspc rule -a Signal desktop='^8' follow=off focus=off
 bspc rule -a Thunderbird desktop='^2'
 
