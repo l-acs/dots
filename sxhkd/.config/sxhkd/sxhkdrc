@@ -207,7 +207,7 @@ super + e
 
 #open non-duplicate programs
 super + {m,f,shift+s,shift+v}
-      findoropen {deezer ncmpcpp,firefox,signal signal-desktop,vim}
+      findoropen {deezer -t ncmpcpp,firefox,signal signal-desktop,vim}
 
 
 #files
