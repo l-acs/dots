@@ -47,7 +47,7 @@ There are two things you can do about this warning:
  '(menu-bar-mode nil)
  '(message-kill-buffer-query nil)
  '(org-support-shift-select t)
- '(org-todo-keywords '((sequence "⭕" "🔵" "▶" "⏩" "✅")))
+ '(org-todo-keywords '((sequence "⭕" "✅" "🔵" "▶" "⏩")))
  '(package-selected-packages 'package-list)
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
