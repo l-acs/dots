@@ -41,6 +41,7 @@ There are two things you can do about this warning:
  '(ansi-color-names-vector
    ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
  '(custom-enabled-themes '(deeper-blue))
+ '(emojify-emoji-styles '(github unicode))
  '(helm-completion-style 'emacs)
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
