@@ -1,35 +1,30 @@
 #keybinds
 sxhkd &
 
-#~/.config/feh/.fehbg
-wal -i ~/Documents/Pictures/Wall/red-lake-mountains-minimal.jpg  -a 85 -b 111111
-#wal -i ~/Documents/Pictures/Wall/red-lake-mountains-minimal.jpg  -l -a 60 -b "fdf6e3"
-#wal -i /home/l-acs/Documents/Pictures/Wall/joshua-comet.jpg
+bg="$PICTURE/wall/red-lake-mountains-minimal.jpg"
+feh --no-fehbg --bg-scale "$bg"
+wal -i "$bg"  -a 85 -b 111111 &
 
 #no bell
-xset -b
-
-#boomer solution: no bar tmux
-tmux set -g status off
+xset -b &
 
 #compositor
 picom -b &
 
 bar &
-#$HOME/Projects/code/lojbar/lojbar | lemonbar -f "Ubuntu Mono" -a 50 | bash &
 
 #usb daemon & tray icon
 udiskie -s &
 
-#right super
+#swap super and ctrl
 xmodmap ~/.config/xmodmap
 
 #notifications daemon
 dunst &
 
 # start mpd and mpdas
-systemctl restart --user mpd
-systemctl restart --user mpdas
+(systemctl restart --user mpd &&
+     systemctl restart --user mpdas) &
 #(pgrep -x mpdas || mpdas -d -c ~/.config/mpdasrc)
 
 
@@ -37,17 +32,13 @@ systemctl restart --user mpdas
 redshift -c ~/.config/redshift.conf &
 
 #unmute?
-~/.scripts/unmute.sh
+unmute.sh &
 
 #layouts etc
 export GTK_IM_MODULE=uim
 export QT_IM_MODULE=uim
 uim-wim &
 export XMODIFIERS=@im=uim
-
-
-#use space as control
-#s2cctl start
 
 exec bspwm
 #exec cwm -c ~/.config/cwm/cwmrc

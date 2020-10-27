@@ -1,34 +1,38 @@
-! 
-! Swap super and control (left)
-! 
+! ! 
+! ! Swap super and control (left)
+! ! 
 
-remove Control = Control_L
-! remove mod4 = Super_L
-! remove Super = Super_L
+! ! ! remove Control = Control_L
+! ! ! remove mod4 = Super_L
+! ! ! remove super = Super_L
 
-! set control to super
+! ! ! set control to super
 keycode 37 = Super_L NoSymbol Super_L
-! set super to control
+! ! ! set super to control
 keycode 133 = Control_L NoSymbol Control_L 
 
 
-! make it work like control again
+! ! ! make it work like control again
+! add control = Control_L
+
+! ! ! add super = Super_L
+! add mod4 = Super_L
+
+! ! remove Control = Control_R
+
+
+! ! ! set Super_R (well, menu) to control
+! ! keycode 135 = Control_R NoSymbol Control_R
+
+! ! ! set Control_R to super
+! ! keycode 105 = Super_R NoSymbol Super_R
+
+
+! ! add Control = Control_R
+
+
+! attempt
+clear Control
+clear mod4
 add Control = Control_L
-
-
-
-
-
-
-
-remove Control = Control_R
-
-
-! set Super_R (well, menu) to control
-keycode 135 = Control_R NoSymbol Control_R
-
-! set Control_R to super
-keycode 105 = Super_R NoSymbol Super_R
-
-
-add Control = Control_R
+add mod4 = Super_L
