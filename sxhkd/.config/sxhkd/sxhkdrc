@@ -270,12 +270,13 @@ shift + {_,mod4, control, alt} + Next
 
 
 
-#take screenshots????
-F8
-      sleep 0.2 && screenshot --select
+# take screenshots to clipboard
+{_, shift +} F9
+      sleep 0.2 && screenshot {clipboard --select, clipboard} 
 
-shift + F8
-      screenshot
+# save screenshots
+super + {_, shift +} + F9
+      sleep 0.2 && screenshot {--select,  } 
 
 
 
