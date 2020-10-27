@@ -3,12 +3,12 @@
 #
 
 # terminal emulator
-super + Return
+mod4 + Return
 	eval ${TERMINAL}
 
 
 # make sxhkd reload its configuration files:
-super + Escape
+mod4 + Escape
 	pkill -USR1 -x sxhkd
 
 #
@@ -16,7 +16,7 @@ super + Escape
 #
 
 # quit/restart bspwm
-super + alt + {q,r}
+mod4 + alt + {q,r}
 	bspc {quit,wm -r}
 
 # close and kill
@@ -25,15 +25,15 @@ super + alt + {q,r}
 	 #	bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
-#super + m
+#mod4 + m
 #	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
-#super + y
+#mod4 + y
 #	bspc node newest.marked.local -n newest.!automatic.local
 
 # swap the current node and the biggest node
-super + g
+mod4 + g
 	bspc node -s biggest
 
 #
@@ -41,12 +41,12 @@ super + g
 #
 
 # set the window state
-super + {@space, shift + f}
+mod4 + {@space, shift + f}
       bspc node -t {\~floating, \~fullscreen}
 
 
 # not working
-# super + shift + @space
+# mod4 + shift + @space
 #       if $(bspc rule -l | grep -q '*:* => state=floating') ; then \
 #       	 bspc rule -r ^$(bspc rule -l | wc -l) ; \ #remove the rule
 #       else \
@@ -57,7 +57,7 @@ super + {@space, shift + f}
 
 
 #if it's pseudo tiled, tile it; otherwise, pseudo tile it
-super + t
+mod4 + t
 	if [ -n "$(bspc query -N -n focused.pseudo_tiled)" ]; then \
 	   bspc node focused -t tiled; \
 	else \
@@ -69,7 +69,7 @@ super + t
 
 
 # set the node flags
-super + ctrl + {m,x,y,z}
+mod4 + ctrl + {m,x,y,z}
 	bspc node -g {marked,locked,sticky,private}
 
 #
@@ -77,37 +77,37 @@ super + ctrl + {m,x,y,z}
 #
 
 # focus the node in the given direction
-super + {_,shift + }{h,j,k,l}
+mod4 + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
 #useful but didn't use
 # focus the node for the given path jump
-#super + {p,b,comma,period}
+#mod4 + {p,b,comma,period}
 #	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-super + {_,shift + }c
+mod4 + {_,shift + }c
 	bspc node -f {next,prev}.local
 
 # focus the next/previous non-empty desktop in the current monitor
-super + bracket{left,right}
+mod4 + bracket{left,right}
       bspc desktop -f {prev,next}.local.occupied
 
 # focus next/previous empty desktop in the current monitor
-super + shift + bracket{left,right}
+mod4 + shift + bracket{left,right}
       bspc desktop -f {prev,next}.local.!occupied
 
 
 # focus the next/previous non-empty desktop in the current monitor
-super + {comma, period}
+mod4 + {comma, period}
       bspc desktop -f {prev,next}.local.occupied
 
 # focus next/previous empty desktop in the current monitor
-super + shift + {comma, period}
+mod4 + shift + {comma, period}
       bspc desktop -f {prev,next}.local.!occupied
 
 # focus the last node/desktop
-#super + {grave,Tab}
+#mod4 + {grave,Tab}
 #	bspc {node,desktop} -f last
 
 # cycle through nodes in desktop
@@ -115,22 +115,22 @@ alt + {_, shift+} Tab
     bspc node -f {next,prev}.local.leaf
 
 # cycle through desktops in desktop
-super + {_, shift+} Tab
+mod4 + {_, shift+} Tab
     bspc desktop -f {next,prev}.local.occupied
 
 
 
 # focus the older or newer node in the focus history
-super + {o,i}
+mod4 + {o,i}
 	bspc wm -h off; \
 	bspc node {older,newer} -f; \
 	bspc wm -h on
 
 # focus or send to the given desktop
-super + {_,shift + }{1-9}
+mod4 + {_,shift + }{1-9}
 	~/.scripts/window/act.sh {--capturefocuscapture,-s} '{1-9}'
 
-super + {_, shift +} 0
+mod4 + {_, shift +} 0
       bspc {desktop -f, node -d} next.local.!occupied
 
 #
@@ -138,19 +138,19 @@ super + {_, shift +} 0
 #
 
 # preselect the direction
-super + ctrl + {h,j,k,l}
+mod4 + ctrl + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
-super + ctrl + {1-9}
+mod4 + ctrl + {1-9}
 	bspc node -o 0.{1-9}
 
 # cancel the preselection for the focused node
-super + ctrl + space
+mod4 + ctrl + space
 	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
-super + ctrl + shift + space
+mod4 + ctrl + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
@@ -158,15 +158,15 @@ super + ctrl + shift + space
 #
 
 # expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
+mod4 + alt + {h,j,k,l}
 	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
 
 # contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
+mod4 + alt + shift + {h,j,k,l}
 	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
-#super + {Left,Down,Up,Right}
+#mod4 + {Left,Down,Up,Right}
 	#bspc node -v {-20 0,0 20,0 -20,20 0}
 
 
@@ -195,25 +195,25 @@ super + alt + shift + {h,j,k,l}
 
 
 #file browsers
-super + {b, shift + b}
+mod4 + {b, shift + b}
       {browse, pcmanfm}
 
 
 #open emacs
-super + e
+mod4 + e
       eval $VISUAL
 
 
 
 #open non-duplicate programs
-super + {m,f,shift+s,shift+v}
+mod4 + {m,f,shift+s,shift+v}
       findoropen {deezer -t ncmpcpp,firefox,signal signal-desktop,vim}
 
 
 #files
 
 #cover art, notes, manpdf
-super + shift + {a,n, p, y}
+mod4 + shift + {a,n, p, y}
       {feh --auto-zoom --keep-zoom-vp $HOME/.scripts/output/cover.jpg,jot, zathura $HOME/.scripts/output/man.pdf, td}
 
 
@@ -222,7 +222,7 @@ super + shift + {a,n, p, y}
 
 
 #open selectors
-super + {n, p, s, v, y}
+mod4 + {n, p, s, v, y}
       {jsel, dmenumanpdf, rofi -show combi -combi-modi "drun\,window", vsel, tdsel}
 
 
@@ -237,7 +237,7 @@ F2
 
 
 # reload the bar
-super + F3
+mod4 + F3
 	bar
 
 
@@ -249,23 +249,23 @@ XF86Calculator
 
 
 #page up + mod = bright up
-{super, control, alt} + Prior
+{mod4, control, alt} + Prior
      for i in $(xrandr -q | grep ' connected' | cut -f1 -d' ' ); do \
      	 bright $i + ; \
      done
 
 #page down + mod = bright down
-{super, control, alt} + Next
+{mod4, control, alt} + Next
      for i in $(xrandr -q | grep ' connected' | cut -f1 -d' ' ); do \
      	 bright $i - ; \
      done
 
 #shift + page up + mod = force bright up
-shift + {_,super, control, alt} + Prior
+shift + {_,mod4, control, alt} + Prior
     xbright +
 
 #shift + page down + mod = force bright down
-shift + {_,super, control, alt} + Next
+shift + {_,mod4, control, alt} + Next
     xbright -
 
 
@@ -289,13 +289,13 @@ shift + F8
 
 
 
-super + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
+mod4 + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
 	mpc {volume +2, volume -2, seek 0, prev, next, toggle}
 
 
 
 
 #toggle space as ctrl
-super + equal
+mod4 + equal
       s2cctl toggle
 
