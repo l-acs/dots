@@ -142,10 +142,14 @@ alias unlove='mpc sendmessage mpdas unlove'
 
 
 # jot logs
-for i in trash grocery ideas; do
+eval $(grep suffix= ~/.scripts/jot)
+for i in trash grocery ideas flac; do
+    touch "$JOT_DIR/$i.$suffix"
     alias "$i"="eval jot "$i" \$(date) - "
 done
-
+for i in flac ukulele guitar; do
+    alias "$i"="jot "$i" \"\$(mpc current)\""
+done
 
 # git stuff
 alias gst='git status'
