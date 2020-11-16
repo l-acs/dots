@@ -180,6 +180,17 @@ mod4 + alt + shift + {h,j,k,l}
 	(isroot || isapplication URxvt emacs -v ncmpcpp) && killall 9menu
 
 
+# extra mouse buttons
+button9
+	plumb
+	
+button8 ; button{1,2,3,4,5,9}
+	{act.sh -c, act.sh -k, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && ~/.scripts/window/bspwm/windraw}
+
+
+button8 ; button8 ; button{1,2,3,9,8}
+	{eval $VISUAL, eval $TERMINAL, pcmanfm, firefox, #abort}
+
 
 # bindings sans modifier
 #{~f, ~m, ~s, ~e, ~t, ~Return}
