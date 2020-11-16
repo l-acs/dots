@@ -24,3 +24,7 @@ map R reload
 map <C-r> rotate
 
 set recolor true
+
+
+
+set guioptions sv
