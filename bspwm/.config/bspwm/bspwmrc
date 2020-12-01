@@ -42,7 +42,7 @@ bspc rule -a *:* state=pseudo_tiled
 #put these somewhere
 bspc rule -a Rocket.Chat:rocket.chat desktop='^9' follow=off focus=off
 bspc rule -a Signal desktop='^8' follow=off focus=off
-bspc rule -a Thunderbird desktop='^2'
+bspc rule -a Thunderbird desktop='^2' follow=on focus=on
 
 
 
@@ -55,6 +55,7 @@ bspc rule -a Mumble:mumble state=tiled
 bspc rule -a Rocket.Chat:rocket.chat state=tiled
 bspc rule -a Signal state=tiled
 bspc rule -a Surf state=tiled
+bspc rule -a Thunderbird state=tiled
 bspc rule -a URxvt:urxvt state=tiled
 bspc rule -a Xournalpp state=tiled
 bspc rule -a Zathura state=tiled

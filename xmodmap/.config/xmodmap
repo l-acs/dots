@@ -36,3 +36,4 @@ clear Control
 clear mod4
 add Control = Control_L
 add mod4 = Super_L
+add Control = Control_R

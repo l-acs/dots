@@ -123,7 +123,7 @@ alias vim="echo 'Try "e"'"
 
 
 #memes etc
-alias lofi="mpv 'https://www.youtube.com/watch?v=5qap5aO4i9A'"
+alias lofi="mpv 'https://www.youtube.com/watch?v=5qap5aO4i9A' & disown"
 
 
 
@@ -143,11 +143,11 @@ alias unlove='mpc sendmessage mpdas unlove'
 
 # jot logs
 eval $(grep suffix= ~/.scripts/jot)
-for i in trash grocery ideas flac; do
+for i in trash grocery; do
     touch "$JOT_DIR/$i.$suffix"
     alias "$i"="eval jot "$i" \$(date) - "
 done
-for i in flac ukulele guitar; do
+for i in 'ticker/new-music?' guitar; do
     alias "$i"="jot "$i" \"\$(mpc current)\""
 done
 
@@ -182,37 +182,6 @@ function gcfg(){
 
 flac2mp3here(){
     find . -print0 | xargs -0 -I '{}' ffmpeg -i '{}' '{}'.mp3
-}
-
-
-# rocketchat stuff
-rc_config="$JOT_DIR/rocket_auth.txt"
-rc_url="$(cut -f2 -d' ' "$rc_config" | sed -n 1p )"
-rc_token="$(cut -f2 -d' ' "$rc_config" | sed -n 2p)"
-rc_id="$(cut -f2 -d' ' "$rc_config" | sed -n 3p)"
-
-function rocket(){
-
-    case "$#" in
-	0)
-	    echo Not enough arguments ; exit 1
-	    ;;
-	1)
-	    arg="$1"
-	    ;;
-	*)
-	    arg="$1"
-	    infix='-H "Content-type: application/json'
-	    shift 1
-	    ;;
-    esac
-#    echo $rc_token $rc_id
-#    echo $*
-    
-   curl -H "X-Auth-Token: $rc_token" \
-	-H "X-User-Id: $rc_id" \
-	$infix "$rc_url/api/v1/$arg" $*
-    
 }
 
 

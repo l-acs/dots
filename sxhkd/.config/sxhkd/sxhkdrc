@@ -102,9 +102,9 @@ mod4 + shift + bracket{left,right}
 mod4 + {comma, period}
       bspc desktop -f {prev,next}.local.occupied
 
-# focus next/previous empty desktop in the current monitor
+# send active window to previous, next occupied desktop
 mod4 + shift + {comma, period}
-      bspc desktop -f {prev,next}.local.!occupied
+      bspc node --to-desktop {prev,next}.local.occupied --follow
 
 # focus the last node/desktop
 #mod4 + {grave,Tab}
@@ -182,7 +182,7 @@ mod4 + alt + shift + {h,j,k,l}
 
 # extra mouse buttons
 button9
-	plumb
+	plumb --keybind
 	
 button8 ; button{1,2,3,4,5,9}
 	{act.sh -c, act.sh -k, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && ~/.scripts/window/bspwm/windraw}
@@ -217,8 +217,8 @@ mod4 + e
 
 
 #open non-duplicate programs
-mod4 + {m,f,shift+s,shift+v}
-      findoropen {deezer -t ncmpcpp,firefox,signal signal-desktop,vim}
+mod4 + {m,f,shift+s,shift+t,shift+v}
+      findoropen {deezer -t ncmpcpp,firefox,signal signal-desktop,thunderbird,vim}
 
 
 #files
