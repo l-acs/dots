@@ -200,11 +200,6 @@ function wttr(){
     
 }
 
-function soundcloudrss(){
-    echo feeds.soundcloud.com/users/soundcloud:"$(curl "$*" | grep soundcloud:// | sed 's|soundcloud://|\n|g' | sed -n 2p | cut -f1 -d\")"/sounds.rss
-}
-
-
 #
 #alias tlmgr='/usr/share/texmf-dist/scripts/texlive/tlmgr.pl --usermode'
 

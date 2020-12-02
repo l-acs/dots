@@ -11,20 +11,17 @@ bspc config border_width         1
 
 if xrandr | grep " connected" | grep -qv "LVDS" ; then     #non-laptop monitor is being used
     bspc config window_gap 10
-
 else
     bspc config window_gap          12
-
 fi
 
-pgrep lemonbar && bspc config top_padding 18
+pgrep lemonbar && bspc config top_padding 19
 
 
-bspc config split_ratio          0.48
+bspc config split_ratio          0.46
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
-
-
+bspc config presel_feedback      false
 bspc config initial_polarity     second_child
 
 
@@ -43,6 +40,8 @@ bspc rule -a *:* state=pseudo_tiled
 bspc rule -a Rocket.Chat:rocket.chat desktop='^9' follow=off focus=off
 bspc rule -a Signal desktop='^8' follow=off focus=off
 bspc rule -a Thunderbird desktop='^2' follow=on focus=on
+bspc rule -a 'Tor Browser' desktop='^1' follow=on
+bspc rule -a zoom desktop='^3' follow=on
 
 
 
@@ -57,9 +56,9 @@ bspc rule -a Signal state=tiled
 bspc rule -a Surf state=tiled
 bspc rule -a Thunderbird state=tiled
 bspc rule -a URxvt:urxvt state=tiled
+bspc rule -a thunderbird:* state=tiled
 bspc rule -a Xournalpp state=tiled
 bspc rule -a Zathura state=tiled
-bspc rule -a Zoom state=tiled
 
 
 
