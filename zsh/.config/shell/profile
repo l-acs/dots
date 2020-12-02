@@ -1,0 +1,23 @@
+export XDG_CONFIG_HOME="$HOME/.config"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.scripts:$HOME/.scripts/window:$HOME/.scripts/sys:$HOME/.scripts/selectors:$HOME/.scripts/music"
+
+export EDITOR="emacsclient -t"
+export VISUAL="emacsclient -create-frame --alternate-editor=''" #"emacs"
+export TERMINAL="urxvt -fn xft:ubuntumono:size=14 -e tmux -f ~/.config/tmux/tmux.conf"
+export WEB="firefox"
+export EMAIL="thunderbird"
+export FILEBROWSER="browse"
+
+export GTK_THEME="Adwaita:dark"
+export NINEFLAGS="-bg #fdf6e3 -fg #222222 -font 'UbuntuMono-R' -popup -teleport" #6A6B6D 181A26
+
+# for scripts
+export JOT_DIR="$HOME/doc/notes"
+export TD_DIR="$HOME/doc/days"
+
+export MUSIC="$HOME/music"
+export VIDEO="$HOME/videos"
+export PICTURE="$HOME/pictures"
+export bar="$HOME/projects/code/lojbar/lojbar"
+
+export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"

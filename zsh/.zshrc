@@ -32,31 +32,12 @@ setopt INTERACTIVE_COMMENTS
 
 
 #environment variables
-export XDG_CONFIG_HOME="$HOME/.config"
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.scripts:$HOME/.scripts/window:$HOME/.scripts/sys:$HOME/.scripts/selectors:$HOME/.scripts/music"
+source ~/.config/shell/profile
 
-export EDITOR="emacsclient -t"
-#"/usr/bin/emacs -nw"
-export VISUAL="emacsclient -create-frame --alternate-editor=''"
-#"emacs"
-export TERMINAL="urxvt -fn xft:ubuntumono:size=14 -e tmux -f ~/.config/tmux/tmux.conf"
-
-export GTK_THEME="Adwaita:dark"
-export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
 
 #for scripts
-export JOT_DIR="$HOME/doc/notes"
-export TD_DIR="$HOME/doc/days"
-export EMAIL="thunderbird"
-export FILEBROWSER="browse"
-export NINEFLAGS="-bg #fdf6e3 -fg #222222 -font 'UbuntuMono-R' -popup -teleport" #6A6B6D 181A26
-export MUSIC="$HOME/music"
-export VIDEO="$HOME/videos"
-export PICTURE="$HOME/pictures"
-export WEB="firefox"
 
 
-export bar="$HOME/projects/code/lojbar/lojbar"
 alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Font Awesome 5 Brands' -f 'Font Awesome 5 Free Solid'"
 
 #aliases & functions
@@ -101,7 +82,7 @@ space(){ #only a function because of quoting nightmares
 
 alias anon='unset HISTFILE'
 
-
+alias mountnosudo='sudo mount -o umask=000'
 
 #configurations
 alias dash="rlwrap dash"
