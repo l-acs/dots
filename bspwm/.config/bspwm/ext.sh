@@ -1,5 +1,8 @@
 #!/bin/sh
 
+monitor_count=$( bspc query -M | wc -l)
+second_monitor_occupied=$(bspc query --monitor '^2.occupied' -D && echo true)
+
 wid=$1
 class=$2
 instance=$3
@@ -19,8 +22,12 @@ fi
 
 case "$class" in
     "firefox")
-    #eval "$consequences"
-    #[ "$state" ] || echo "state=pseudo_tiled"
-	[ $(pgrep -f 'firefox .*-childID.*' | wc -l) -gt 1 ]  || echo 'desktop=^4'
+
+	if [ $(pgrep -f 'firefox .*-childID.*' | wc -l) -gt 1 ]; then # there's already a firefox open
+	    [ $monitor_count -ge 1 ] && [ ! $second_monitor_occupied ]  && echo 'monitor=^2 follow=on focus=on'
+	else
+	    echo 'desktop=^4' # this is the first firefox
+	fi
+
 	;;
 esac

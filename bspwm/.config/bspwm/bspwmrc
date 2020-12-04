@@ -2,15 +2,17 @@
 
 #fix cursor
 xsetroot -cursor_name left_ptr
+xrandr --output DP-1 --rotate left
+bspc wm --reorder-monitors VGA-1 DP-1
 
 
 bspc monitor ^1 -d i ii iii iv v vi vii viii ix
-bspc monitor ^2 -d m
+bspc monitor ^2 -d a b c d
 
 bspc config border_width         1
 
 if xrandr | grep " connected" | grep -qv "LVDS" ; then     #non-laptop monitor is being used
-    bspc config window_gap 10
+    bspc config window_gap 6
 else
     bspc config window_gap          12
 fi
@@ -37,9 +39,16 @@ bspc rule -a *:* state=pseudo_tiled
 
 
 #put these somewhere
-bspc rule -a Rocket.Chat:rocket.chat desktop='^9' follow=off focus=off
-bspc rule -a Signal desktop='^8' follow=off focus=off
-bspc rule -a Thunderbird desktop='^2' follow=on focus=on
+if [ $( bspc query -M | wc -l) -eq 1 ]; then
+    bspc rule -a Thunderbird desktop='^2' follow=on focus=on
+    bspc rule -a Signal desktop='^8' follow=off focus=off
+    bspc rule -a Rocket.Chat:rocket.chat desktop='^9' follow=off focus=off
+else
+    bspc rule -a Thunderbird desktop='a' follow=on focus=on
+    bspc rule -a Signal desktop='b' follow=off focus=off
+    bspc rule -a Rocket.Chat:rocket.chat desktop='c' follow=off focus=off
+fi
+
 bspc rule -a 'Tor Browser' desktop='^1' follow=on
 bspc rule -a zoom desktop='^3' follow=on
 
@@ -70,6 +79,7 @@ bspc rule -a Pinentry-gtk-2:\* state=floating
 # general settings
 bspc config pointer_modifier mod1
 bspc config pointer_follows_focus    true
+bspc config click_to_focus any
 
 
 bspc config external_rules_command ~/.config/bspwm/ext.sh

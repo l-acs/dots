@@ -36,7 +36,7 @@ mod4 + alt + {q,r}
 
 # swap the current node and the biggest node
 mod4 + g
-	bspc node -s biggest
+	bspc monitor --focus next
 
 #
 # state/flags
@@ -104,9 +104,9 @@ mod4 + shift + bracket{left,right}
 mod4 + {comma, period}
       bspc desktop -f {prev,next}.local.occupied
 
-# send active window to previous, next occupied desktop
+# send active window to previous, next desktop
 mod4 + shift + {comma, period}
-      bspc node --to-desktop {prev,next}.local.occupied --follow
+      bspc node --to-desktop {prev,next}.local --follow
 
 # focus the last node/desktop
 #mod4 + {grave,Tab}
@@ -130,7 +130,7 @@ mod4 + {o,i}
 
 # focus or send to the given desktop
 mod4 + {_,shift + }{1-9}
-	~/.scripts/window/act.sh {--capturefocuscapture,-s} '{1-9}'
+	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^{1-9}'
 
 mod4 + {_, shift +} 0
       bspc {desktop -f, node -d} next.local.!occupied
@@ -219,8 +219,8 @@ mod4 + e
 
 
 #open non-duplicate programs
-mod4 + {m,f,shift+s,shift+t,shift+v}
-      findoropen {deezer -t ncmpcpp,firefox,signal signal-desktop,thunderbird,vim}
+mod4 + {m,f,r,shift+s,shift+t,shift+v}
+      findoropen {deezer -t ncmpcpp,firefox,rocketchat-desktop,signal signal-desktop,thunderbird,vim}
 
 
 #files
