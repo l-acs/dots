@@ -104,7 +104,8 @@ There are two things you can do about this warning:
        "\M-]" 'org-metaright "\M-}" 'org-shiftmetaright
        (kbd "C-<up>") 'org-forward-element
        (kbd "C-<down>") 'org-backward-element
-       (kbd "C-`") 'org-force-cycle-archived))
+       (kbd "C-`") 'org-force-cycle-archived
+       (kbd "M-`") 'org-todo))
 
 (defun my-org-stuff ()
   "Turn on indent mode, unbind some keys, bind some keys"

@@ -14,7 +14,7 @@ bspc config border_width         1
 if xrandr | grep " connected" | grep -qv "LVDS" ; then     #non-laptop monitor is being used
     bspc config window_gap 6
 else
-    bspc config window_gap          12
+    bspc config window_gap 8
 fi
 
 pgrep lemonbar && bspc config top_padding 19
