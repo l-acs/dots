@@ -205,3 +205,12 @@ alias sysbright='brightnessctl set'
  
 alias screencast='ffmpeg -f x11grab -video_size 1920x1080 -framerate 25 -i :0 -f alsa -i default -c:v libx264 -preset ultrafast -c:a aac '
 alias nf=neofetch
+
+
+function playsliststoipod(){
+    # puts them in the right place, makes the path absolute, removes invalid characters, and 'converts' to m3u8
+    for playlist in "$playlists"/*.m3u; do
+	newname="$(basename "$playlist" | sed 's/[:\\]//g')"8
+	sed 's|^|/music/|' "$playlist" > /run/media/l-acs/LSAHAR\'S\ IP/Playlists/"$newname"
+    done
+}
