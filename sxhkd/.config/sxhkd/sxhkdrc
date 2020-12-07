@@ -227,7 +227,7 @@ mod4 + {m,f,r,shift+s,shift+t,shift+v}
 
 #cover art, notes, manpdf
 mod4 + shift + {a,n, p, y}
-      {feh --auto-zoom --keep-zoom-vp $HOME/.scripts/output/cover.jpg,jot, zathura $HOME/.scripts/output/man.pdf, td}
+      {feh --auto-zoom --keep-zoom-vp $HOME/.scripts/output/cover.png,jot, zathura $HOME/.scripts/output/man.pdf, td}
 
 
 

@@ -64,7 +64,7 @@ alias -g xb='"$(xsel -b)"'
 alias zrc="$EDITOR ~/.zshrc"
 alias token="cat $JOT_DIR/ocaml_token.txt | xsel -bi"
 alias sepia="cat $JOT_DIR/sepia.txt | xsel -bi"
-alias cover="feh --auto-zoom --keep-zoom-vp .scripts/output/cover.jpg"
+alias cover="feh --auto-zoom --keep-zoom-vp .scripts/output/cover.png"
 playlists="$HOME/.config/mpd/playlists"
 
 
