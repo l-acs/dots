@@ -49,6 +49,7 @@ else
     bspc rule -a Rocket.Chat:rocket.chat desktop='c' follow=off focus=off
 fi
 
+bspc rule -a Lingot:lingot desktop='^5' follow=on focus=on
 bspc rule -a 'Tor Browser' desktop='^1' follow=on
 bspc rule -a zoom desktop='^3' follow=on
 
@@ -59,6 +60,7 @@ bspc rule -a zoom desktop='^3' follow=on
 bspc rule -a 'Deezloader Remix':* state=tiled
 bspc rule -a Emacs:emacs state=tiled
 bspc rule -a firefox:* state=tiled
+bspc rule -a Lingot:lingot state=tiled
 bspc rule -a Mumble:mumble state=tiled
 bspc rule -a Rocket.Chat:rocket.chat state=tiled
 bspc rule -a Signal state=tiled
