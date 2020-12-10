@@ -1,9 +1,16 @@
+if [ $HOST = rock ]; then
+    font=14
+else
+    font=18
+fi
+
+
 export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:$HOME/.scripts:$HOME/.scripts/window:$HOME/.scripts/sys:$HOME/.scripts/selectors:$HOME/.scripts/music"
 
 export EDITOR="emacsclient -t"
 export VISUAL="emacsclient -create-frame --alternate-editor=''" #"emacs"
-export TERMINAL="urxvt -fn xft:ubuntumono:size=14 -e tmux -f ~/.config/tmux/tmux.conf"
+export TERMINAL="urxvt -fn xft:ubuntumono:size=$font -e tmux -f ~/.config/tmux/tmux.conf"
 export WEB="firefox"
 export EMAIL="thunderbird"
 export FILEBROWSER="browse"
