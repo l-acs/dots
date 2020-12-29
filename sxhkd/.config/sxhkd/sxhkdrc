@@ -47,8 +47,8 @@ mod4 + {@space, shift + f}
       bspc node -t {\~floating, \~fullscreen}
 
 
-mod4 + t
 # if it's pseudo tiled, tile it; otherwise, pseudo tile it
+mod4 + shift + t
 	if [ -n "$(bspc query -N -n focused.pseudo_tiled)" ]; then \
 	   bspc node focused -t tiled; \
 	else \
@@ -206,8 +206,8 @@ mod4 + e
 
 
 #open non-duplicate programs
-mod4 + {m,f,r,shift+s,shift+t,shift+v}
-      findoropen {deezer -t ncmpcpp,firefox,rocketchat-desktop,signal signal-desktop,thunderbird,vim}
+mod4 + {m,f,r,s,t,shift+v,shift+x}
+      findoropen {deezer -t ncmpcpp,firefox,rocketchat-desktop,signal signal-desktop,thunderbird,vim,xournalpp}
 
 
 #files
@@ -222,7 +222,7 @@ mod4 + shift + {a,n, p, y}
 
 
 #open selectors
-mod4 + {n, p, s, v, y}
+mod4 + {n, p, x, v, y}
       {jsel, dmenumanpdf, rofi -show combi -combi-modi "drun\,window", vsel, tdsel}
 
 
