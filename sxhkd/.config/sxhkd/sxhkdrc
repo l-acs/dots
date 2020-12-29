@@ -47,27 +47,14 @@ mod4 + {@space, shift + f}
       bspc node -t {\~floating, \~fullscreen}
 
 
-# not working
-# mod4 + shift + @space
-#       if $(bspc rule -l | grep -q '*:* => state=floating') ; then \
-#       	 bspc rule -r ^$(bspc rule -l | wc -l) ; \ #remove the rule
-#       else \
-#          bspc rule -a \*:\* state=floating ; \
-#       fi   
-
-
-
-
-#if it's pseudo tiled, tile it; otherwise, pseudo tile it
 mod4 + t
+# if it's pseudo tiled, tile it; otherwise, pseudo tile it
 	if [ -n "$(bspc query -N -n focused.pseudo_tiled)" ]; then \
 	   bspc node focused -t tiled; \
 	else \
 	     bspc node focused -t pseudo_tiled; \
 	fi
 	     
-
-
 
 
 # set the node flags
