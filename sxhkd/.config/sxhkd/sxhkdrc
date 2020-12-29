@@ -247,6 +247,15 @@ mod4 + F3
 XF86Calculator
 	qalculate-gtk
 
+XF86Audio{LowerVolume,RaiseVolume}
+	volume {-, +}
+
+{shift, _} + XF86AudioMute
+	volume {mute,toggle}
+
+
+
+
 
 #page up + mod = bright up
 {mod4, control, alt} + Prior
