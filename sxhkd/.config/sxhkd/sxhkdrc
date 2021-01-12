@@ -34,9 +34,9 @@ mod4 + alt + {q,r}
 #mod4 + y
 #	bspc node newest.marked.local -n newest.!automatic.local
 
-# swap the current node and the biggest node
-mod4 + g
-	bspc monitor --focus next
+# {focus, send node to} next desktop
+mod4 + {_,shift +} g
+	bspc {monitor --focus, node --to-monitor} next
 
 #
 # state/flags
