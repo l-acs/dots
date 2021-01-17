@@ -217,6 +217,8 @@ mod4 + e
 #open non-duplicate programs
 mod4 + {m,r,s,t,shift+t,shift+v,w,shift+x,z}
       findoropen {deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp,zoom}
+mod4 + {m,r,s,t,shift+t,shift+v,w,shift+x}
+      findoropen {deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp}
 
 
 #files
