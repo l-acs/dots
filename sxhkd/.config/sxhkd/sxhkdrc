@@ -1,4 +1,4 @@
-#
+
 # wm independent hotkeys
 #
 
@@ -34,21 +34,25 @@ mod4 + alt + {q,r}
 #mod4 + y
 #	bspc node newest.marked.local -n newest.!automatic.local
 
-# {focus, send node to} next desktop
-mod4 + {_,shift +} g
-	bspc {monitor --focus, node --to-monitor} next
+# focus next desktop
+mod4 + g
+	bspc monitor --focus next
+
+# send node to next desktop
+mod4 + shift + g
+     	bspc node --to-monitor next --follow
 
 #
 # state/flags
 #
 
 # set the window state
-mod4 + {@space, shift + f}
+mod4 + {shift + @space, f}
       bspc node -t {\~floating, \~fullscreen}
 
 
 # if it's pseudo tiled, tile it; otherwise, pseudo tile it
-mod4 + shift + t
+mod4 + space
 	if [ -n "$(bspc query -N -n focused.pseudo_tiled)" ]; then \
 	   bspc node focused -t tiled; \
 	else \
@@ -105,7 +109,12 @@ alt + {_, shift+} Tab
 
 # cycle through desktops in desktop
 mod4 + {_, shift+} Tab
-    bspc desktop -f {next,prev}.local.occupied
+     bspc wm -h off; \
+     bspc desktop -f {older,newer}; \
+     bspc wm -h on
+     bspc desktop -f focused
+
+# bspc desktop -f {next,prev}.local.occupied
 
 
 
@@ -174,7 +183,7 @@ button9
 	plumb --keybind
 	
 button8 ; button{1,2,3,4,5,9}
-	{act.sh -c, act.sh -k, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && ~/.scripts/window/bspwm/windraw}
+	{gestureclose.sh, act.sh -c, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && ~/.scripts/window/bspwm/windraw}
 
 
 button8 ; button8 ; button{1,2,3,9,8}
@@ -206,8 +215,8 @@ mod4 + e
 
 
 #open non-duplicate programs
-mod4 + {m,f,r,s,t,shift+v,shift+x}
-      findoropen {deezer -t ncmpcpp,firefox,rocketchat-desktop,signal signal-desktop,thunderbird,vim,xournalpp}
+mod4 + {m,r,s,t,shift+t,shift+v,w,shift+x,z}
+      findoropen {deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp,zoom}
 
 
 #files
@@ -247,15 +256,19 @@ XF86Calculator
 	qalculate-gtk
 
 XF86Audio{LowerVolume,RaiseVolume}
-	volume {-, +}
+	pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
+
+#	volume {-, +}
 
 {_, shift} + XF86AudioMute
 	volume {toggle,mute}
 
-~XF86Audio{Play,Pause,Prev,Next}
-	pgrep mpv || mpc {toggle, toggle, prev, next}
-
-
+XF86Audio{Play,Pause,Prev,Next}
+	mpvisrunning="$(pgrep mpv)" ;\
+	$(if [ -n "$mpvisrunning" ]; then \
+	   findoropen mpv ;\
+	   echo mpvc ;\
+	else echo mpc; fi) {toggle, toggle, prev, next}
 
 
 
