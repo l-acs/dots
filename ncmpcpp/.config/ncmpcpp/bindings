@@ -521,13 +521,13 @@ def_key "V"
 #  move_sort_order_up
 #
 def_key "."
-  move_selected_items_up
+  move_selected_items_down
 
 #def_key "n"
 #  move_sort_order_down
 #
 def_key ","
-  move_selected_items_down
+  move_selected_items_up
 
 #def_key "M"
 #  move_selected_items_to

@@ -1,4 +1,4 @@
-#
+
 # wm independent hotkeys
 #
 
@@ -34,21 +34,25 @@ mod4 + alt + {q,r}
 #mod4 + y
 #	bspc node newest.marked.local -n newest.!automatic.local
 
-# {focus, send node to} next desktop
-mod4 + {_,shift +} g
-	bspc {monitor --focus, node --to-monitor} next
+# focus next desktop
+mod4 + g
+	bspc monitor --focus next
+
+# send node to next desktop
+mod4 + shift + g
+     	bspc node --to-monitor next --follow
 
 #
 # state/flags
 #
 
 # set the window state
-mod4 + {@space, shift + f}
+mod4 + {shift + @space, f}
       bspc node -t {\~floating, \~fullscreen}
 
 
 # if it's pseudo tiled, tile it; otherwise, pseudo tile it
-mod4 + shift + t
+mod4 + space
 	if [ -n "$(bspc query -N -n focused.pseudo_tiled)" ]; then \
 	   bspc node focused -t tiled; \
 	else \
@@ -174,7 +178,7 @@ button9
 	plumb --keybind
 	
 button8 ; button{1,2,3,4,5,9}
-	{act.sh -c, act.sh -k, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && ~/.scripts/window/bspwm/windraw}
+	{gestureclose.sh, act.sh -c, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && ~/.scripts/window/bspwm/windraw}
 
 
 button8 ; button8 ; button{1,2,3,9,8}
@@ -206,8 +210,8 @@ mod4 + e
 
 
 #open non-duplicate programs
-mod4 + {m,f,r,s,t,shift+v,shift+x}
-      findoropen {deezer -t ncmpcpp,firefox,rocketchat-desktop,signal signal-desktop,thunderbird,vim,xournalpp}
+mod4 + {m,r,s,t,shift+t,shift+v,w,shift+x}
+      findoropen {deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp}
 
 
 #files

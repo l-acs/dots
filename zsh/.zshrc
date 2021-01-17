@@ -44,11 +44,18 @@ alias blather="$HOME/.programs/blather/Blather.py"
 alias m="ncmpcpp"
 alias nf=neofetch
 
-function z(){
+function x()
+{
+    xdg-open "${@}" &
+}
+
+function z()
+{
     zathura "${@}" & disown
 }
 
-function _myxsel(){
+function _myxsel()
+{
     if [ -n "$(xsel -o | tr -d '[:blank:]')" ]; then xsel; else xsel -b; fi
 }
 
@@ -71,7 +78,8 @@ alias reload="source ~/.zshrc"
 alias anon='unset HISTFILE'
 alias mountnosudo='sudo mount -o umask=000'
 
-function cl () {
+function cl ()
+{
     cd "${@}" && ls --color
 }
 
