@@ -1,6 +1,6 @@
-#! /bin/sh
+#! /bin/zsh
 
-#fix cursor
+# fix cursor
 xsetroot -cursor_name left_ptr
 xrandr --output DP-1 --rotate left
 bspc wm --reorder-monitors VGA-1 DP-1
@@ -27,18 +27,17 @@ bspc config presel_feedback      false
 bspc config initial_polarity     second_child
 
 
-#don't manage these
+# don't manage these
 bspc rule -a 9menu:* manage=off
 
 
 
-#default: pseudotile all
+# default: pseudotile all
 bspc rule -a *:* state=pseudo_tiled
 
 
 
-
-#put these somewhere
+# put these somewhere
 if [ $( bspc query -M | wc -l) -eq 1 ]; then
     bspc rule -a Thunderbird desktop='^2' follow=on focus=on
     bspc rule -a Signal desktop='^8' follow=off focus=off
@@ -55,26 +54,18 @@ bspc rule -a zoom desktop='^3' follow=on
 
 
 
-#tile these
+# tile these
+function bulktile()
+{
+    for i in $*; do bspc rule -a "$i" state=tiled; done
+}
 
-bspc rule -a 'Deezloader Remix':* state=tiled
-bspc rule -a Emacs:emacs state=tiled
-bspc rule -a firefox:* state=tiled
-bspc rule -a Lingot:lingot state=tiled
-bspc rule -a Mumble:mumble state=tiled
-bspc rule -a Rocket.Chat:rocket.chat state=tiled
-bspc rule -a Signal state=tiled
-bspc rule -a Surf state=tiled
-bspc rule -a Thunderbird state=tiled
-bspc rule -a URxvt:urxvt state=tiled
-bspc rule -a Xournalpp state=tiled
-bspc rule -a Zathura state=tiled
+bulktile \
+    'Deezloader Remix' Emacs firefox gvim Lingot Mumble mpv Rocket.Chat Signal Surf 'Tor Browser' Thunderbird URxvt Xournalpp Zathura
 
 
-
-#make these float
+# make these float
 bspc rule -a Pinentry-gtk-2:\* state=floating
-
 
 
 # general settings
