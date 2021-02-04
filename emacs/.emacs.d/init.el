@@ -178,10 +178,10 @@ There are two things you can do about this warning:
    '("\C-f" isearch-forward-regexp) '("\M-f" isearch-forward-regexp)
    
    ;; text movement
-   '("\M-k" move-end-of-line) '("\M-j" move-beginning-of-line)
+   '("\M-h" move-beginning-of-line) '("\M-l" move-end-of-line)
    '("\C-l" forward-char) '("\C-h" backward-char)
    '("\C-j" next-line) '("\C-k" previous-line)
-   '("\M-l" forward-word) '("\M-h" backward-word)
+   '("\M-j" backward-word) '("\M-k" forward-word)
    '("\M-g" beginning-of-buffer) '("\M-G" end-of-buffer)
 
    ;; text manipulation
