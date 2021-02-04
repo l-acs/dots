@@ -6,7 +6,7 @@ xrandr --output DP-1 --rotate left
 bspc wm --reorder-monitors VGA-1 DP-1
 
 
-bspc monitor ^1 -d i ii iii iv v vi vii viii ix
+bspc monitor ^1 -d i ii iii iv v vi vii viii ix x
 bspc monitor ^2 -d a b c d
 
 bspc config border_width         1
@@ -28,12 +28,12 @@ bspc config initial_polarity     second_child
 
 
 # don't manage these
-bspc rule -a 9menu:* manage=off
+bspc rule -a '9menu:*' manage=off
 
 
 
 # default: pseudotile all
-bspc rule -a *:* state=pseudo_tiled
+# bspc rule -a '*:*' state=pseudo_tiled
 
 
 

@@ -28,3 +28,5 @@ export PICTURE="$HOME/pictures"
 export bar="$HOME/projects/code/lojbar/lojbar"
 
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
+# frequently used
+export bind="$HOME/.config/sxhkd/sxhkdrc"

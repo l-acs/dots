@@ -34,6 +34,10 @@ setopt INTERACTIVE_COMMENTS
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # colours!
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh # history: autosuggestions
 
+# make emacs shell work
+[ $TERM == "dumb" ] && unsetopt zle
+
+
 # environment variables
 source ~/.config/shell/profile
 

@@ -73,7 +73,7 @@ mod4 + ctrl + {m,x,y,z}
 mod4 + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
-#useful but didn't use
+# useful but didn't use
 # focus the node for the given path jump
 #mod4 + {p,b,comma,period}
 #	bspc node -f @{parent,brother,first,second}
@@ -91,13 +91,21 @@ mod4 + shift + bracket{left,right}
       bspc desktop -f {prev,next}.local.!occupied
 
 
-# focus the next/previous non-empty desktop in the current monitor
+# focus the prev/next non-empty desktop in the current monitor
 mod4 + {comma, period}
       bspc desktop -f {prev,next}.local.occupied
 
-# send active window to previous, next desktop
+# follow active window to prev/next desktop (whether empty or not)
 mod4 + shift + {comma, period}
       bspc node --to-desktop {prev,next}.local --follow
+
+# focus the prev/next empty desktop in the current monitor
+mod4 + alt + {comma, period}
+      bspc desktop -f {prev,next}.local.!occupied
+
+# send active window to prev/next empty desktop and follow
+mod4 + alt + shift + {comma, period}
+       bspc node --to-desktop {prev,next}.local.!occupied --follow
 
 # focus the last node/desktop
 #mod4 + {grave,Tab}
@@ -110,7 +118,7 @@ alt + {_, shift+} Tab
 # cycle through desktops in desktop
 mod4 + {_, shift+} Tab
      bspc wm -h off; \
-     bspc desktop -f {older,newer}; \
+     bspc desktop -f {older,newer}.occupied; \
      bspc wm -h on
      bspc desktop -f focused
 
@@ -124,12 +132,24 @@ mod4 + {o,i}
 	bspc node {older,newer} -f; \
 	bspc wm -h on
 
-# focus or send to the given desktop
+# focus/send to the given desktop
 mod4 + {_,shift + }{1-9}
 	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^{1-9}'
 
-mod4 + {_, shift +} 0
-      bspc {desktop -f, node -d} next.local.!occupied
+mod4 + alt + {1-9}
+	bspc node --to-desktop '^{1-9}' --follow
+
+mod4 + {_,shift + }0
+	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^10'
+
+# focus next empty desktop
+mod4 + minus
+      bspc desktop -f next.local.!occupied
+
+# send/follow to next empty desktop
+mod4 + {shift, alt} minus
+      bspc node --to-desktop next.local.!occupied {_,--follow}
+
 
 #
 # preselect
@@ -170,12 +190,12 @@ mod4 + alt + shift + {h,j,k,l}
 
 
 
-#right click magic
+# right click magic
 ~button3
 	(isroot || isapplication URxvt emacs -v ncmpcpp) && ( pkill 9menu || clickbait )
 
 ~button1
-	(isroot || isapplication URxvt emacs -v ncmpcpp) && killall 9menu
+	pkill 9menu
 
 
 # extra mouse buttons
@@ -215,10 +235,8 @@ mod4 + e
 
 
 #open non-duplicate programs
-mod4 + {m,r,s,t,shift+t,shift+v,w,shift+x,z}
-      findoropen {deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp,zoom}
-mod4 + {m,r,s,t,shift+t,shift+v,w,shift+x}
-      findoropen {deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp}
+mod4 + {a,m,r,s,t,shift+t,shift+v,w,shift+x,z}
+      findoropen {anki,deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp,zoom}
 
 
 #files
@@ -240,7 +258,7 @@ mod4 + {n, p, x, v, y}
 
 
 
-#function keys
+# function keys
 F2
 	~/.scripts/window/act.sh -d
 
@@ -250,6 +268,16 @@ F2
 # reload the bar
 mod4 + F3
 	bar
+
+# brightness
+{F5,F6}
+	brightnessctl set {5%-,+5%} --exponent=1.5
+
+
+# rotate
+{_, shift +} F8
+	~/.local/bin/rotate-script.sh {invert, normal}
+
 
 
 #special keys
@@ -265,13 +293,29 @@ XF86Audio{LowerVolume,RaiseVolume}
 {_, shift} + XF86AudioMute
 	volume {toggle,mute}
 
-XF86Audio{Play,Pause,Prev,Next}
+XF86Audio{Play,Pause}
 	mpvisrunning="$(pgrep mpv)" ;\
-	$(if [ -n "$mpvisrunning" ]; then \
+	if [ -n "$mpvisrunning" ]; then \
 	   findoropen mpv ;\
-	   echo mpvc ;\
-	else echo mpc; fi) {toggle, toggle, prev, next}
+	   mpvc toggle ;\
+	else mpc toggle ; fi
 
+XF86AudioPrev
+	mpvisrunning="$(pgrep mpv)" ;\
+	if [ -n "$mpvisrunning" ]; then \
+	   findoropen mpv ;\
+	   xdotool key Left ;\
+	else mpc prev ; fi
+
+XF86AudioNext
+	mpvisrunning="$(pgrep mpv)" ;\
+	if [ -n "$mpvisrunning" ]; then \
+	   findoropen mpv ;\
+	   xdotool key Right ;\
+	else mpc next ; fi
+
+XF86{RotateWindows,TaskPane}
+	~/.local/bin/rotate-script.sh {invert, normal}
 
 
 #page up + mod = bright up
