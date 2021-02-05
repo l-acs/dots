@@ -195,7 +195,7 @@ mod4 + alt + shift + {h,j,k,l}
 	(isroot || isapplication URxvt emacs -v ncmpcpp) && ( pkill 9menu || clickbait )
 
 ~button1
-	pkill 9menu
+	(isapplication 9menu || pkill 9menu)
 
 
 # extra mouse buttons
@@ -366,7 +366,7 @@ mod4 + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
 
 
 
-#toggle space as ctrl
-mod4 + equal
-      s2cctl toggle
+# compositor, nightshift
+mod4 + {equal, plus}
+      {pkill picom || picom -b, pkill redshift || redshift -c ~/.config/redshift.conf}
 
