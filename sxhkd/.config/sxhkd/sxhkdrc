@@ -4,7 +4,13 @@
 
 # terminal emulator
 mod4 + Return
+     emacsclient -create-frame --alternate-editor='' -e "(term \"/bin/tmux\")"
+
+
+mod4 + shift + Return
 	eval ${TERMINAL}
+
+
 
 
 # make sxhkd reload its configuration files:
@@ -235,9 +241,12 @@ mod4 + e
 
 
 #open non-duplicate programs
-mod4 + {a,m,r,s,t,shift+t,shift+v,w,shift+x,z}
-      findoropen {anki,deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp,zoom}
+mod4 + {a,m,r,s,t,shift+t,shift+v,w,shift+x}
+      findoropen {anki,deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp}
 
+# find teams if it's open; otherwise, findoropen zoom
+mod4 + z
+     (pgrep teams && findoropen teams) || findoropen zoom
 
 #files
 
