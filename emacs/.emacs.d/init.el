@@ -18,7 +18,7 @@ There are two things you can do about this warning:
 (package-initialize)
 
 (setq package-list
-      '(centaur-tabs cider emojify ess helm kotlin-mode lua-mode magit markdown-mode tuareg undo-tree use-package))
+      '(centaur-tabs cider dictionary emojify ess helm kotlin-mode lua-mode magit markdown-mode tuareg undo-tree use-package))
 
 
 ;; (unless package-archive-contents
@@ -54,7 +54,10 @@ There are two things you can do about this warning:
 
 
 (custom-set-faces
-
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
 
 ;; use org in *scratch*
