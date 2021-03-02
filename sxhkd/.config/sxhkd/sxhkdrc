@@ -4,7 +4,15 @@
 
 # terminal emulator
 mod4 + Return
-     emacsclient -create-frame --alternate-editor='' -e "(term \"/bin/tmux\")"
+     if isapplication Emacs ; then \
+     	xdotool key --clearmodifiers alt+e; \
+	xdotool type --clearmodifiers shell; \
+	xdotool key --clearmodifiers Return; \
+     else \
+     	emacsclient -create-frame --alternate-editor='' -e "(shell)" ;\
+     fi
+
+# term \"/bin/tmux\")"
 
 
 mod4 + shift + Return
@@ -156,6 +164,14 @@ mod4 + minus
 mod4 + {shift, alt} minus
       bspc node --to-desktop next.local.!occupied {_,--follow}
 
+# open next window in next empty desktop
+mod4 + semicolon
+     bspc rule -a '*' -o desktop=next.!occupied follow=on
+
+# cancel
+# problematic...
+mod4 + shift + semicolon
+     bspc rule -r tail
 
 #
 # preselect
@@ -204,6 +220,11 @@ mod4 + alt + shift + {h,j,k,l}
 	(isapplication 9menu || pkill 9menu)
 
 
+
+~button2
+	pkill 9menu ; isroot && act.sh --draw
+
+
 # extra mouse buttons
 button9
 	plumb --keybind
@@ -233,10 +254,19 @@ button8 ; button8 ; button{1,2,3,9,8}
 mod4 + {b, shift + b}
       {browse, pcmanfm}
 
+# bluetooth
+mod4 + alt + {b, shift + b}
+     {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} $(bluetoothctl devices | cut -f2 -d' ' | head -n 1)
+
 
 # open emacs
 mod4 + e
       eval $VISUAL
+
+
+# pomodoro
+mod4 + p ; {p, b, c}
+    { pomo pomodoro, pomo 5 break, pkill pomo ; pkill -f ringtone.webm }
 
 
 
@@ -251,8 +281,8 @@ mod4 + z
 #files
 
 #cover art, notes, manpdf
-mod4 + shift + {a,n, p, y}
-      {feh --auto-zoom --keep-zoom-vp $HOME/.scripts/output/cover.png,jot, zathura $HOME/.scripts/output/man.pdf, td}
+mod4 + shift + {a, p, y}
+      {feh --auto-zoom --keep-zoom-vp $HOME/.scripts/output/cover.png, zathura $HOME/.scripts/output/man.pdf, td}
 
 
 
@@ -260,8 +290,8 @@ mod4 + shift + {a,n, p, y}
 
 
 #open selectors
-mod4 + {n, p, x, v, y}
-      {jsel, dmenumanpdf, rofi -show combi -combi-modi "drun\,window", vsel, tdsel}
+mod4 + {n, x, shift + v, y}
+      {~/ruby/jot.rb $( find ~/gtd -type f \! -name '*~' \! -wholename '*gtd/capture.org' | sed "s|^$HOME/gtd/||" | sort | dmenu), rofi -show combi -combi-modi "drun\,window", vsel, tdsel}
 
 
 
@@ -367,12 +397,18 @@ super + {_, shift +} + F9
 {F12, shift + F12}
       volume {toggle, mute}
 
+mod4 + F12
+     plumb
+
 
 
 
 
 mod4 + {Up, Down, Left, shift + Left, Right, shift + Right}
 	mpc {volume +2, volume -2, prev, seek 0, next, toggle}
+
+mod4 + alt + {Left, Right}
+        mpc seek {-,+}2
 
 
 

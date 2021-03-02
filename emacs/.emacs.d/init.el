@@ -171,6 +171,14 @@ There are two things you can do about this warning:
         ((looking-at "\\s)") (forward-char) (backward-sexp arg))
         ((looking-back "\\s(" 1) (backward-char) (forward-sexp arg))))
 
+(defun eval-replace-last-sexp ()
+  "Eval sexp and replace it inline"
+  (interactive)
+  (let ((value (eval (preceding-sexp))))
+    (kill-sexp -1)
+    (insert (format "%S" value))))
+
+
 ;; searching
 (def-keymap isearch-mode-map
   (list
@@ -196,7 +204,8 @@ There are two things you can do about this warning:
    '("\C-z" undo)
 
    ;; elisp
-   '("\C-e" eval-last-sexp) '("\M-e" execute-extended-command)
+   '("\C-e" eval-replace-last-sexp) (list (kbd "C-M-e") 'eval-print-last-sexp)
+   '("\M-e" execute-extended-command)
 
    ;; windows, buffers, and files
    (list (kbd "<C-tab>") 'other-window) (list (kbd "C-x k") 'kill-current-buffer)

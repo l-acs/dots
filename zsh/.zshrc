@@ -73,6 +73,9 @@ alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Fon
 alias zrc="$EDITOR ~/.zshrc"
 alias cover="feh --auto-zoom --keep-zoom-vp .scripts/output/cover.png"
 playlists="$HOME/.config/mpd/playlists"
+alias 330="cd ~/school/330/"
+alias 409="cd ~/school/409/"
+
 
 
 ### utils ###
@@ -109,6 +112,13 @@ function playsliststoipod()
     done
 }
 
+function videotoaudio()
+{
+    # todo: take more arguments
+    ffmpeg -i "$*" -vn -acodec copy "$(echo "$*" | sed 's/\.[a-zA-Z0-9]*$/.aac/')"
+}
+
+
 # scrobbling
 alias love='mpc sendmessage mpdas love'
 alias unlove='mpc sendmessage mpdas unlove'
@@ -139,6 +149,7 @@ alias pgrep="pgrep -f -a"
 alias gst='git status'
 alias gadd='git add'
 alias gcom='git commit'
+alias gpull='git pull'
 alias gpush='git push'
 alias gdiff='git diff'
 alias gls='git ls-files'
