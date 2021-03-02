@@ -8,6 +8,8 @@ class=$2
 instance=$3
 consequences=$4
 
+
+
 if [ "$instance" = zoom ] ; then
     title=$(xtitle "$wid" | tr '[:upper:]' '[:lower:]')
     case "$title" in
@@ -26,7 +28,7 @@ case "$class" in
 	if [ $(pgrep -f 'firefox .*-childID.*' | wc -l) -gt 1 ]; then # there's already a firefox open
 	    [ $monitor_count -ge 1 ] && [ ! $second_monitor_occupied ]  && echo 'monitor=^2 follow=on focus=on'
 	else
-	    echo 'desktop=^4' # this is the first firefox
+	    echo 'desktop=^5' # this is the first firefox
 	fi
 
 	;;

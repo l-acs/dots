@@ -71,8 +71,6 @@ alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Fon
 
 ### files, etc ###
 alias zrc="$EDITOR ~/.zshrc"
-alias token="cat $JOT_DIR/ocaml_token.txt | xsel -bi"
-alias sepia="cat $JOT_DIR/sepia.txt | xsel -bi"
 alias cover="feh --auto-zoom --keep-zoom-vp .scripts/output/cover.png"
 playlists="$HOME/.config/mpd/playlists"
 
@@ -168,14 +166,3 @@ function gcfg()
 }
 
 
-### miscellaneous ###
-
-# jot logs
-eval $(grep suffix= ~/.scripts/jot)
-for i in trash grocery; do
-    touch "$JOT_DIR/$i.$suffix"
-    alias "$i"="eval jot "$i" \$(date) - "
-done
-for i in 'tickler/new-music?' guitar; do
-    alias "$i"="jot "$i" \"\$(mpc current)\""
-done

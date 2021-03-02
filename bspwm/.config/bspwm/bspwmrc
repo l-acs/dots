@@ -14,7 +14,7 @@ bspc config border_width         1
 if xrandr | grep " connected" | grep -qv "LVDS" ; then     #non-laptop monitor is being used
     bspc config window_gap 6
 else
-    bspc config window_gap 8
+    bspc config window_gap 6
 fi
 
 pgrep lemonbar && bspc config top_padding 19
@@ -39,7 +39,7 @@ bspc rule -a '9menu:*' manage=off
 
 # put these somewhere
 if [ $( bspc query -M | wc -l) -eq 1 ]; then
-    bspc rule -a Thunderbird desktop='^2' follow=on focus=on
+    bspc rule -a Thunderbird desktop='^3' follow=on focus=on
     bspc rule -a Signal desktop='^8' follow=off focus=off
     bspc rule -a Rocket.Chat:rocket.chat desktop='^9' follow=off focus=off
 else
@@ -71,6 +71,7 @@ bspc rule -a Pinentry-gtk-2:\* state=floating
 # general settings
 bspc config pointer_modifier mod1
 bspc config pointer_follows_focus    true
+bspc config pointer_follows_monitor  true
 bspc config click_to_focus any
 
 

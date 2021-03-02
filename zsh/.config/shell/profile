@@ -1,4 +1,4 @@
-if [ $HOST = rock ]; then
+if [ "$HOST" = rock ]; then
     font=14
 else
     font=18
@@ -19,14 +19,12 @@ export GTK_THEME="Adwaita:dark"
 export NINEFLAGS="-bg #fdf6e3 -fg #222222 -font 'UbuntuMono-R' -popup -teleport" #6A6B6D 181A26
 
 # for scripts
-export JOT_DIR="$HOME/doc/notes"
-export TD_DIR="$HOME/doc/days"
 
 export MUSIC="$HOME/music"
 export VIDEO="$HOME/videos"
 export PICTURE="$HOME/pictures"
-export bar="$HOME/projects/code/lojbar/lojbar"
 
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
+
 # frequently used
 export bind="$HOME/.config/sxhkd/sxhkdrc"

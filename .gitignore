@@ -5,3 +5,12 @@ mpd/.config/mpd/database
 mpd/.config/mpd/pid
 mpd/.config/mpd/sticker.sql
 *#*
+/zsh/.config/shell/histfile
+/emacs/.emacs.d/elpa/
+/emacs/.emacs.d/emojis/
+/emacs/.emacs.d/eshell/
+/emacs/.emacs.d/games/
+/emacs/.emacs.d/transient/
+/ipod/.config/ncmpcpp/patterns.list
+/ncmpcpp/.config/ncmpcpp/patterns.list
+/sxhkd/.config/sxhkd/sxhkdrc.rej

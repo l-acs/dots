@@ -118,11 +118,11 @@ mod4 + alt + shift + {comma, period}
 #	bspc {node,desktop} -f last
 
 # cycle through nodes in desktop
-alt + {_, shift+} Tab
+mod4 + {_, shift+} Tab
     bspc node -f {next,prev}.local.leaf
 
 # cycle through desktops in desktop
-mod4 + {_, shift+} Tab
+alt + {_, shift+} Tab
      bspc wm -h off; \
      bspc desktop -f {older,newer}.occupied; \
      bspc wm -h on
@@ -209,7 +209,7 @@ button9
 	plumb --keybind
 	
 button8 ; button{1,2,3,4,5,9}
-	{gestureclose.sh, act.sh -c, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && ~/.scripts/window/bspwm/windraw}
+	{gestureclose.sh, act.sh -c, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && act.sh --draw}
 
 
 button8 ; button8 ; button{1,2,3,9,8}
@@ -229,20 +229,20 @@ button8 ; button8 ; button{1,2,3,9,8}
 
 
 
-#file browsers
+# file browsers
 mod4 + {b, shift + b}
       {browse, pcmanfm}
 
 
-#open emacs
+# open emacs
 mod4 + e
       eval $VISUAL
 
 
 
 #open non-duplicate programs
-mod4 + {a,m,r,s,t,shift+t,shift+v,w,shift+x}
-      findoropen {anki,deezer -t ncmpcpp,rocketchat-desktop,signal signal-desktop,thunderbird,Browser tor-browser,vim,"$WEB",xournalpp}
+mod4 + {a,m,r,s,t,shift+t,v,w,shift+x}
+      findoropen {anki, deezer -t ncmpcpp, rocketchat-desktop, signal signal-desktop, thunderbird, Browser tor-browser,mpv,"$WEB",xournalpp}
 
 # find teams if it's open; otherwise, findoropen zoom
 mod4 + z
@@ -323,7 +323,7 @@ XF86AudioNext
 	   xdotool key Right ;\
 	else mpc next ; fi
 
-XF86{RotateWindows,TaskPane}
+XF86{TaskPane,RotateWindows}
 	~/.local/bin/rotate-script.sh {invert, normal}
 
 
@@ -369,8 +369,10 @@ super + {_, shift +} + F9
 
 
 
-mod4 + {shift + Up, shift + Down, shift + Left, Left, Right, shift + Right}
-	mpc {volume +2, volume -2, seek 0, prev, next, toggle}
+
+
+mod4 + {Up, Down, Left, shift + Left, Right, shift + Right}
+	mpc {volume +2, volume -2, prev, seek 0, next, toggle}
 
 
 

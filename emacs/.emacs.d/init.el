@@ -178,7 +178,7 @@ There are two things you can do about this warning:
 
 (def-keymap global-map
   (list
-   '("\C-f" isearch-forward-regexp) '("\M-f" isearch-forward-regexp)
+   '("\C-f" isearch-forward-regexp) '("\M-f" isearch-backward-regexp)
    
    ;; text movement
    '("\M-h" move-beginning-of-line) '("\M-l" move-end-of-line)
