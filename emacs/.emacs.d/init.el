@@ -154,12 +154,12 @@ There are two things you can do about this warning:
        pairlist))
 
 ;; for muscle memory
-(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\M-s" "\C-t"))
+(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\M-s" "\C-t" "\C-q"))
 (mapc 'global-unset-key global-unsets)
 
 (def-keymap ctl-x-map
   (list
-   '("u" nil) '("k" nil)))
+   '("u" nil) '("k" nil) '("\C-w" nil) '("\C-k" nil)))
 
 
 (defun forward-or-backward-sexp (&optional arg)
@@ -177,7 +177,6 @@ There are two things you can do about this warning:
   (let ((value (eval (preceding-sexp))))
     (kill-sexp -1)
     (insert (format "%S" value))))
-
 
 ;; searching
 (def-keymap isearch-mode-map
@@ -199,17 +198,17 @@ There are two things you can do about this warning:
    '("\C-a" mark-whole-buffer) '("\M-x" kill-region)
    '("\M-c" kill-ring-save) '("\M-v" yank)
    '("\C-d" delete-char) '("\M-d" kill-line)
-   '("\M-w" kill-word) '("\C-w" kill-word)
+   '("\M-w" kill-word) '("\C-z" undo)
    '("\M-0" forward-or-backward-sexp)
-   '("\C-z" undo)
+   '("\M-Q" quoted-insert)
 
    ;; elisp
    '("\C-e" eval-replace-last-sexp) (list (kbd "C-M-e") 'eval-print-last-sexp)
    '("\M-e" execute-extended-command)
 
    ;; windows, buffers, and files
-   (list (kbd "<C-tab>") 'other-window) (list (kbd "C-x k") 'kill-current-buffer)
-   (list (kbd "C-x C-k") 'kill-buffer) '("\C-b" switch-to-buffer)
+   (list (kbd "<C-tab>") 'other-window) '("\C-w" kill-current-buffer) ;; (list (kbd "C-x k") 'kill-current-buffer)
+   (list (kbd "C-x C-w") 'kill-buffer) '("\C-b" switch-to-buffer)
    '("\C-s" save-buffer) '("\C-t" find-file)
 
    ;; emoji
@@ -219,7 +218,11 @@ There are two things you can do about this warning:
    (list (kbd "C-x <right>") 'centaur-tabs-forward-tab)
 
    ;; org
-   (list (kbd "C-c l") 'org-store-link)))
+   (list (kbd "C-c l") 'org-store-link)
+
+   ;; emacs
+   '("\C-q" save-buffers-kill-terminal)))
+
 
 ;; give escape expected behavior
 (def-keymap key-translation-map
