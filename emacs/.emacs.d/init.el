@@ -91,7 +91,7 @@ There are two things you can do about this warning:
 
 (setq org-unset
       (append
-       (list "\M-e" "\M-h" "\C-j")
+       (list "\M-e" "\M-h" "\C-j" "\C-k" "\C-e")
        (mapcar 'kbd
 	       (list "M-<right>" "M-S-<right>" "M-<left>" "M-S-<left>" "M-{" "M-}" "C-<up>" "C-<down>" "C-<tab>"))))
 
@@ -100,13 +100,11 @@ There are two things you can do about this warning:
        "\M-[" 'org-metaleft "\M-{" 'org-shiftmetaleft
        "\M-[" 'org-metaleft  "\M-{" 'org-shiftmetaleft
        "\M-]" 'org-metaright "\M-}" 'org-shiftmetaright
-       (kbd "C-<up>") 'org-forward-element
-       (kbd "C-<down>") 'org-backward-element
+       (kbd "C-<up>") 'org-backward-element
+       (kbd "C-<down>") 'org-forward-element
        (kbd "C-`") 'org-force-cycle-archived
        "\M-[" 'org-metaleft "\M-{" 'org-shiftmetaleft
        "\M-]" 'org-metaright "\M-}" 'org-shiftmetaright
-       (kbd "C-<up>") 'org-forward-element
-       (kbd "C-<down>") 'org-backward-element
        (kbd "C-`") 'org-force-cycle-archived
        (kbd "M-`") 'org-todo))
 
@@ -209,6 +207,7 @@ There are two things you can do about this warning:
    ;; windows, buffers, and files
    (list (kbd "<C-tab>") 'other-window) '("\C-w" kill-current-buffer) ;; (list (kbd "C-x k") 'kill-current-buffer)
    (list (kbd "C-x C-w") 'kill-buffer) '("\C-b" switch-to-buffer)
+   '("\M-W" write-file)
    '("\C-s" save-buffer) '("\C-t" find-file)
 
    ;; emoji
