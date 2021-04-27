@@ -85,6 +85,9 @@ There are two things you can do about this warning:
 ;; emoji globally 🌍
 (add-hook 'after-init-hook #'global-emojify-mode)
 
+;; typing overwrites selection if active (http://pragmaticemacs.com/emacs/overwrite-selected-text/)
+(delete-selection-mode t)
+
 
 ;; use org-indent-mode
 ;; and org keybinds
