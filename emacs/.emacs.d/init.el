@@ -162,7 +162,7 @@ There are two things you can do about this warning:
 
 
 
-;; key bindings
+;; general key bindings
 
 (defun def-keymap (keymap pairlist)
   ""
@@ -171,7 +171,7 @@ There are two things you can do about this warning:
        pairlist))
 
 ;; for muscle memory
-(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\M-s" "\C-t" "\C-q"))
+(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\C-y" "\M-y" "\M-s" "\C-t" "\C-q" "\M-<" "\M->"))
 (mapc 'global-unset-key global-unsets)
 
 (def-keymap ctl-x-map
@@ -195,6 +195,12 @@ There are two things you can do about this warning:
     (kill-sexp -1)
     (insert (format "%S" value))))
 
+(defun eval-print-region (start end &optional printflag read-function)
+  "I mean, it works. Weird line separation going on."
+  (interactive "r")
+  (save-excursion
+    (eval-region start end (copy-marker (point)) read-function)))
+
 ;; searching
 (def-keymap isearch-mode-map
   (list
@@ -212,8 +218,9 @@ There are two things you can do about this warning:
    '("\M-g" beginning-of-buffer) '("\M-G" end-of-buffer)
 
    ;; text manipulation
-   '("\C-a" mark-whole-buffer) '("\M-x" kill-region)
-   '("\M-c" kill-ring-save) '("\M-v" yank)
+   '("\C-a" mark-whole-buffer)
+   '("\M-x" kill-region) '("\M-c" kill-ring-save)
+   '("\M-v" yank) '("\M-V" yank-pop)
    '("\C-d" delete-char) '("\M-d" kill-line)
    '("\M-w" kill-word) '("\C-z" undo)
    '("\M-0" forward-or-backward-sexp)
@@ -221,13 +228,18 @@ There are two things you can do about this warning:
 
    ;; elisp
    '("\C-e" eval-replace-last-sexp) (list (kbd "C-M-e") 'eval-print-last-sexp)
+   (list (kbd "C-M-r") 'eval-print-region)
    '("\M-e" execute-extended-command)
+   '("\M-," xref-find-definitions)
+   '("\M-<" xref-pop-marker-stack)
+   '("\M-." repeat)
+   '("\M->" repeat-complex-command)
 
    ;; windows, buffers, and files
    (list (kbd "<C-tab>") 'other-window) '("\C-w" kill-current-buffer) ;; (list (kbd "C-x k") 'kill-current-buffer)
    (list (kbd "C-x C-w") 'kill-buffer) '("\C-b" switch-to-buffer)
-   '("\M-W" write-file)
-   '("\C-s" save-buffer) '("\C-t" find-file)
+   '("\M-W" write-file) '("\C-t" find-file)
+   '("\C-s" save-buffer) '("\C-n" make-frame-command)
 
    ;; emoji
    '("\M-E" emojify-insert-emoji)
