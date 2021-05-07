@@ -141,8 +141,24 @@ There are two things you can do about this warning:
   :ensure t
   :config (helm-mode 1))
 
+;; add eval line functionality with Python
+;; from https://emacs.stackexchange.com/questions/52108/evaluate-single-line-of-python-code-from-emacs-org-babel
 
+;; Add a function to send a single line to the Python console
+(defun python-shell-send-line ()
+  (interactive)
+  (save-mark-and-excursion
+    (move-beginning-of-line nil)
+    (set-mark-command nil)
+    (move-end-of-line nil)
+    (python-shell-send-region
+     (region-beginning)
+     (region-end))))
 
+;; Create shortcut
+(with-eval-after-load "python" (define-key python-mode-map
+                 (kbd "C-c C-j")
+                 'python-shell-send-line))
 
 
 
