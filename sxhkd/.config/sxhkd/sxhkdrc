@@ -282,9 +282,11 @@ mod4 + z
 
 #cover art, notes, manpdf
 mod4 + shift + {a, p, y}
-      {feh --auto-zoom --keep-zoom-vp $HOME/.scripts/output/cover.png, zathura $HOME/.scripts/output/man.pdf, td}
+      {feh --auto-zoom --keep-zoom-vp --reload 1 $HOME/.scripts/output/cover.png, zathura $HOME/.scripts/output/man.pdf, td}
 
-
+# bg
+mod4 + alt + f
+     ~/.config/.fehbg
 
 
 
