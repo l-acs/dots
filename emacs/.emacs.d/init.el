@@ -94,6 +94,18 @@ There are two things you can do about this warning:
 ;; typing overwrites selection if active (http://pragmaticemacs.com/emacs/overwrite-selected-text/)
 (delete-selection-mode t)
 
+;; sessions
+(setq desktop-save-mode t)
+;; A file which saves the desktop has a lock while a session runs. A
+;; session will always be running whenever the daemon still is (and
+;; the lock will thus never be automatically released).
+(setq desktop-load-locked-desktop t)
+;; When not t: a desktop won't load automatically if the saved session
+;; still has its lock; Emacs cannot restore the session of an
+;; unstopped daemon——starting again, it will be unable to prompt
+;; interactively whether to load a locked session.
+
+
 ;; hide finished todos from agenda
 (setq org-agenda-skip-scheduled-if-done t)
 
