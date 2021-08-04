@@ -1,5 +1,10 @@
 #! /bin/zsh
 
+# make sure keys operate if not started already
+pgrep -u $USER sxhkd || sxhkd &
+pgrep -u $USER dunst || dunst &
+pgrep -u $USER fusuma || fusuma -d &
+
 # fix cursor
 xsetroot -cursor_name left_ptr
 xrandr --output DP-1 --rotate left
