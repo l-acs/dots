@@ -55,6 +55,7 @@ There are two things you can do about this warning:
  '(org-support-shift-select t)
  '(package-selected-packages 'package-list)
  '(org-todo-keywords (quote ((sequence "⭕" "🔵" "⏩" "✅"))))
+ '(text-scale-mode-step 1.05)
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 
@@ -242,8 +243,9 @@ There are two things you can do about this warning:
    '("\C-a" mark-whole-buffer)
    '("\M-x" kill-region) '("\M-c" kill-ring-save)
    '("\M-v" yank) '("\M-V" yank-pop)
-   '("\C-d" delete-char) '("\M-d" kill-line)
-   '("\M-w" kill-word) '("\C-z" undo)
+   '("\C-d" delete-char) '("\M-w" kill-word)
+   '("\M-d" kill-line) '("\M-D" kill-whole-line)
+   '("\C-z" undo)
    '("\M-0" forward-or-backward-sexp)
    '("\M-Q" quoted-insert)
 
@@ -272,8 +274,7 @@ There are two things you can do about this warning:
    (list (kbd "C-c l") 'org-store-link)
 
    ;; emacs
-   '("\C-q" save-buffers-kill-terminal)))
-
+   '("\C-q" delete-frame)))
 
 ;; give escape expected behavior
 (def-keymap key-translation-map
@@ -282,11 +283,13 @@ There are two things you can do about this warning:
    (list (kbd "C-<escape>") (kbd "ESC"))))
 
 
+(set-face-attribute 'default nil :height 200)
+
+
 
 ;; 2021-07-13: some env var stuff, not sure if good
 ;; 2021-07-13: it might do well to have these instead be in another elisp file -- maybe one not `stow`ed -- to be added to the load path
 (setenv "PATH" (concat (getenv "PATH") ":/home/l-acs/.scripts:/home/l-acs/.scripts/*")) ;; the globbing doesn't work
 (setenv "TD_DIR" "/home/l-acs/Documents/gtd/td") ;; why is this here? maybe for `td` w/in the Emacs shell?
 
-(set-face-attribute 'default nil :height 140)
 ;; how do I source .zshrc "into" the PATH?
