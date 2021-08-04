@@ -41,8 +41,8 @@ mod4 + alt + {q,r}
 	 bspc config pointer_follows_focus true
 
 # alternate between the tiled and monocle layout
-#mod4 + m
-#	bspc desktop -l next
+mod4 + shift + m
+	bspc desktop -l next
 
 # send the newest marked node to the newest preselected node
 #mod4 + y
