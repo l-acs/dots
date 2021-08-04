@@ -46,9 +46,15 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(message-kill-buffer-query nil)
+ '(org-agenda-files ;; 2021-07-30: recursively add directories to org-agenda
+    (mapcar 'abbreviate-file-name
+	(split-string
+	 (shell-command-to-string "find ~/Documents/gtd -mindepth 1 -type d")
+	 "\n")))
+ '(org-log-done (quote time))
  '(org-support-shift-select t)
- '(org-todo-keywords '((sequence "⭕" "✅" "🔵" "▶" "⏩")))
  '(package-selected-packages 'package-list)
+ '(org-todo-keywords (quote ((sequence "⭕" "🔵" "⏩" "✅"))))
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
 
@@ -88,13 +94,16 @@ There are two things you can do about this warning:
 ;; typing overwrites selection if active (http://pragmaticemacs.com/emacs/overwrite-selected-text/)
 (delete-selection-mode t)
 
+;; hide finished todos from agenda
+(setq org-agenda-skip-scheduled-if-done t)
+
 
 ;; use org-indent-mode
 ;; and org keybinds
 
 (setq org-unset
       (append
-       (list "\M-e" "\M-h" "\C-j" "\C-k" "\C-e")
+       (list "\M-e" "\M-h" "\C-j" "\C-k" "\C-a" "\C-e")
        (mapcar 'kbd
 	       (list "M-<right>" "M-S-<right>" "M-<left>" "M-S-<left>" "M-{" "M-}" "C-<up>" "C-<down>" "C-<tab>"))))
 
@@ -262,5 +271,10 @@ There are two things you can do about this warning:
 
 
 
+;; 2021-07-13: some env var stuff, not sure if good
+;; 2021-07-13: it might do well to have these instead be in another elisp file -- maybe one not `stow`ed -- to be added to the load path
+(setenv "PATH" (concat (getenv "PATH") ":/home/l-acs/.scripts:/home/l-acs/.scripts/*")) ;; the globbing doesn't work
+(setenv "TD_DIR" "/home/l-acs/Documents/gtd/td") ;; why is this here? maybe for `td` w/in the Emacs shell?
 
 (set-face-attribute 'default nil :height 140)
+;; how do I source .zshrc "into" the PATH?
