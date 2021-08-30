@@ -46,7 +46,9 @@ source ~/.config/shell/profile
 alias e="emacsclient -t"
 alias blather="$HOME/.programs/blather/Blather.py"
 alias m="ncmpcpp"
+alias n="nordvpn"
 alias nf=neofetch
+alias p=ping
 
 function x()
 {
@@ -83,7 +85,7 @@ alias reload="source ~/.zshrc"
 alias anon='unset HISTFILE'
 alias mountnosudo='sudo mount -o umask=000'
 
-function cl ()
+function cl()
 {
     cd "${@}" && ls --color
 }
@@ -141,6 +143,19 @@ function emacs()
     emacsclient -create-frame --alternate-editor="" "${@}" & disown
 }
 
+ping=$(which ping)
+function ping()
+{
+    case $# in
+	0)
+	    $ping gnu.org
+	    ;;
+	*)
+	    $ping $*
+	    ;;
+    esac
+}
+
 alias ls="ls --color"
 alias pgrep="pgrep -f -a"
 
@@ -177,3 +192,25 @@ function gcfg()
 }
 
 
+function m3u8tom3u()
+{
+	for playlist in "$1"/*.m3u8
+	do
+		newname="$(basename "$playlist" \.m3u8 | sed 's/[:\]//g').m3u"
+		echo $playlist
+		cat "$playlist"
+		echo $newname
+
+		cp "$playlist" "$2/$newname"
+	done
+}
+
+
+function kitaab-vocab ()
+{
+    grep 'alkitaabtextbook.com/[-._/a-z%A-Z0-9]*/[a-zA-Z0-9\-_]*.mp3' ~/school/ara/alkitaabtextbook.com/part2/3e/lesson$1/index.html -o | sed "s|^|$HOME/school/ara/|" | xargs mpv 
+}
+
+
+
+alias nst="nordvpn status"
