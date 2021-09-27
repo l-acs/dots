@@ -419,7 +419,7 @@ There are two things you can do about this warning:
    (list (kbd "C-<escape>") (kbd "ESC"))))
 
 
-(set-face-attribute 'default nil :height 200)
+(set-face-attribute 'default nil :height 250)
 
 
 
