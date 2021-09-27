@@ -46,11 +46,13 @@ There are two things you can do about this warning:
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(message-kill-buffer-query nil)
- '(org-agenda-files ;; 2021-07-30: recursively add directories to org-agenda
-    (mapcar 'abbreviate-file-name
-	(split-string
-	 (shell-command-to-string "find ~/Documents/gtd -mindepth 1 -type d")
-	 "\n")))
+ '(org-agenda-files
+   (split-string
+    (replace-regexp-in-string
+     "\n\\'" ""
+     (shell-command-to-string "find ~/Documents/gtd -mindepth 1 -type d"))
+    "\n"))
+
  '(org-log-done (quote time))
  '(org-support-shift-select t)
  '(package-selected-packages 'package-list)
@@ -110,6 +112,13 @@ There are two things you can do about this warning:
 ;; hide finished todos from agenda
 (setq org-agenda-skip-scheduled-if-done t)
 
+;; lower default priority, I guess
+;; it's not actually supposed to let you do this, but it does
+(setq org-default-priority ?D) ;; 2021-09-27
+
+;; make it so that if you do org-agenda-priority-down on an entry w/ no priority, it will start w/ #A
+(setq org-priority-start-cycle-with-default nil) ;; 2021-09-27
+
 
 ;; use org-indent-mode
 ;; and org keybinds
@@ -118,32 +127,145 @@ There are two things you can do about this warning:
       (append
        (list "\M-e" "\M-h" "\C-j" "\C-k" "\C-a" "\C-e")
        (mapcar 'kbd
-	       (list "M-<right>" "M-S-<right>" "M-<left>" "M-S-<left>" "M-{" "M-}" "C-<up>" "C-<down>" "C-<tab>"))))
+	       (list ;; "M-<right>" "M-S-<right>"
+		     "M-<left>" "M-S-<left>" "M-{" "M-}" "C-<up>" "C-<down>" "C-<tab>"))))
 
 (setq org-bindings
       (list
        "\M-[" 'org-metaleft "\M-{" 'org-shiftmetaleft
        "\M-[" 'org-metaleft  "\M-{" 'org-shiftmetaleft
        "\M-]" 'org-metaright "\M-}" 'org-shiftmetaright
+
        (kbd "C-<up>") 'org-backward-element
        (kbd "C-<down>") 'org-forward-element
-       (kbd "C-`") 'org-force-cycle-archived
+
+       (kbd "\C-c d") 'org-cut-subtree
+
        "\M-[" 'org-metaleft "\M-{" 'org-shiftmetaleft
        "\M-]" 'org-metaright "\M-}" 'org-shiftmetaright
+
        (kbd "C-`") 'org-force-cycle-archived
        (kbd "M-`") 'org-todo))
 
 (defun my-org-stuff ()
   "Turn on indent mode, unbind some keys, bind some keys"
-  (progn 
+  (progn
     (org-indent-mode)
     (mapc 'local-unset-key org-unset)
     (mapc (lambda (s)
 	(apply 'local-set-key s))
       (seq-partition org-bindings 2))))
 
+(setq org-agenda-unset
+     (append
+      (list 	"\C-j"
+		"\C-k")
+
+
+       (mapcar 'kbd
+	       (list
+		;; "M-<right>"
+		"M-S-<right>"
+		;; "M-<left>"
+		"M-S-<left>"
+		;; "M-{" "M-}" "C-<up>" "C-<down>" "C-<tab>"
+		))))
+
+
+(setq org-agenda-bindings
+      (list
+       (kbd "\C-j") 'org-agenda-next-line
+       (kbd "\C-k") 'org-agenda-previous-line
+
+       ;; (kbd "\C-c C-<down>") 'org-agenda-priority-down
+       ;; (kbd "\C-c C-<up>") 'org-agenda-priority-up
+
+       ;; (kbd "M-S-<left>") 'org-agenda-date-earlier
+       ;; (kbd "M-S-<right>") 'org-agenda-date-later
+
+       (kbd "<left>") 'org-agenda-date-earlier
+       (kbd "<right>") 'org-agenda-date-later
+
+       "F" 'org-agenda-filter-by-tag
+
+       "?" 'isearch-backward-regexp
+       "/" 'isearch-forward-regexp
+
+       "n" 'isearch-repeat-forward
+       "N" 'isearch-repeat-backward
+
+       ;; (kbd "\C-c -") 'org-agenda-date-earlier
+       ;; (kbd "\C-c =") 'org-agenda-date-later
+
+       "z" 'org-agenda-undo
+       "c" 'org-agenda-add-note
+
+       "j" 'org-agenda-next-line
+       "k" 'org-agenda-previous-line
+
+       "C" 'org-agenda-recenter
+       "L" 'org-agenda-log-mode
+       "f" 'org-agenda-follow-mode
+
+
+       ;; "h" 'org-agenda-earlier
+       ;; "l" 'org-agenda-later
+
+       "p" 'org-agenda-priority
+       "r" 'org-agenda-redo-all
+
+       ;; (progn ;; not working: "wrong type" or something, fix later
+       ;; 	     (org-save-all-org-buffers)
+       ;; 	     (org-agenda-redo-all))
+
+       "y" 'org-agenda-goto-today
+       "d" 'org-agenda-goto-date
+;;       "Y" 'org-agenda-year-view
+
+       "," 'org-agenda-earlier
+       "." 'org-agenda-later
+
+
+       "g" 'beginning-of-buffer
+       "G" 'end-of-buffer
+
+       "V" 'org-agenda-toggle-time-grid
+
+       (kbd "<up>") 'org-agenda-priority-up
+       (kbd "<down>") 'org-agenda-priority-down
+
+       "S" 'org-agenda-schedule
+
+
+
+))
+
+;; (defun my-org-agenda-stuff ()
+;;   "Unbind some keys, bind some keys"
+;; ;;  "Turn on indent mode, unbind some keys, bind some keys"
+;;   (progn
+;;     ;; (org-indent-mode)
+;;     (mapc 'local-unset-key org-agenda-unset) ;; not working as expected
+;;     (mapc (lambda (s)
+;; 	(apply 'local-set-key s))
+;;       (seq-partition org-agenda-bindings 2))))
+
+(defun bind-keypair (kp)
+  "Bind a list of key and fun"
+  (apply 'local-set-key kp))
+;; seems to work:
+;; (bind-keypair (list (kbd "\C-c RET") 'org-capture))
+
+(defun bind-keylist (kl)
+  "Sequentially bind a list of keypairs"
+  (mapc
+   'bind-keypair kl))
+
 (add-hook 'org-mode-hook 'my-org-stuff)
 
+(add-hook 'org-agenda-mode-hook
+	  (lambda () (bind-keylist
+		      (seq-partition org-agenda-bindings 2))))
 
 ;; enable downcase-region
 (put 'downcase-region 'disabled nil)
@@ -223,6 +345,13 @@ There are two things you can do about this warning:
   (save-excursion
     (eval-region start end (copy-marker (point)) read-function)))
 
+
+(defun agenda ()
+  "Open Org Agenda in day view"
+  (interactive)
+  (let '(org-agenda-span 'day)
+    (org-agenda-list)))
+
 ;; searching
 (def-keymap isearch-mode-map
   (list
@@ -248,6 +377,7 @@ There are two things you can do about this warning:
    '("\C-z" undo)
    '("\M-0" forward-or-backward-sexp)
    '("\M-Q" quoted-insert)
+   '("\M-\\" just-one-space)
 
    ;; elisp
    '("\C-e" eval-replace-last-sexp) (list (kbd "C-M-e") 'eval-print-last-sexp)
@@ -259,9 +389,14 @@ There are two things you can do about this warning:
    '("\M->" repeat-complex-command)
 
    ;; windows, buffers, and files
-   (list (kbd "<C-tab>") 'other-window) '("\C-w" kill-current-buffer) ;; (list (kbd "C-x k") 'kill-current-buffer)
-   (list (kbd "C-x C-w") 'kill-buffer) '("\C-b" switch-to-buffer)
-   '("\M-W" write-file) '("\C-t" find-file)
+   (list (kbd "<C-tab>") 'other-window)
+   '("\M-b" previous-buffer) '("\C-b" switch-to-buffer)
+
+   '("\C-w" kill-current-buffer)
+   (list (kbd "C-x C-w") 'kill-buffer)
+
+   '("\M-W" write-file)
+   '("\C-t" find-file) (list (kbd "C-x t") 'find-file-at-point)
    '("\C-s" save-buffer) '("\C-n" make-frame-command)
 
    ;; emoji
@@ -272,6 +407,7 @@ There are two things you can do about this warning:
 
    ;; org
    (list (kbd "C-c l") 'org-store-link)
+   (list (kbd "M-SPC") 'agenda)
 
    ;; emacs
    '("\C-q" delete-frame)))
@@ -293,3 +429,11 @@ There are two things you can do about this warning:
 (setenv "TD_DIR" "/home/l-acs/Documents/gtd/td") ;; why is this here? maybe for `td` w/in the Emacs shell?
 
 ;; how do I source .zshrc "into" the PATH?
+
+(desktop-read (concat (getenv "HOME") "/.emacs.d/"))
+;; 2021-09-27: this initially seemed to break the daemon somehow (and
+;; yet running emacsclient a second time seemed to do just fine) but
+;; it seems as though the problem's gone away
+
+
+(let '(org-agenda-span 'day) (org-agenda-list)) ;; start org-agenda, temporarily setting `org-agenda-span` to day view to do so
