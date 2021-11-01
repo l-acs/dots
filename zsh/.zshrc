@@ -31,8 +31,12 @@ bindkey -e
 source ~/.config/shell/zshbindings
 setopt INTERACTIVE_COMMENTS
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # colours!
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh # history: autosuggestions
+# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # colours!
+# source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh # history: autosuggestions
+
+# ubuntu version:
+source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # colours!
+source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh # history: autosuggestions
 
 # make emacs shell work
 [ $TERM == "dumb" ] && unsetopt zle
@@ -43,10 +47,15 @@ source ~/.config/shell/profile
 
 
 ### abbreviations: ###
-alias e="emacsclient -t"
 alias blather="$HOME/.programs/blather/Blather.py"
+alias e="emacsclient -t"
+alias k9="kill -9"
 alias m="ncmpcpp"
-alias n="nordvpn"
+alias n="nmtui"
+alias nord="nordvpn"
+alias nc="nordvpn connect"
+alias nd="nordvpn disconnect"
+alias nst="nordvpn status"
 alias nf=neofetch
 alias p=ping
 
@@ -65,14 +74,29 @@ function _myxsel()
     if [ -n "$(xsel -o | tr -d '[:blank:]')" ]; then xsel; else xsel -b; fi
 }
 
+function vtmp () {
+    () { vim $1
+         cat $1 } =() }
+
 alias -g xs='"$(_myxsel)"'
 alias -g xb='"$(xsel -b)"'
+alias -g clip='xsel -b'
+
+function cwrite ()
+{
+    vim $1
+    clip < $1
+}
+
+
+# edit a temporary file and write its contents to stdout, copying them to the clipboard
+alias cw='cwrite =() && clip'
 
 alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Font Awesome 5 Brands' -f 'Font Awesome 5 Free Solid'"
 
 
 ### files, etc ###
-alias zrc="$EDITOR ~/.zshrc"
+alias zrc="vim ~/.zshrc"
 alias cover="feh --auto-zoom --keep-zoom-vp .scripts/output/cover.png"
 playlists="$HOME/.config/mpd/playlists"
 alias 330="cd ~/school/330/"
@@ -83,6 +107,7 @@ alias 409="cd ~/school/409/"
 ### utils ###
 alias reload="source ~/.zshrc"
 alias anon='unset HISTFILE'
+alias leave='bg %1 ; disown ; exit'
 alias mountnosudo='sudo mount -o umask=000'
 
 function cl()
@@ -92,12 +117,15 @@ function cl()
 
 function space() #only a function because of quoting nightmares
 { 
-	df -h | grep sda4 | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
+	df -h | \grep '/$' | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
 }
 
 alias battery='cat /sys/class/power_supply/BAT0/capacity'
 alias sysbright='brightnessctl set'
- 
+
+# rename a window for e.g. rofi -window
+alias wrename='xprop -format _NET_WM_NAME 8u -set _NET_WM_NAME'
+
 alias screencast='ffmpeg -f x11grab -video_size 1920x1080 -framerate 25 -i :0 -f alsa -i default -c:v libx264 -preset ultrafast -c:a aac '
 
 function flac2mp3here()
@@ -131,7 +159,8 @@ alias lofi="mpv 'https://www.youtube.com/watch?v=5qap5aO4i9A' & disown"
 alias mdl='youtube-dl -i -f bestaudio\[ext=m4a\] --embed-thumbnail -o "$MUSIC/%(title)s.%(ext)s"'
 alias vdl-sub='youtube-dl -i -f worst -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s" --write-auto-sub'
 alias vdl='youtube-dl -i -f worst -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s"'
-
+alias vdl-sub='youtube-dl -i -f best -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s" --write-auto-sub'
+alias vdl='youtube-dl -i -f best -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s"'
 
 ### configurations ###
 alias dash="rlwrap dash"
@@ -146,6 +175,7 @@ function emacs()
 ping=$(which ping)
 function ping()
 {
+
     case $# in
 	0)
 	    $ping gnu.org
@@ -154,11 +184,17 @@ function ping()
 	    $ping $*
 	    ;;
     esac
+
 }
 
+alias diff="diff --unified --color"
+alias du="du -sh"
+alias grep="grep --color --no-messages --dereference-recursive"
+alias less='less -N'
 alias ls="ls --color"
 alias pgrep="pgrep -f -a"
-
+alias rm="rm -I"
+alias tmux="tmux -f ~/.config/tmux/tmux.conf"
 
 ### git ###
 alias gst='git status'
@@ -168,7 +204,7 @@ alias gpull='git pull'
 alias gpush='git push'
 alias gdiff='git diff'
 alias gls='git ls-files'
-alias guntracked='git ls-files --exclude-standard --others'
+alias guntracked='git ls-files --exclude-standard --directory --others'
 
 function gcfg()
 {
@@ -208,9 +244,15 @@ function m3u8tom3u()
 
 function kitaab-vocab ()
 {
-    grep 'alkitaabtextbook.com/[-._/a-z%A-Z0-9]*/[a-zA-Z0-9\-_]*.mp3' ~/school/ara/alkitaabtextbook.com/part2/3e/lesson$1/index.html -o | sed "s|^|$HOME/school/ara/|" | xargs mpv 
+    grep 'alkitaabtextbook.com/[-._/a-z%A-Z0-9]*/[a-zA-Z0-9\-_]*.mp3' ~/ara/alkitaabtextbook.com/part2/3e/lesson$1/index.html -o | sed "s|^|$HOME/ara/|" | xargs mpv
+}
+
+function kitaab-vocab-mpvc ()
+{
+    grep 'alkitaabtextbook.com/[-._/a-z%A-Z0-9]*/[a-zA-Z0-9\-_]*.mp3' ~/ara/alkitaabtextbook.com/part2/3e/lesson$1/index.html -o | sed "s|^|$HOME/ara/|" | xargs mpvc add
 }
 
 
-
-alias nst="nordvpn status"
+alias kitaab="z $HOME/Documents/fall-2021/fiu/al-kitaab-two.pdf"
+alias clock='tty-clock -t -c'
+alias pomodoro='pomo 25m'
