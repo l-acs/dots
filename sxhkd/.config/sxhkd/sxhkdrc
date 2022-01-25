@@ -148,13 +148,19 @@ mod4 + {o,i}
 
 # focus/send to the given desktop
 mod4 + {_,shift + }{1-9}
-	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^{1-9}'
+     bspc {desktop -f, node --to-desktop} '^{1-9}'
+#	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^{1-9}'
 
 mod4 + alt + {1-9}
 	bspc node --to-desktop '^{1-9}' --follow
 
-mod4 + {_,shift + }0
-	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^10'
+mod4 + {_,shift +} 0
+	bspc {desktop -f, node --to-desktop, node --to-desktop} '^10'
+#	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^10'
+
+mod4 + alt + 0
+	bspc node --to-desktop '^10' --follow
+
 
 # focus next empty desktop
 mod4 + minus
