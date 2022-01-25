@@ -1,36 +1,28 @@
-
-
-
-
-
-
-
-
-
-
 [global]
 frame_color = "#222222"
 separator_color = "#586e75"
 backgound = "#222222"
+notification_limit = 5
 
 
 geometry = "300x3-13+32"
 notification_height = 70
 alignment = center
 
-#monitor = 1 #second monitor
+# monitor = 1 # second monitor
 follow = keyboard
 
 
-#prevent huge images
+# prevent huge images
 max_icon_size = 60
 
 hide_duplicate_count = true
-show_indicators = false #hide the pesky "A"
+show_indicators = false
+#  hide the pesky "A"
 stack_duplicates = true
 indicate_hidden = true
 
-#rounding
+# rounding
 corner_radius = 15
 
 idle_threshold = 2m
@@ -40,19 +32,19 @@ font = Ubuntu
 format =  "%s \n %b"
 
 
-shrink = no
+shrink = false
 separator_height = 0
 padding = 10
 horizontal_padding = 18
 frame_width = 1
-sort = no
+sort = false
 line_height = 1
-word_wrap = yes
+word_wrap = true
 icon_position = left
-ignore_newline = no
+ignore_newline = false
 
 
-history_length = 5
+history_length = 4
 
 mouse_left_click = do_action
 mouse_middle_click = close_current
@@ -77,7 +69,7 @@ transparency = 5
     background = "#222222"
     foreground = "#fdf6e3"
 
-#rule
+# rule
 
 [music]
    icon="*cover.jpg"
