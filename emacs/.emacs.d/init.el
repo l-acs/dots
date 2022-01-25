@@ -562,6 +562,11 @@ This command assumes point is not in a string or comment."
 ;; it seems as though the problem's gone away
 
 
+;; 2022-01-05: make C-S-tab tab work
+(define-key function-key-map [(control shift iso-lefttab)] [(control shift tab)])
+(define-key function-key-map [(meta shift iso-lefttab)] [(meta shift tab)])
+(define-key function-key-map [(meta control shift iso-lefttab)] [(meta control shift tab)])
+
 ;; 2022-01-05: try to fix helm cluttering
 (require 'popwin)
 (popwin-mode 1)
