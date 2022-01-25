@@ -57,6 +57,11 @@ There are two things you can do about this warning:
  '(org-support-shift-select t)
  '(package-selected-packages 'package-list)
  '(org-todo-keywords (quote ((sequence "⭕" "🔵" "⏩" "✅"))))
+
+ '(safe-local-variable-values
+   (quote
+    ((cider-shadow-default-options . ":app")
+     (cider-default-cljs-repl . shadow))))
  '(text-scale-mode-step 1.05)
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
