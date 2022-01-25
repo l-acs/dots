@@ -1,3 +1,9 @@
+mod4 + alt + shift + slash
+     systemctl suspend
+
+mod4 + ctrl + shift + slash
+     systemctl suspend
+
 
 # wm independent hotkeys
 #
