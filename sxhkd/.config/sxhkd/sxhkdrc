@@ -277,8 +277,12 @@ mod4 + p ; {p, b, c}
 
 
 #open non-duplicate programs
-mod4 + {a,m,r,s,t,shift+t,v,w,shift+x}
-      findoropen {anki, deezer -t ncmpcpp, rocketchat-desktop, signal signal-desktop, thunderbird, Browser tor-browser,mpv,"$WEB",xournalpp}
+mod4 + {a,c, shift + r,s,t,shift+t,v,w,shift+x}
+      findoropen {anki, chromium, rocket rocketchat-desktop /snap/bin/rocketchat-desktop, signal signal-desktop /opt/Signal/signal-desktop, thunderbird, Browser tor-browser,mpv,"$WEB",xournalpp}
+
+# open ncmpcpp
+mod4 + m
+      (pgrep -x ncmpcpp || bspc rule -a '*' -o desktop='^7' follow=on); TERMINAL='urxvt -fn xft:ubuntumono:size=24' findoropen -t ncmpcpp
 
 # find teams if it's open; otherwise, findoropen zoom
 mod4 + z
