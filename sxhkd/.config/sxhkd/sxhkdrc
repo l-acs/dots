@@ -369,18 +369,18 @@ XF86Audio{Play,Pause}
 	   mpvc toggle ;\
 	else mpc toggle ; fi
 
-XF86AudioPrev
+{_, shift} + XF86AudioPrev
 	mpvisrunning="$(pgrep mpv)" ;\
 	if [ -n "$mpvisrunning" ]; then \
 	   findoropen mpv ;\
-	   xdotool key Left ;\
+	   mpvc {seek -10s, prev} ;\
 	else mpc prev ; fi
 
-XF86AudioNext
+{_, shift} + XF86AudioNext
 	mpvisrunning="$(pgrep mpv)" ;\
 	if [ -n "$mpvisrunning" ]; then \
 	   findoropen mpv ;\
-	   xdotool key Right ;\
+	   mpvc {seek +10s, next} ;\
 	else mpc next ; fi
 
 XF86{TaskPane,RotateWindows}
@@ -414,7 +414,7 @@ shift + {_,mod4, control, alt} + Next
       sleep 0.2 && screenshot {clipboard --select, clipboard} 
 
 # save screenshots
-super + {_, shift +} + F9
+super + {_, shift} + F9
       sleep 0.2 && screenshot {--select,  } 
 
 
@@ -435,10 +435,16 @@ mod4 + F12
 
 
 mod4 + {Up, Down, Left, shift + Left, Right, shift + Right}
-	mpc {volume +2, volume -2, prev, seek 0, next, toggle}
+     mpc {volume +2, volume -2, prev, seek 0%, next, toggle}
+
+mod4 + ctrl + {Up, Down, Left, shift + Left, Right, shift + Right}
+     mpvc {volume +2, volume -2, prev, seek 0%, next, toggle}
 
 mod4 + alt + {Left, Right}
         mpc seek {-,+}2
+
+mod4 + ctrl + alt + {Left, Right}
+        mpvc seek {-,+}2
 
 
 
