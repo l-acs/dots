@@ -18,7 +18,7 @@ There are two things you can do about this warning:
 (package-initialize)
 
 (setq package-list
-      '(centaur-tabs cider dictionary emojify ess helm kotlin-mode lua-mode magit markdown-mode tuareg undo-tree use-package))
+      '(centaur-tabs cider company dictionary docker-compose-mode dockerfile-mode emojify ess helm indium kotlin-mode lua-mode magit markdown-mode org-journal popwin projectile tuareg undo-tree use-package))
 
 
 ;; (unless package-archive-contents
@@ -127,7 +127,7 @@ There are two things you can do about this warning:
       (append
        (list "\M-e" "\M-h" "\C-j" "\C-k" "\C-a" "\C-e")
        (mapcar 'kbd
-	       (list ;; "M-<right>" "M-S-<right>"
+	       (list "M-<right>" "M-S-<right>"
 		     "M-<left>" "M-S-<left>" "M-{" "M-}" "C-<up>" "C-<down>" "C-<tab>"))))
 
 (setq org-bindings
@@ -148,9 +148,10 @@ There are two things you can do about this warning:
        (kbd "M-`") 'org-todo))
 
 (defun my-org-stuff ()
-  "Turn on indent mode, unbind some keys, bind some keys"
+  "Turn on indent mode, turn on auto-fill mode, unbind some keys, bind some keys"
   (progn
     (org-indent-mode)
+    (auto-fill-mode)
     (mapc 'local-unset-key org-unset)
     (mapc (lambda (s)
 	(apply 'local-set-key s))
@@ -278,7 +279,10 @@ There are two things you can do about this warning:
   (centaur-tabs-mode t)
   :bind
   ("M-<left>" . centaur-tabs-backward)
-  ("M-<right>" . centaur-tabs-forward))
+  ("M-<right>" . centaur-tabs-forward)
+  ("<C-tab>" . centaur-tabs-backward)
+  ("<C-S-isolefttab>" . centaur-tabs-forward)
+)
 
 
 (use-package helm
@@ -315,7 +319,7 @@ There are two things you can do about this warning:
        pairlist))
 
 ;; for muscle memory
-(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\C-y" "\M-y" "\M-s" "\C-t" "\C-q" "\M-<" "\M->"))
+(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\C-y" "\M-y" "\C-r" "\M-r" "\M-s" "\C-t" "\C-q" "\M-<" "\M->" "("))
 (mapc 'global-unset-key global-unsets)
 
 (def-keymap ctl-x-map
@@ -375,9 +379,12 @@ There are two things you can do about this warning:
    '("\C-d" delete-char) '("\M-w" kill-word)
    '("\M-d" kill-line) '("\M-D" kill-whole-line)
    '("\C-z" undo)
+   '("\M-9" insert-parentheses)
    '("\M-0" forward-or-backward-sexp)
    '("\M-Q" quoted-insert)
    '("\M-\\" just-one-space)
+   '("\M-U" downcase-word)
+
 
    ;; elisp
    '("\C-e" eval-replace-last-sexp) (list (kbd "C-M-e") 'eval-print-last-sexp)
@@ -389,7 +396,10 @@ There are two things you can do about this warning:
    '("\M->" repeat-complex-command)
 
    ;; windows, buffers, and files
-   (list (kbd "<C-tab>") 'other-window)
+   ;; (list (kbd "<C-tab>") 'other-window)
+   '("\M-r" other-window)
+   ;; (list (kbd "<C-tab>") 'previous-buffer)
+   ;; (list (kbd "<C-S-isolefttab>") 'next-buffer)
    '("\M-b" previous-buffer) '("\C-b" switch-to-buffer)
 
    '("\C-w" kill-current-buffer)
@@ -434,6 +444,14 @@ There are two things you can do about this warning:
 ;; 2021-09-27: this initially seemed to break the daemon somehow (and
 ;; yet running emacsclient a second time seemed to do just fine) but
 ;; it seems as though the problem's gone away
+
+
+;; 2022-01-05: try to fix helm cluttering
+(require 'popwin)
+(popwin-mode 1)
+(setq display-buffer-function 'popwin:display-buffer)
+(push '("^\*helm .+\*$" :regexp t) popwin:special-display-config)
+(push '("^\*helm-.+\*$" :regexp t) popwin:special-display-config)
 
 
 (let '(org-agenda-span 'day) (org-agenda-list)) ;; start org-agenda, temporarily setting `org-agenda-span` to day view to do so
