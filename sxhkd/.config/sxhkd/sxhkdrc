@@ -269,10 +269,30 @@ mod4 + e
 
 
 # pomodoro
-mod4 + p ; {p, b, c}
-    { pomo pomodoro, pomo 5 break, pkill pomo ; pkill -f ringtone.webm }
+mod4 + p ; {p, b, c, r}
+    { pomo 25m pomodoro, pomo 5 break, pkill --newest pomo ; pkill -f ringtone.webm, notify-send "$(pomo-time.sh) remaining" "($(pomo-time.sh name))"}
+
+# reports
+mod4 + r ; {b, d, n, p, v}
+     notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
 
 
+mod4 + r ; m
+     reload-cover # this one already sends a notification
+
+
+# pause / unpause dunst
+mod4 + backslash
+       ;dunstctl set-paused false
+
+@mod4 + backslash
+      ; sleep 0.3; [ $(dunstctl is-paused) = false ] && dunstctl set-paused true
+
+mod4 + shift + backslash
+     dunstctl set-paused toggle
+
+# not working as desired but it does provide the functionality all the
+# same
 
 #open non-duplicate programs
 mod4 + {a,c, shift + r,s,t,shift+t,v,w,shift+x}
