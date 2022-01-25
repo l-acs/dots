@@ -562,6 +562,19 @@ This command assumes point is not in a string or comment."
 ;; it seems as though the problem's gone away
 
 
+
+;; from https://www.emacswiki.org/emacs/BackupDirectory
+(setq
+ backup-by-copying t			; don't clobber symlinks
+   backup-directory-alist
+   '(("." . "~/.emacs.d/saves/"))	; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)			; use versioned backups
+;; 2022-01-05: try to not clutter everything with ~s everywhere
+
+
 ;; 2022-01-05: make C-S-tab tab work
 (define-key function-key-map [(control shift iso-lefttab)] [(control shift tab)])
 (define-key function-key-map [(meta shift iso-lefttab)] [(meta shift tab)])
@@ -576,3 +589,7 @@ This command assumes point is not in a string or comment."
 
 
 (let '(org-agenda-span 'day) (org-agenda-list)) ;; start org-agenda, temporarily setting `org-agenda-span` to day view to do so
+
+;; N.B.
+;; M-x name-last-kbd-macro
+;; M-x insert-kbd-macro
