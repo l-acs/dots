@@ -54,11 +54,11 @@ mod4 + shift + m
 #mod4 + y
 #	bspc node newest.marked.local -n newest.!automatic.local
 
-# focus next desktop
+# focus next monitor
 mod4 + g
 	bspc monitor --focus next
 
-# send node to next desktop
+# send node to next monitor
 mod4 + shift + g
      	bspc node --to-monitor next --follow
 
@@ -99,17 +99,8 @@ mod4 + {_,shift + }{h,j,k,l}
 #	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-mod4 + {_,shift + }c
-	bspc node -f {next,prev}.local
-
-# focus the next/previous non-empty desktop in the current monitor
-mod4 + bracket{left,right}
-      bspc desktop -f {prev,next}.local.occupied
-
-# focus next/previous empty desktop in the current monitor
-mod4 + shift + bracket{left,right}
-      bspc desktop -f {prev,next}.local.!occupied
-
+# mod4 + {_,shift + }c
+#	bspc node -f {next,prev}.local
 
 # focus the prev/next non-empty desktop in the current monitor
 mod4 + {comma, period}
@@ -132,22 +123,23 @@ mod4 + alt + shift + {comma, period}
 #	bspc {node,desktop} -f last
 
 # cycle through nodes in desktop
-mod4 + {_, shift+} Tab
+@mod4 + {_, shift+} Tab
     bspc node -f {next,prev}.local.leaf
 
 # cycle through desktops in desktop
-alt + {_, shift+} Tab
-     bspc wm -h off; \
-     bspc desktop -f {older,newer}.occupied; \
-     bspc wm -h on
-     bspc desktop -f focused
+# alt + {_, shift+} Tab
+ #     bspc wm -h off; \
+  #    bspc desktop -f {older,newer}.occupied; \
+   #   bspc wm -h on
+    #  bspc desktop -f focused
 
-# bspc desktop -f {next,prev}.local.occupied
+@alt + {_, shift+} Tab
+	; (bspc desktop -f {next,prev}.local.occupied & sleep 0.2)
 
 
 
 # focus the older or newer node in the focus history
-mod4 + {o,i}
+mod4 + bracket{left,right}
 	bspc wm -h off; \
 	bspc node {older,newer} -f; \
 	bspc wm -h on
@@ -182,7 +174,7 @@ mod4 + semicolon
 
 # cancel
 # problematic...
-mod4 + shift + semicolon
+mod4 + alt + semicolon
      bspc rule -r tail
 
 #
