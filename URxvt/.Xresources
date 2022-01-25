@@ -43,7 +43,7 @@
 
 
 URxvt.scrollBar: false
-URxvt.font: xft:ubuntumono:size=14
+URxvt.font: xft:ubuntumono:size=20
 
 
 
