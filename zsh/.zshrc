@@ -48,6 +48,7 @@ source ~/.config/shell/profile
 
 ### abbreviations: ###
 alias blather="$HOME/.programs/blather/Blather.py"
+alias clj="clojure"
 alias e="emacsclient -t"
 alias k9="kill -9"
 alias m="ncmpcpp"
@@ -58,6 +59,7 @@ alias nd="nordvpn disconnect"
 alias nst="nordvpn status"
 alias nf=neofetch
 alias p=ping
+alias py=python3
 
 function x()
 {
@@ -75,7 +77,7 @@ function _myxsel()
 }
 
 function vtmp () {
-    () { vim $1
+    () { vim $1 -c startinsert
          cat $1 } =() }
 
 alias -g xs='"$(_myxsel)"'
@@ -84,10 +86,13 @@ alias -g clip='xsel -b'
 
 function cwrite ()
 {
-    vim $1
+    vim $1 -c startinsert
     clip < $1
 }
 
+function unicopy () {
+    unicode.py $* | clip
+}
 
 # edit a temporary file and write its contents to stdout, copying them to the clipboard
 alias cw='cwrite =() && clip'
@@ -255,4 +260,6 @@ function kitaab-vocab-mpvc ()
 
 alias kitaab="z $HOME/Documents/fall-2021/fiu/al-kitaab-two.pdf"
 alias clock='tty-clock -t -c'
-alias pomodoro='pomo 25m'
+alias pomo='~/projects/pomo/add-date.sh >/dev/null ; pomo'
+alias pomodoro:='pomo 25m'
+# alias pomodoro='pomodoro:'
