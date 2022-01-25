@@ -40,28 +40,28 @@ There are two things you can do about this warning:
    [default default default italic underline success warning error])
  '(ansi-color-names-vector
    ["#2e3436" "#a40000" "#4e9a06" "#c4a000" "#204a87" "#5c3566" "#729fcf" "#eeeeec"])
- '(custom-enabled-themes '(deeper-blue))
- '(emojify-emoji-styles '(github unicode))
- '(helm-completion-style 'emacs)
+ '(centaur-tabs-background-color "blue")
+ '(emojify-emoji-styles (quote (github unicode)))
+ '(helm-completion-style (quote emacs))
  '(inhibit-startup-screen t)
  '(menu-bar-mode nil)
  '(message-kill-buffer-query nil)
  '(org-agenda-files
    (split-string
-    (replace-regexp-in-string
-     "\n\\'" ""
-     (shell-command-to-string "find ~/Documents/gtd -mindepth 1 -type d"))
-    "\n"))
-
+    (replace-regexp-in-string "
+\\'" ""
+(shell-command-to-string "find ~/Documents/gtd -mindepth 1 -type d"))
+    "
+"))
  '(org-log-done (quote time))
  '(org-support-shift-select t)
  '(package-selected-packages 'package-list)
- '(org-todo-keywords (quote ((sequence "⭕" "🔵" "⏩" "✅"))))
 
  '(safe-local-variable-values
    (quote
     ((cider-shadow-default-options . ":app")
      (cider-default-cljs-repl . shadow))))
+ '(sql-product (quote mysql))
  '(text-scale-mode-step 1.05)
  '(tool-bar-mode nil)
  '(xterm-mouse-mode t))
