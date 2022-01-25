@@ -343,6 +343,98 @@ There are two things you can do about this warning:
    '("u" nil) '("k" nil) '("\C-w" nil) '("\C-k" nil)))
 
 
+(defun insert-wrap (open close &optional arg)
+  "Enclose following ARG sexps in parentheses.
+Leave point after open-paren.
+A negative ARG encloses the preceding ARG sexps instead.
+No argument is equivalent to zero: just insert `()' and leave point between.
+If `parens-require-spaces' is non-nil, this command also inserts a space
+before and after, depending on the surrounding characters.
+If region is active, insert enclosing characters at region boundaries.
+
+This command assumes point is not in a string or comment."
+  (interactive "P")
+  ;;  (insert-pair arg ?\( ?\)))
+  ;; the question mark means character literals
+  (insert-pair arg open close))
+
+(defun wrap-if-region (&optional arg open close)
+  ;; taken from insert-pair
+  ;; if there's a region, wrap in open ... close
+  ;; otherwise, insert open
+  "Enclose following ARG sexps in a pair of OPEN and CLOSE characters.
+Leave point after the first character.
+A negative ARG encloses the preceding ARG sexps instead.
+No argument is equivalent to zero: just insert characters
+and leave point between.
+If `parens-require-spaces' is non-nil, this command also inserts a space
+before and after, depending on the surrounding characters.
+If region is active, insert enclosing characters at region boundaries.
+
+If arguments OPEN and CLOSE are nil, the character pair is found
+from the variable `insert-pair-alist' according to the last input
+character with or without modifiers.  If no character pair is
+found in the variable `insert-pair-alist', then the last input
+character is inserted ARG times.
+
+This command assumes point is not in a string or comment."
+  (interactive "P")
+  (if (not (and open close))
+      (let ((pair (or (assq last-command-event insert-pair-alist)
+                      (assq (event-basic-type last-command-event)
+                            insert-pair-alist))))
+        (if pair
+            (if (nth 2 pair)
+                (setq open (nth 1 pair) close (nth 2 pair))
+              (setq open (nth 0 pair) close (nth 1 pair))))))
+  (if (and open close)
+      (if (and transient-mark-mode mark-active)
+	  (progn
+	    (save-excursion
+	      (goto-char (region-end))
+	      (insert close))
+	    (goto-char (region-beginning))
+	    (insert open))
+	(insert open))))
+
+(setq insert-pair-alist '((40 41)
+			  (91 93)
+			  (123 125)
+			  (60 62)
+			  (34 34)
+			  (39 39)
+			  (96 96)   ; backticks
+			  (126 126) ; tildes
+			  (95 95))) ; underscores
+
+(defun wrap-curly (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?\{ ?\}))
+
+(defun wrap-bracket (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?\[ ?\]))
+
+(defun wrap-angle (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?\< ?\>))
+
+(defun wrap-quote (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?\" ?\"))
+
+(defun wrap-tilde (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?~ ?~))
+
+(defun wrap-backtick (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?\` ?\`))
+
+(defun wrap-underscore (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?_ ?_))
+
 (defun forward-or-backward-sexp (&optional arg)
   "Go to the matching parenthesis character if one is adjacent to point."
   (interactive "^p")
