@@ -120,6 +120,14 @@ There are two things you can do about this warning:
 ;; hide finished todos from agenda
 (setq org-agenda-skip-scheduled-if-done t)
 
+;; change up some keywords
+(setq org-todo-keywords
+      '((sequence "todo:" "doing:" "later:" "done:")
+	(sequence "⭕" "🔵" "⏩" "✅")
+	(sequence "try:" "maybe:" "waiting:")
+	(sequence "clarify:" "to capture:")))
+
+
 ;; lower default priority, I guess
 ;; it's not actually supposed to let you do this, but it does
 (setq org-default-priority ?D) ;; 2021-09-27
