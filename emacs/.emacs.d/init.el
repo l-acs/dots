@@ -473,6 +473,12 @@ This command assumes point is not in a string or comment."
   (let '(org-agenda-span 'day)
     (org-agenda-list)))
 
+(fset 'new-empty-line-above
+      [?\M-h return up])
+
+(fset 'new-empty-line-below
+      [?\M-l return])
+
 ;; searching
 (def-keymap isearch-mode-map
   (list
@@ -488,6 +494,7 @@ This command assumes point is not in a string or comment."
    '("\C-j" next-line) '("\C-k" previous-line)
    '("\M-j" backward-word) '("\M-k" forward-word)
    '("\M-g" beginning-of-buffer) '("\M-G" end-of-buffer)
+   '("\M-o" new-empty-line-below) '("\M-O" new-empty-line-above)
 
    ;; text manipulation
    '("\C-a" mark-whole-buffer)
