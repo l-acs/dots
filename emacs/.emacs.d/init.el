@@ -57,6 +57,7 @@ There are two things you can do about this warning:
  '(org-support-shift-select t)
  '(package-selected-packages 'package-list)
 
+ '(parens-require-spaces nil)
  '(safe-local-variable-values
    (quote
     ((cider-shadow-default-options . ":app")
@@ -284,6 +285,12 @@ There are two things you can do about this warning:
 	  (lambda () (bind-keylist
 		      (seq-partition org-agenda-bindings 2))))
 
+(add-hook 'java-mode-hook
+	  (lambda ()
+	    (progn
+	      (local-unset-key "{")
+	      (local-unset-key "}"))))
+
 ;; enable downcase-region
 (put 'downcase-region 'disabled nil)
 
@@ -335,7 +342,7 @@ There are two things you can do about this warning:
        pairlist))
 
 ;; for muscle memory
-(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\C-y" "\M-y" "\C-r" "\M-r" "\M-s" "\C-t" "\C-q" "\M-<" "\M->" "("))
+(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\C-y" "\M-y" "\C-r" "\M-r" "\M-s" "\C-t" "\C-q" "\M-<" "\M->" "(" "{" "<" "~" "`" "\"" "_"))
 (mapc 'global-unset-key global-unsets)
 
 (def-keymap ctl-x-map
@@ -409,11 +416,13 @@ This command assumes point is not in a string or comment."
 
 (defun wrap-curly (&optional arg)
   (interactive "P")
-  (wrap-if-region ?\{ ?\}))
+  (insert-wrap ?\{ ?\}))
+  ;; (wrap-if-region ?\{ ?\}))
 
 (defun wrap-bracket (&optional arg)
   (interactive "P")
-  (wrap-if-region ?\[ ?\]))
+  (insert-wrap ?\[ ?\]))
+;;  (wrap-if-region ?\[ ?\]))
 
 (defun wrap-angle (&optional arg)
   (interactive "P")
