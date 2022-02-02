@@ -50,10 +50,6 @@ mod4 + alt + {q,r}
 mod4 + shift + m
 	bspc desktop -l next
 
-# send the newest marked node to the newest preselected node
-#mod4 + y
-#	bspc node newest.marked.local -n newest.!automatic.local
-
 # focus next monitor
 mod4 + g
 	bspc monitor --focus next
@@ -93,15 +89,6 @@ mod4 + ctrl + {m,x,y,z}
 mod4 + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
-# useful but didn't use
-# focus the node for the given path jump
-#mod4 + {p,b,comma,period}
-#	bspc node -f @{parent,brother,first,second}
-
-# focus the next/previous node in the current desktop
-# mod4 + {_,shift + }c
-#	bspc node -f {next,prev}.local
-
 # focus the prev/next non-empty desktop in the current monitor
 mod4 + {comma, period}
       bspc desktop -f {prev,next}.local.occupied
@@ -118,24 +105,12 @@ mod4 + alt + {comma, period}
 mod4 + alt + shift + {comma, period}
        bspc node --to-desktop {prev,next}.local.!occupied --follow
 
-# focus the last node/desktop
-#mod4 + {grave,Tab}
-#	bspc {node,desktop} -f last
-
 # cycle through nodes in desktop
 @mod4 + {_, shift+} Tab
     bspc node -f {next,prev}.local.leaf
 
-# cycle through desktops in desktop
-# alt + {_, shift+} Tab
- #     bspc wm -h off; \
-  #    bspc desktop -f {older,newer}.occupied; \
-   #   bspc wm -h on
-    #  bspc desktop -f focused
-
 @alt + {_, shift+} Tab
 	; (bspc desktop -f {next,prev}.local.occupied & sleep 0.2)
-
 
 
 # focus the older or newer node in the focus history
@@ -172,10 +147,10 @@ mod4 + {shift, alt} minus
 mod4 + semicolon
      bspc rule -a '*' -o desktop=next.!occupied follow=on
 
-# cancel
-# problematic...
-mod4 + alt + semicolon
-     bspc rule -r tail
+# open next window as floating
+mod4 + colon
+     bspc rule -a '*' -o state=floating
+
 
 #
 # preselect
@@ -216,41 +191,24 @@ mod4 + alt + shift + {h,j,k,l}
 
 
 
-# right click magic
-~button3
-	(isroot || isapplication URxvt emacs -v ncmpcpp) && ( pkill 9menu || clickbait )
-
-~button1
-	(isapplication 9menu || pkill 9menu)
-
-
-
-~button2
-	pkill 9menu ; isroot && act.sh --draw
-
-
 # extra mouse buttons
-button9
+button8
 	plumb --keybind
 	
-button8 ; button{1,2,3,4,5,9}
+button9 ; button{1,2,3,4,5,8}
 	{gestureclose.sh, act.sh -c, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && act.sh --draw}
 
 
-button8 ; button8 ; button{1,2,3,9,8}
+button9 ; button9 ; button{1,2,3,8,9}
 	{eval $VISUAL, eval $TERMINAL, pcmanfm, firefox, #abort}
 
-
-# bindings sans modifier
-#{~f, ~m, ~s, ~e, ~t, ~Return}
-#	haswindows || {firefox, findoropen deezer -t ncmpcpp, rofi -show combi -combi-modi "drun\,window", eval $VISUAL, urxvt -e tmux -f ~/.config/tmux/tmux.conf, urxvt -e tmux -f ~/.config/tmux/tmux.conf}
+button15
+       urxvt
 
 
 # kill notifications
 ~Escape
-	 pkill 9menu ; dunstctl close-all ; pkill -f 'feh.*thumbnail'
-
-
+	 pkill 9menu ; dunstctl close-all ; pkill -f 'feh.*thumbnail' ; bspc node any.sticky -g hidden=on
 
 
 
@@ -260,12 +218,21 @@ mod4 + {b, shift + b}
 
 # bluetooth
 mod4 + alt + {b, shift + b}
-     {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} $(bluetoothctl devices | cut -f2 -d' ' | head -n 1)
+     {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} $(bluetoothctl paired-devices | cut -f2 -d' ' | head -n 1)
+#    {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} 21:11:01:11:54:17
+#     {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} $(bluetoothctl paired-devices | cut -f2 -d' ' | head -n 1)
 
 
 # open emacs
+
 mod4 + e
-      eval $VISUAL
+     findoropen emacs
+#     (pgrep -x -u "$USER" emacsclient && findoropen emacs)
+# || emacsclient -create-frame
+
+mod4 + shift + e
+     emacsclient -create-frame
+#      eval $VISUAL
 
 
 # pomodoro
@@ -280,7 +247,6 @@ mod4 + r ; {b, d, n, p, v}
 mod4 + r ; m
      reload-cover # this one already sends a notification
 
-
 # pause / unpause dunst
 mod4 + backslash
        ;dunstctl set-paused false
@@ -294,6 +260,8 @@ mod4 + shift + backslash
 # not working as desired but it does provide the functionality all the
 # same
 
+
+
 #open non-duplicate programs
 mod4 + {a,c, shift + r,s,t,shift+t,v,w,shift+x}
       findoropen {anki, chromium, rocket rocketchat-desktop /snap/bin/rocketchat-desktop, signal signal-desktop /opt/Signal/signal-desktop, thunderbird, Browser tor-browser,mpv,"$WEB",xournalpp}
@@ -306,11 +274,13 @@ mod4 + m
 mod4 + z
      (pgrep teams && findoropen teams) || findoropen zoom
 
-#files
 
-#cover art, notes, manpdf
+
+# files
+
+# cover art, notes, manpdf
 mod4 + shift + {a, p, y}
-      {feh --auto-zoom --keep-zoom-vp --reload 1 $HOME/.scripts/output/cover.png, zathura $HOME/.scripts/output/man.pdf, td}
+      {bspc rule -a '*' -o state=floating; feh --auto-zoom --keep-zoom-vp --reload 1 $HOME/.scripts/output/cover.png, zathura $HOME/.scripts/output/man.pdf, td}
 
 # bg
 mod4 + alt + f
@@ -319,9 +289,9 @@ mod4 + alt + f
 
 
 
-#open selectors
-mod4 + {n, x, shift + v, y}
-      {~/ruby/jot.rb $( find ~/gtd -type f \! -name '*~' \! -wholename '*gtd/capture.org' | sed "s|^$HOME/gtd/||" | sort | dmenu), rofi -show combi -combi-modi "drun\,window", vsel, tdsel}
+# open selectors
+mod4 + {n, x, shift + u, shift + v, y}
+      {echo $( find $HOME/Documents/gtd -type f \! -name '*~' \! -wholename '*gtd/capture.org' | sed "s|^$HOME/Documents/gtd/||" | sort | rofi -dmenu), rofi -show combi -combi-modi "window\,drun", unicode.py $(rofi -dmenu) | xsel -b, vsel, tdsel}
 
 
 
@@ -331,9 +301,6 @@ mod4 + {n, x, shift + v, y}
 F2
 	~/.scripts/window/act.sh -d
 
-
-
-
 # reload the bar
 mod4 + F3
 	bar
@@ -342,11 +309,9 @@ mod4 + F3
 {F5,F6}
 	brightnessctl set {5%-,+5%} --exponent=1.5
 
-
 # rotate
 {_, shift +} F8
 	~/.local/bin/rotate-script.sh {invert, normal}
-
 
 
 #special keys
@@ -356,7 +321,6 @@ XF86Calculator
 
 XF86Audio{LowerVolume,RaiseVolume}
 	pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
-
 #	volume {-, +}
 
 {_, shift} + XF86AudioMute
@@ -398,28 +362,6 @@ XF86{TaskPane,RotateWindows}
 	~/.local/bin/rotate-script.sh {invert, normal}
 
 
-#page up + mod = bright up
-{mod4, control, alt} + Prior
-     for i in $(xrandr -q | grep ' connected' | cut -f1 -d' ' ); do \
-     	 bright $i + ; \
-     done
-
-#page down + mod = bright down
-{mod4, control, alt} + Next
-     for i in $(xrandr -q | grep ' connected' | cut -f1 -d' ' ); do \
-     	 bright $i - ; \
-     done
-
-#shift + page up + mod = force bright up
-shift + {_,mod4, control, alt} + Prior
-    xbright +
-
-#shift + page down + mod = force bright down
-shift + {_,mod4, control, alt} + Next
-    xbright -
-
-
-
 # take screenshots to clipboard
 {_, shift +} F9
       sleep 0.2 && screenshot {clipboard --select, clipboard} 
@@ -427,8 +369,6 @@ shift + {_,mod4, control, alt} + Next
 # save screenshots
 super + {_, shift} + F9
       sleep 0.2 && screenshot {--select,  } 
-
-
 
 
 {F10, F11}
@@ -440,9 +380,6 @@ super + {_, shift} + F9
 
 mod4 + F12
      plumb
-
-
-
 
 
 mod4 + {Up, Down, Left, shift + Left, Right, shift + Right}
@@ -458,9 +395,25 @@ mod4 + ctrl + alt + {Left, Right}
         mpvc seek {-,+}2
 
 
+# system utils:
 
 
 # compositor, nightshift
 mod4 + {equal, plus}
-      {pkill picom || picom -b, pkill redshift || redshift -c ~/.config/redshift.conf}
+      {(pkill picom || picom -b) || (pkill compton || compton --config ~/.config/compton/compton.conf), pkill redshift || redshift -c ~/.config/redshift.conf}
 
+
+
+# change keyboard layout
+mod4 + u ; {a, e, f, i, c}
+     setxkbmap -layout {ar, es, fr, ir, us -variant colemak} ; xmodmap ~/.config/xmodmap
+
+
+# tarmak
+mod4 + u ; {u, mod4 + u, space}
+     setxkbmap -layout us ; xmodmap ~/.config/xmodmap # ; xmodmap ~/.config/layouts/tarmak
+
+# suspend
+mod4 + alt + slash ; s
+     systemctl suspend
+# not working:(
