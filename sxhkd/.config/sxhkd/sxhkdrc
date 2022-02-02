@@ -363,25 +363,36 @@ XF86Audio{LowerVolume,RaiseVolume}
 	volume {toggle,mute}
 
 XF86Audio{Play,Pause}
-	mpvisrunning="$(pgrep mpv)" ;\
+	mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
 	if [ -n "$mpvisrunning" ]; then \
+	   echo 'mpv running' >> status ;\
 	   findoropen mpv ;\
-	   mpvc toggle ;\
-	else mpc toggle ; fi
+	   mpvc toggle || (sleep 0.1 ; xdotool key space) ;\
+	else \
+	   echo 'no mpv' >> status ;\
+	   mpc toggle ;\
+	fi
 
-{_, shift} + XF86AudioPrev
-	mpvisrunning="$(pgrep mpv)" ;\
+# It works! :)
+{_, shift +} XF86AudioPrev
+	mpvisrunning="$(/bin/pgrep mpv)" ;\
 	if [ -n "$mpvisrunning" ]; then \
 	   findoropen mpv ;\
-	   mpvc {seek -10s, prev} ;\
-	else mpc prev ; fi
+	   {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc prev, \
+ 	    mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
+	fi
+# 's/mpvc seek -60s/mpvc prev/' if you want to make use of the playlist features
 
-{_, shift} + XF86AudioNext
-	mpvisrunning="$(pgrep mpv)" ;\
+
+
+{_, shift +} XF86AudioNext
+	mpvisrunning="$(/bin/pgrep mpv)" ;\
 	if [ -n "$mpvisrunning" ]; then \
 	   findoropen mpv ;\
-	   mpvc {seek +10s, next} ;\
-	else mpc next ; fi
+	   {mpvc seek +10s || (sleep 0.1 ; xdotool key --clearmodifiers Right); else mpc next, \
+ 	    mpvc seek +60s || (sleep 0.1 ; xdotool key --clearmodifiers Up); else mpc random; mpc next} ;\ 
+	fi
+
 
 XF86{TaskPane,RotateWindows}
 	~/.local/bin/rotate-script.sh {invert, normal}
