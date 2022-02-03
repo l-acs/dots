@@ -290,6 +290,10 @@ There are two things you can do about this warning:
 	    (progn
 	      (local-unset-key "{")
 	      (local-unset-key "}"))))
+(add-hook 'tex-mode-hook
+	  (lambda ()
+	    (local-unset-key "\C-j")))
+
 
 ;; enable downcase-region
 (put 'downcase-region 'disabled nil)
