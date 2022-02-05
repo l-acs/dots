@@ -477,11 +477,15 @@ This command assumes point is not in a string or comment."
   (let '(org-agenda-span 'day)
     (org-agenda-list)))
 
+;; macros
 (fset 'new-empty-line-above
       [?\M-h return up])
 
 (fset 'new-empty-line-below
       [?\M-l return])
+
+(fset 'unfill-line
+   "\354\C-d\334\354")
 
 ;; searching
 (def-keymap isearch-mode-map
