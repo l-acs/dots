@@ -14,7 +14,7 @@ ncmpcpp_directory = ~/.config/ncmpcpp
 ## MPD clients (eg. ncmpc) also use that location.
 ##
 #
-lyrics_directory = ~/music/.lyrics
+lyrics_directory = $MUSIC/.lyrics
 #
 ##### connection settings #####
 #
