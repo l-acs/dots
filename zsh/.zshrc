@@ -97,6 +97,9 @@ function unicopy () {
 # edit a temporary file and write its contents to stdout, copying them to the clipboard
 alias cw='cwrite =() && clip'
 
+# copy last line of history to clipboard
+alias copylast='history | tail -n 1 | clip'
+
 alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Font Awesome 5 Brands' -f 'Font Awesome 5 Free Solid'"
 
 
@@ -104,9 +107,15 @@ alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Fon
 alias zrc="vim ~/.zshrc"
 alias cover="feh --auto-zoom --keep-zoom-vp .scripts/output/cover.png"
 playlists="$HOME/.config/mpd/playlists"
-alias 330="cd ~/school/330/"
-alias 409="cd ~/school/409/"
 
+# aliases for each school folder
+for folder in "$HOME/s/"*; do
+	if [ -d "$folder" ]; then
+		base="$(basename "$folder")"
+		alias "$base"="$folder"
+	fi
+done
+alias comp=component
 
 
 ### utils ###
@@ -153,6 +162,11 @@ function videotoaudio()
     ffmpeg -i "$*" -vn -acodec copy "$(echo "$*" | sed 's/\.[a-zA-Z0-9]*$/.aac/')"
 }
 
+# cover art
+function save-current-art-to-file()
+{
+    ffmpeg -i "$MUSIC/$( mpc current -f '%file%' )" "$MUSIC/$(dirname "$(mpc current -f '%file%')")/cover.jpg"
+}
 
 # scrobbling
 alias love='mpc sendmessage mpdas love'

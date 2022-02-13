@@ -1,8 +1,17 @@
-if [ "$HOST" = rock ]; then
-    font=14
-else
-    font=18
 fi
+
+export MOZ_USE_XINPUT2=2
+case "$HOST" in
+	rock)
+		font=14
+		;;
+	titanium)
+		font=30
+		;;
+	*)
+		font=18
+		;;
+esac
 
 
 export XDG_CONFIG_HOME="$HOME/.config"
