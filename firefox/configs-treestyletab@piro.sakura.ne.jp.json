@@ -1,0 +1,37 @@
+{
+  "avoidDiscardedTabToBeActivatedIfPossible": true,
+  "cachedExternalAddons": [
+    "multipletab@piro.sakura.ne.jp"
+  ],
+  "chunkedUserStyleRules0": "LyogU2hvdyB0aXRsZSBvZiB1bnJlYWQgdGFicyB3aXRoIHJlZCBhbmQgaXRhbGljIGZvbnQgKi8KLyoKOnJvb3Quc2lkZWJhciB0YWItaXRlbS51bnJlYWQgLmxhYmVsLWNvbnRlbnQgewogIGNvbG9yOiByZWQgIWltcG9ydGFudDsKICBmb250LXN0eWxlOiBpdGFsaWMgIWltcG9ydGFudDsKfQoqLwoKLyogQWRkIHByaXZhdGUgYnJvd3NpbmcgaW5kaWNhdG9yIHBlciB0YWIgKi8KLyoKOnJvb3Quc2lkZWJhciB0YWItaXRlbS5wcml2YXRlLWJyb3dzaW5nIHRhYi1sYWJlbDpiZWZvcmUgewogIGNvbnRlbnQ6ICLwn5W2IjsKfQoqLw==",
+  "closeParentBehavior": 6,
+  "closeParentBehaviorMode": 1,
+  "closeParentBehavior_insideSidebar_expanded": 6,
+  "configsVersion": 25,
+  "context_openAllBookmarksWithStructureRecursively": true,
+  "lastSelectedSubPanelProviderId": "@tst-search-dev",
+  "notifiedFeaturesVersion": 9,
+  "optionsExpandedSections": [
+    "section-appearance",
+    "section-treeBehavior",
+    "section-advanced",
+    "section-addons",
+    "section-debug"
+  ],
+  "parentTabOperationBehaviorMode": 1,
+  "showDialogInSidebar": true,
+  "sidebarPosition": 1,
+  "sidebarPositionRighsideNotificationShown": true,
+  "style": "photon",
+  "syncDevices": {
+    "device-1618711758322-30354": {
+      "id": "device-1618711758322-30354",
+      "name": "Firefox on Linux",
+      "icon": "device-desktop",
+      "timestamp": 1640558690736
+    }
+  },
+  "treeDoubleClickBehavior": 1,
+  "userStyleRules": "",
+  "userStyleRulesFieldHeight": "88.88333129882812px"
+}
