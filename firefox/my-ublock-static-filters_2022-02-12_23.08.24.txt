@@ -1,0 +1,171 @@
+! pesky stack exchange cookie banner
+*##.js-consent-banner.r16.l16.b16.bar-lg.fc-white.bg-black-750.p32.sm\:w-auto.ws4.z-nav-fixed.ps-fixed.ff-sans
+
+!!! pesky stack exchange ui filler
+! banner
+*##.sm\:fd-column.wmx12.mx-auto.jc-center.ai-center.grid.px12
+! left sidebar
+*##.ps-relative.js-pinned-left-sidebar.left-sidebar
+! top bar
+*##.js-dismissable-hero.ps-relative.sm\:pb24.sm\:pt24.fc-black-200.bg-black-750.py24
+*##.user-logged-out.h100.list-reset.ai-center.grid.-secondary.ml-auto.overflow-x-auto
+
+! 2021-04-19 https://www.howtogeek.com
+www.howtogeek.com##.inner-border
+
+! 2021-04-20 https://www.duolingo.com
+www.duolingo.com##.IvcaF
+www.duolingo.com##._2QOX5.yTpGk.UCrz7._3yAjN._25Cnc._3dtSu.t5wFJ._2fOC9._1nlVc._2gwtT.whuSQ._1Ylz-._6TCdY
+www.duolingo.com##._3shUr
+www.duolingo.com##._1ErIv
+||d35aaqx5ub95lt.cloudfront.net/images/star-pattern.svg$image
+||d35aaqx5ub95lt.cloudfront.net/images/star-pattern.svg$image
+www.duolingo.com##._1SrGE
+www.duolingo.com##._7pBya
+www.duolingo.com##._8oBzi
+www.duolingo.com##._1figt._3Ev3S._3yAjN._25Cnc._3dtSu.t5wFJ._2fOC9._1nlVc._2gwtT._2A7uO._2OOOF._2Gf2X
+
+! 2021-04-20 https://github.com
+github.com##.text-md-left.text-center.col-lg-6.col-12.mr-md-3.ml-md-n3
+github.com###home-code > .p-responsive-fluid.container-xl > .gutter-spacious-fluid.gutter-fluid.flex-column.d-flex
+github.com##.js-section.wide-block.box-shadow-default-mktg.mx-auto.z-2.position-relative
+github.com##.color-bg-primary.py-2.px-md-4
+github.com##.js-globe-canvas.webgl-canvas
+github.com##.js-webgl-globe.height-full.position-relative.home-globe.mt-lg-2.mt-n9.width-full.mx-auto
+github.com##.py-md-9.py-8.p-responsive-fluid.container-xl.mx-auto
+github.com##.pt-md-6.pt-5.offset-md-1.col-12.home-git-log-light
+github.com##.home-codespaces-container.offset-1.col-md-10.col-11
+github.com##.pb-md-9.pb-8.pt-md-11.pt-10.home-git-log-center
+github.com##.d-lg-inline-block.d-block.no-wrap.border-0.py-3.px-0.HeaderMenu-link.HeaderMenu-summary
+github.com##.d-lg-inline-block.d-block.py-3.no-underline.HeaderMenu-link
+github.com##.js-signup-redesign-control.js-signup-redesign-target.py-1.px-2.rounded.color-border-tertiary.border.no-underline.d-inline-block.flex-shrink-0.HeaderMenu-link
+
+! 2021-04-23 https://www.duolingo.com
+www.duolingo.com##div._3Gj5_:nth-of-type(6)
+www.duolingo.com##div._3Gj5_ > ._1figt._3Ev3S._3yAjN._25Cnc._3dtSu.t5wFJ._2fOC9._1nlVc._2gwtT._2A7uO._3iVqs._2Jb7i
+www.duolingo.com##._3bfsh._1UOwI > ._3ZuGY
+
+! 2021-05-06 https://www.nytimes.com
+www.nytimes.com##div.egw6tc41.css-et84d3:nth-of-type(2)
+www.nytimes.com##div.egw6tc41.css-et84d3:nth-of-type(1)
+www.nytimes.com##.css-13321i0
+www.nytimes.com##.egw6tc40.css-zz4c3m
+www.nytimes.com##.dockCard__content
+www.nytimes.com##.ejw0p350.css-183a15u
+
+! 2021-05-07 https://www.wikihow.com
+www.wikihow.com##.qa_obscured_answer_purchase.qa_obscured_answer_expert.qa_obscured_answer.answer.qa_answer > .qa_obscured_prompt > .qa_obscured_answer_overlay
+
+! 2021-05-08 https://stackoverflow.com
+stackoverflow.com##.sm\:ai-center.sm\:fd-row.md\:fd-column.lg\:pr24.lg\:pl24.ai-center.jc-space-between.py12.px8.mx-auto.wmx12.grid
+stackoverflow.com##.m0.p0.d-block
+stackoverflow.com##.show-votes
+stackoverflow.com##.site-footer--container
+
+! 2021-05-08 https://forum.proxmox.com
+forum.proxmox.com##.notice--cookie.notice--primary.js-notice.notice
+
+! 2021-05-08 https://serverfault.com
+serverfault.com##.mb16.s-anchors__grayscale.s-anchors.s-sidebarwidget__yellow.s-sidebarwidget
+serverfault.com##.tex2jax_ignore.module
+serverfault.com##.sm\:pb8.sm\:pt8.sm\:fd-column.jc-space-between.site-header--container
+serverfault.com##.site-footer--container
+
+! 2021-05-08 https://security.stackexchange.com
+security.stackexchange.com##.mb16.s-anchors__grayscale.s-anchors.s-sidebarwidget__yellow.s-sidebarwidget
+||cdn.sstatic.net/Sites/security/img/header-foreground.svg?v=621bb09b5524$image
+||cdn.sstatic.net/Sites/security/img/header-foreground.svg?v=621bb09b5524$image
+||cdn.sstatic.net/Sites/security/img/header-foreground.svg?v=621bb09b5524$image
+||cdn.sstatic.net/Sites/security/img/header-foreground.svg?v=621bb09b5524$image
+||cdn.sstatic.net/Sites/security/Img/logo.svg?v=f9d04c44487b$image
+||cdn.sstatic.net/Sites/security/img/header-foreground.svg?v=621bb09b5524$image
+||cdn.sstatic.net/Sites/security/img/header-foreground.svg?v=621bb09b5524$image
+||cdn.sstatic.net/Sites/security/img/header-foreground.svg?v=621bb09b5524$image
+security.stackexchange.com##.site-footer--container
+
+! 2021-05-08 https://www.meridianstar.com
+www.meridianstar.com###ta_background
+www.meridianstar.com##.ta_centralPopup.ta_popup
+
+! 2021-05-30 https://theburningmonk.com
+||theburningmonk.com/wp-content/uploads/2020/08/img_5f4d6e7b19846.png$image
+theburningmonk.com###custom_html-12 > .custom-html-widget.textwidget
+theburningmonk.com##.widget_wgs_widget.widget
+
+! 2021-06-27 https://phoenixnap.com
+phoenixnap.com##.ftwp-transform-left-center.ftwp-border-thin.ftwp-shape-square
+
+! 2021-06-27 https://tabs.ultimate-guitar.com
+||tabs.ultimate-guitar.com/static/storage/takeover/media/1f561c2721c64c4933036af253b33066c0f0f511_0.jpeg@250?ver=1624354866$image
+||tabs.ultimate-guitar.com/static/storage/takeover/media/1f561c2721c64c4933036af253b33066c0f0f511_1.jpeg@250?ver=1624354866$image
+||tabs.ultimate-guitar.com/static/storage/takeover/media/1f561c2721c64c4933036af253b33066c0f0f511_0.jpeg@250?ver=1624354866$image
+
+! 2021-06-28 https://www.nytimes.com
+www.nytimes.com###gateway-content
+www.nytimes.com##.e1x0szx60.css-17nqy7q.expanded-dock.shown.MAG_web_regi_us_sale_apple-pay-dock-ecd-test
+
+! 2021-06-29 https://www.washingtonpost.com
+www.washingtonpost.com##.border-box.w-100.absolute.grid-cols-12.grid
+www.washingtonpost.com##.bg-white.justify-center.flex.overflow-hidden.border-box.w-100.left-0.bottom-0.fixed
+
+! 2021-07-21 https://www.spanishdict.com
+www.spanishdict.com##.uMMjjd-3
+
+! 2021-08-21 https://www.duolingo.com
+www.duolingo.com##div._3Gj5_:nth-of-type(5)
+
+! 2021-08-22 https://fizz.ca
+fizz.ca###social-buttons-container
+fizz.ca##.more-options-line.justify-content-center.row
+
+! 2021-10-05 https://metro.co.uk
+metro.co.uk##.widget.just-in-container.trending-sidebar
+||metro.co.uk/wp-content/themes/metro-parent/lib/plugins/metro-newsletters/signups/images/news-signup.png$image
+||metro.co.uk/wp-content/themes/metro-parent/lib/plugins/metro-newsletters/signups/images/news-signup.png$image
+||metro.co.uk/wp-content/themes/metro-parent/lib/plugins/metro-newsletters/signups/images/news-signup.png$image
+||metro.co.uk/wp-content/themes/metro-parent/lib/plugins/metro-newsletters/signups/images/news-signup.png$image
+||metro.co.uk/wp-content/themes/metro-parent/lib/plugins/metro-newsletters/signups/images/news-signup.png$image
+metro.co.uk##.col-skinny
+metro.co.uk##.clearfix.widget.trending-main
+metro.co.uk##.four-item.clearfix.widget.video-list
+metro.co.uk##.metro-discounts
+metro.co.uk###page-container > .clearfix
+metro.co.uk###nav-menu-item-488626 > .navigation__menu-bar-submenu
+metro.co.uk###we-need-monies
+metro.co.uk##.masthead__top
+metro.co.uk##.single-article-header
+metro.co.uk##.metro-email-signup-news-inner
+||metro.co.uk/wp-content/themes/metro-parent/lib/plugins/metro-newsletters/signups/images/news-signup.png$image
+metro.co.uk##.metro-email-signup-news-info > p
+||metro.co.uk/wp-content/uploads/2015/06/ad_173442188.jpg?quality=90&strip=all&zoom=1&resize=644%2C491$image
+metro.co.uk##.masthead
+metro.co.uk##figcaption
+||metro.co.uk/wp-content/uploads/2015/06/ad_173442188.jpg?quality=90&strip=all&zoom=1&resize=644%2C491$image
+||metro.co.uk/wp-content/themes/metro-parent/lib/plugins/metro-newsletters/signups/images/news-signup.png$image
+||metro.co.uk/wp-content/themes/metro-parent/lib/plugins/metro-newsletters/signups/images/news-signup.png$image
+
+! 2021-11-05 https://www.spanishdict.com
+www.spanishdict.com##._3-1LsKuy
+
+! 2022-02-13 https://www.washingtonpost.com
+www.washingtonpost.com##.overflow-hidden.border-box.w-100.absolute.grid.justify-between
+www.washingtonpost.com##.softwall-overlay.bg-blue-pale.subs-theme.hide-for-print.justify-center.flex.overflow-hidden.border-box.w-100.left-0.bottom-0.fixed
+www.washingtonpost.com##.col-4-lg.flex.mt-md-l.flex-1.right-rail.flex-column.hide-for-print
+www.washingtonpost.com##.mr-sm-ns.mr-xs.justify-end.flex-1.flex
+www.washingtonpost.com##.bt.b.mb-lg-mod.pb-sm.bc-black.w-100.hide-for-print.headline-list
+||talk.washingtonpost.com/embed/stream?storyURL=https%3A%2F%2Fwww.washingtonpost.com%2Ftechnology%2F2021%2F03%2F18%2Fapple-flicktype-lawsuit-fraud%2F&v=6.16.2&ts=1644723900000&initialWidth=648&childId=comments&parentTitle=FlickType%20sues%20Apple%20for%20fraud%20and%20abuse%20of%20monopoly%20-%20The%20Washington%20Post&parentUrl=https%3A%2F%2Fwww.washingtonpost.com%2Ftechnology%2F2021%2F03%2F18%2Fapple-flicktype-lawsuit-fraud%2F$subdocument
+||talk.washingtonpost.com/embed/stream?storyURL=https%3A%2F%2Fwww.washingtonpost.com%2Ftechnology%2F2021%2F03%2F18%2Fapple-flicktype-lawsuit-fraud%2F&v=6.16.2&ts=1644723900000&initialWidth=648&childId=comments&parentTitle=FlickType%20sues%20Apple%20for%20fraud%20and%20abuse%20of%20monopoly%20-%20The%20Washington%20Post&parentUrl=https%3A%2F%2Fwww.washingtonpost.com%2Ftechnology%2F2021%2F03%2F18%2Fapple-flicktype-lawsuit-fraud%2F$subdocument
+www.washingtonpost.com##.pb-lg.pt-lg.mb-lg-mod.bh.b
+||talk.washingtonpost.com/embed/stream?storyURL=https%3A%2F%2Fwww.washingtonpost.com%2Ftechnology%2F2021%2F03%2F18%2Fapple-flicktype-lawsuit-fraud%2F&v=6.16.2&ts=1644723900000&initialWidth=648&childId=comments&parentTitle=FlickType%20sues%20Apple%20for%20fraud%20and%20abuse%20of%20monopoly%20-%20The%20Washington%20Post&parentUrl=https%3A%2F%2Fwww.washingtonpost.com%2Ftechnology%2F2021%2F03%2F18%2Fapple-flicktype-lawsuit-fraud%2F$subdocument
+www.washingtonpost.com###comments-wrapper > div
+www.washingtonpost.com##.ma-auto.pb-xl.flex-grid.hide-for-print
+www.washingtonpost.com###gift-share-control > .fill-offblack.content-box > path
+
+! 2022-02-13 https://www.goodreads.com
+www.goodreads.com##.Overlay__window
+||i.gr-assets.com/images/S/compressed.photo.goodreads.com/siteheaderbannerimages/16433860*.jpg$image
+www.goodreads.com##.Button--rounded.Button--medium.Button--buy.Button
+www.goodreads.com##.Button--block.Button--medium.Button--buy.Button
+www.goodreads.com##div.ReviewsList:nth-of-type(2)
+www.goodreads.com##.WriteReviewCTA
+
