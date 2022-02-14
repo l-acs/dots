@@ -10,21 +10,10 @@ mod4 + ctrl + shift + slash
 
 # terminal emulator
 mod4 + Return
-     if isapplication Emacs ; then \
-     	xdotool key --clearmodifiers alt+e; \
-	xdotool type --clearmodifiers shell; \
-	xdotool key --clearmodifiers Return; \
-     else \
-     	emacsclient -create-frame --alternate-editor='' -e "(shell)" ;\
-     fi
-
-# term \"/bin/tmux\")"
-
+     eval ${TERMINAL}
 
 mod4 + shift + Return
-	eval ${TERMINAL}
-
-
+    emacsclient -create-frame --alternate-editor='' -e "(shell)"
 
 
 # make sxhkd reload its configuration files:
