@@ -162,6 +162,13 @@ function videotoaudio()
     ffmpeg -i "$*" -vn -acodec copy "$(echo "$*" | sed 's/\.[a-zA-Z0-9]*$/.aac/')"
 }
 
+
+# go to current song folder
+function nav-to-current-song()
+{
+    mpc current -f '%file%' | sed "s|^|$MUSIC/|" | xargs -0 dirname | clip ; cd xb
+}
+
 # cover art
 function save-current-art-to-file()
 {
