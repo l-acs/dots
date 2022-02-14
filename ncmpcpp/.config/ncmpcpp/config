@@ -282,7 +282,12 @@ song_columns_list_format = (20)[]{a} (6f)[green]{NE} (50)[white]{t|f:Title} (20)
 ## Note: Custom command that will be executed each time song changes. Useful for
 ## notifications etc.
 ##
-execute_on_song_change = reload-cover ; pkill wal ; ( pgrep -f -x 'feh .*cover.png' && wal -i "$HOME/.scripts/output/covers/$( mpc current -f '%artist% - %album%' ).png"  -n -a 85 & )  >/dev/null 2>/dev/null
+execute_on_song_change = pkill wal ; cp "$MUSIC/$(dirname "$(mpc current -f '%file%')")/cover.jpg" ~/.scripts/output/cover.png ; (pgrep -x dunst && [ "$(dunstctl is-paused)" = true ]) || notify-send --icon=~/.scripts/output/cover.png "$(mpc current -f '%title%\n%artist%')"; ( pgrep -f -x 'feh .*cover.png' && wal -a 85 -n -b 000000 -i "$MUSIC/$(dirname "$(mpc current -f '%file%')")/"cover.jpg & ) >/dev/null 2>/dev/null
+# either [dunst is running and paused] or else (i.e. dunst is unpaused or not running) send a notification
+
+
+# notify-send --icon=~/.scripts/output/cover.png "$(mpc current -f '%title%\n%artist%'
+# wal -i "$HOME/.scripts/output/covers/$( mpc current -f '%artist% - %album%' ).png"  -n -a 85 & )  >/dev/null 2>/dev/null
 #
 ##
 ## Note: Custom command that will be executed each time player state
