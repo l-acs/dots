@@ -97,8 +97,21 @@ function unicopy () {
 # edit a temporary file and write its contents to stdout, copying them to the clipboard
 alias cw='cwrite =() && clip'
 
-# copy last line of history to clipboard
-alias copylast='history | tail -n 1 | clip'
+# copy last line(s) of history to clipboard
+function copylast()
+{
+    case $# in
+       0)
+	  history | tail -n 1 | cut -f3- -d' ' | clip
+	  ;;
+       1)
+	  history | tail -n "$1" | cut -f3- -d' ' | clip
+	  ;;
+       *)
+          return 1
+	  ;;
+    esac
+}
 
 alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Font Awesome 5 Brands' -f 'Font Awesome 5 Free Solid'"
 
