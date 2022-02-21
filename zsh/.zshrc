@@ -228,6 +228,18 @@ function emacs()
     emacsclient -create-frame --alternate-editor="" "${@}" & disown
 }
 
+grep=$(which grep)
+function grep()
+{
+    grepflags="--color --no-messages" # --line-number"
+    # if there's no standard input, then tell grep to run recursively on its arguments
+    if [ -p /dev/stdin ]; then
+        eval $grep $grepflags "$*" /dev/stdin
+    else
+        eval $grep $grepflags --dereference-recursive "$*"
+    fi
+}
+
 ping=$(which ping)
 function ping()
 {
