@@ -182,18 +182,21 @@ function nav-to-current-song()
     mpc current -f '%file%' | sed "s|^|$MUSIC/|" | xargs -0 dirname | clip ; cd xb
 }
 
+function open-if-exists() { [ -f "$1" ] && eval ${VISUAL} '"$1"' }
+
 function open-lyrics-if-exist()
 {
-    function open-if-exists() { [ -f "$1" ] && eval ${VISUAL} '"$1"' }
+    function open-if-exists() { [ -f "$1" ] && eval ${VISUAL} '"$1"' &}
 
     current="$(mpc current -f '%file%' | sed "s|^|$MUSIC/|")"
     dir="$(dirname "$current")"
     stem="$(basename "$current" | sed "s/\.\(mp3\|flac\|m4a\)$//")"
 
-    (open-if-exists "$dir/$stem.lrc" ||
+    open-if-exists "$dir/$stem.lrc" ||
 	   open-if-exists "$dir/$stem.txt" ||
 	   open-if-exists "$MUSIC/.lyrics/$stem.lrc" ||
-	   open-if-exists "$MUSIC/$(mpc current -f '%artist% - %title%').txt") &
+	   open-if-exists "$MUSIC/$(mpc current -f '%artist% - %title%').txt" ||
+	   return 1
 }
 
 # cover art
