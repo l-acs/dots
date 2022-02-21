@@ -152,6 +152,14 @@
 #def_key "mouse"
 #  mouse_event
 #
+
+
+def_key "b"
+    run_external_command "mpc sendmessage mpdas love && notify-send --icon=~/.scripts/output/cover.png \"Loved: $(mpc current -f '%title%\n%artist%')\""
+
+def_key "B"
+  run_external_command "mpc sendmessage mpdas unlove && notify-send --icon=~/.scripts/output/cover.png \"Unloved: $(mpc current -f '%title%\n%artist%')\""
+
 def_key "k"
   scroll_up
 
@@ -355,6 +363,11 @@ def_key "space"
 def_key "\\"
   add_item_to_playlist
 
+
+# def_key "\\"
+#   add_item_to_playlist_after_current_song
+
+
 #def_key ">"
 #  next
 #
@@ -484,11 +497,14 @@ def_key "N"
 #def_key "I"
 #  show_artist_info
 #
-#def_key "g"
-#  jump_to_position_in_song
-#
+def_key "m"
+  jump_to_position_in_song
+
+# show lyrics
 def_key "L"
-  show_lyrics
+ run_external_command "zsh -c 'source /home/l-acs/.zshrc && open-lyrics-if-exist' >/dev/null 2>&1"
+
+
 
 #def_key "ctrl-v"
 #  select_range
