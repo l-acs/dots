@@ -295,6 +295,20 @@ function gcfg()
 }
 
 
+function magit()
+{
+   if [ $# -eq 0 ]; then
+      if [ -d .git ]; then
+         emacs -eval "(magit)"
+      else
+         echo 'Not a git repository! Please navigate to one or pass an argument.'
+	 return 1
+      fi
+   else
+      emacs -eval "(magit \"$*\")"
+   fi
+}
+
 function m3u8tom3u()
 {
 	for playlist in "$1"/*.m3u8
