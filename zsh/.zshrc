@@ -228,7 +228,7 @@ function emacs()
     emacsclient -create-frame --alternate-editor="" "${@}" & disown
 }
 
-grep=$(which grep)
+grep=$(which -p grep) # force a path search so not overridden by function
 function grep()
 {
     grepflags="--color --no-messages" # --line-number"
@@ -240,7 +240,7 @@ function grep()
     fi
 }
 
-ping=$(which ping)
+ping=$(which -p ping) # force a path search so not overridden by function
 function ping()
 {
 
@@ -257,7 +257,6 @@ function ping()
 
 alias diff="diff --unified --color"
 alias du="du -sh"
-alias grep="grep --color --no-messages --dereference-recursive"
 alias less='less -N'
 alias ls="ls --color"
 alias pgrep="pgrep -f -a"
