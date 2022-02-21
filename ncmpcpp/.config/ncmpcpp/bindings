@@ -502,7 +502,7 @@ def_key "m"
 
 # show lyrics
 def_key "L"
- run_external_command "zsh -c 'source /home/l-acs/.zshrc && open-lyrics-if-exist' >/dev/null 2>&1"
+ run_external_command "zsh -c 'source /home/l-acs/.zshrc && open-lyrics-if-exist || notify-send \"Lyrics not found!\"'  >/dev/null 2>&1"
 
 
 
