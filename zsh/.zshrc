@@ -310,6 +310,40 @@ function magit()
    fi
 }
 
+
+### docker ###
+alias dlogs='docker container logs'
+
+function matching-containers ()
+{
+    docker container ls --all |
+	sed '/^CONTAINER/d' |
+	cut -f1 -d' ' |
+	while read id;
+	    do
+		[ -n "$(docker container inspect "$id" | grep -i "$*")" ] &&
+			echo Container \'"$id"\' matches "$*"\; \
+			    its image might be \
+			    "$(docker container inspect "$id" | grep image -i | cut -f4 -d'"' | tail -n 1)";
+            done
+}
+
+
+function non-matching-containers ()
+{
+    docker container ls --all |
+	sed '/^CONTAINER/d' |
+	cut -f1 -d' ' |
+	while read id;
+	    do
+		[ -z "$(docker container inspect "$id" | grep -i "$*")" ] &&
+			echo Container \'"$id"\' does not match "$*"\; \
+			    its image might be \
+		  	    "$(docker container inspect "$id" | grep image -i | cut -f4 -d'"' | tail -n 1)";
+	    done
+}
+
+
 function m3u8tom3u()
 {
 	for playlist in "$1"/*.m3u8
@@ -336,6 +370,15 @@ function kitaab-vocab-mpvc ()
 
 
 alias kitaab="z $HOME/Documents/fall-2021/fiu/al-kitaab-two.pdf"
+CONTAINER_NOTEBOOK_DIR='/opt/notebooks'
+alias jupyter='docker run -d -t -p 8888:8888 -v "$HOME/s/webapp/projects/notebooks":"$CONTAINER_NOTEBOOK_DIR" continuumio/anaconda3 /bin/bash -c "mkdir -p "$CONTAINER_NOTEBOOK_DIR" && /opt/conda/bin/jupyter notebook --notebook-dir="$CONTAINER_NOTEBOOK_DIR" --ip=\* --port=8888 --no-browser --allow-root"'
+
+alias condacontainer='docker ps | grep anaconda | cut -f1 -d\ '
+alias condastop='docker container stop $(condacontainer)'
+alias condaurl='docker logs $(condacontainer) | grep http | cut -f7- -d" "  | tail -n 1'
+alias condashell='docker exec -it $(condacontainer) /bin/bash'
+
+
 alias clock='tty-clock -t -c'
 alias pomo='~/projects/pomo/add-date.sh >/dev/null ; pomo'
 alias pomodoro:='pomo $POMO_DEFAULT_DURATION'
