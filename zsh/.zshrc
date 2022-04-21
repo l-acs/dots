@@ -125,10 +125,10 @@ playlists="$HOME/.config/mpd/playlists"
 for folder in "$HOME/s/"*; do
 	if [ -d "$folder" ]; then
 		base="$(basename "$folder")"
-		alias "$base"="$folder"
+		alias -g "$base"="$folder"
 	fi
 done
-alias comp=component
+alias -g comp=component
 
 
 ### utils ###
@@ -144,7 +144,7 @@ function cl()
 
 function space() #only a function because of quoting nightmares
 { 
-	df -h | \grep '/$' | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
+	df -h | /bin/grep '/$' | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
 }
 
 alias battery='cat /sys/class/power_supply/BAT0/capacity'
@@ -255,6 +255,7 @@ function ping()
 
 }
 
+alias crontab="crontab -i"
 alias diff="diff --unified --color"
 alias du="du -sh"
 alias less='less -N'
@@ -337,5 +338,5 @@ function kitaab-vocab-mpvc ()
 alias kitaab="z $HOME/Documents/fall-2021/fiu/al-kitaab-two.pdf"
 alias clock='tty-clock -t -c'
 alias pomo='~/projects/pomo/add-date.sh >/dev/null ; pomo'
-alias pomodoro:='pomo 25m'
+alias pomodoro:='pomo $POMO_DEFAULT_DURATION'
 # alias pomodoro='pomodoro:'

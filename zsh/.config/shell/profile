@@ -32,8 +32,15 @@ export NINEFLAGS="-bg #fdf6e3 -fg #222222 -font 'UbuntuMono-R' -popup -teleport"
 export MUSIC="$HOME/music"
 export VIDEO="$HOME/videos"
 export PICTURE="$HOME/pictures"
+export PODCAST="$HOME/Documents/podcasts"
+export POMO_DEFAULT_DURATION="25m"
+
 
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
+export DOCKER_HOST=unix:///run/user/1000/docker.sock
+export INPUTRC="$HOME/.config/readline/rlwrap"
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # frequently used
 export bind="$HOME/.config/sxhkd/sxhkdrc"
