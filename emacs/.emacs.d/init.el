@@ -349,7 +349,7 @@ There are two things you can do about this warning:
        pairlist))
 
 ;; for muscle memory
-(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\C-y" "\M-y" "\C-r" "\M-r" "\M-s" "\C-t" "\C-q" "\M-<" "\M->" "(" "{" "<" "~" "`" "\"" "_"))
+(setq global-unsets '("\C-j" "\C-k" "\C-n" "\C-p" "\M-f" "\M-b" "\C-f" "\C-b" "\C-a" "\C-e" "\M-a" "\M-v" "\C-v" "\C-y" "\M-y" "\C-r" "\M-r" "\M-s" "\C-t" "\C-q" "\M-<" "\M->" "(" "{" "<" "~" "`" "\"" "'" "_" "*"))
 (mapc 'global-unset-key global-unsets)
 
 (def-keymap ctl-x-map
@@ -416,10 +416,11 @@ This command assumes point is not in a string or comment."
 			  (123 125)
 			  (60 62)
 			  (34 34)
-			  (39 39)
-			  (96 96)   ; backticks
-			  (126 126) ; tildes
-			  (95 95))) ; underscores
+			  (39 39) ; 'single quotes'
+			  (96 96)   ; `backticks`
+			  (126 126) ; ~tildes~
+			  (95 95) ; _underscores_
+			  (42 42))) ; *asterisks*
 
 (defun wrap-curly (&optional arg)
   (interactive "P")
@@ -439,6 +440,11 @@ This command assumes point is not in a string or comment."
   (interactive "P")
   (wrap-if-region ?\" ?\"))
 
+(defun wrap-single-quote (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?\' ?\'))
+
+
 (defun wrap-tilde (&optional arg)
   (interactive "P")
   (wrap-if-region ?~ ?~))
@@ -451,8 +457,14 @@ This command assumes point is not in a string or comment."
   (interactive "P")
   (wrap-if-region ?_ ?_))
 
+(defun wrap-asterisk (&optional arg)
+  (interactive "P")
+  (wrap-if-region ?* ?*))
+
+
 (defun forward-or-backward-sexp (&optional arg)
   "Go to the matching parenthesis character if one is adjacent to point."
+  "todo: Make this work with <>,{},[] automatically"
   (interactive "^p")
   (cond ((looking-at "\\s(") (forward-sexp arg))
         ((looking-back "\\s)" 1) (backward-sexp arg))
@@ -520,9 +532,11 @@ This command assumes point is not in a string or comment."
    '("[" wrap-bracket)
    '("<" wrap-angle)
    '("\"" wrap-quote)
+   '("'" wrap-single-quote)
    '("~" wrap-tilde)
    '("`" wrap-backtick)
    '("_" wrap-underscore)
+   '("*" wrap-asterisk)
    '("\M-0" forward-or-backward-sexp)
    '("\M-Q" quoted-insert)
    '("\M-\\" just-one-space)
