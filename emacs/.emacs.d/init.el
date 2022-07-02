@@ -596,8 +596,13 @@ This command assumes point is not in a string or comment."
 (setenv "TD_DIR" "/home/l-acs/Documents/gtd/td") ;; why is this here? maybe for `td` w/in the Emacs shell?
 
 ;; how do I source .zshrc "into" the PATH?
+(setq desktop-dirname
+      (concat (getenv "HOME") "/.emacs.d/desktops"))
 
-(desktop-read (concat (getenv "HOME") "/.emacs.d/"))
+(setq desktop-path
+      (list desktop-dirname))
+
+(desktop-read)
 ;; 2021-09-27: this initially seemed to break the daemon somehow (and
 ;; yet running emacsclient a second time seemed to do just fine) but
 ;; it seems as though the problem's gone away
