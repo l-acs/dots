@@ -287,10 +287,13 @@ There are two things you can do about this warning:
 
 (add-hook 'java-mode-hook
 	  (lambda ()
-	    (progn
-	      (local-unset-key "{")
-	      (local-unset-key "}"))))
+	    (mapc 'local-unset-key (list "{" "}" "(" ")"))))
+
 (add-hook 'tex-mode-hook
+	  (lambda ()
+	    (local-unset-key "\C-j")))
+
+(add-hook 'sql-interactive-mode-hook
 	  (lambda ()
 	    (local-unset-key "\C-j")))
 
