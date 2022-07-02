@@ -11,7 +11,7 @@ ncmpcpp_directory = ~/.config/ncmpcpp
 #
 ##
 ## Directory for storing downloaded lyrics. It defaults to ~/.lyrics since other
-## MPD clients (eg. ncmpc) also use that location.
+## MPD clients (e.g. ncmpc) also use that location.
 ##
 #
 lyrics_directory = $MUSIC/.lyrics
@@ -32,7 +32,7 @@ mpd_music_dir = ~/music
 #
 ##### music visualizer #####
 ##
-## Note: In order to make music visualizer work you'll need to use mpd fifo
+## Note: In order to make music visualizer work you'll need to use mpd FIFO
 ## output, whose format parameter has to be set to 44100:16:1 for mono
 ## visualization or 44100:16:2 for stereo visualization. Example configuration
 ## (it has to be put into mpd.conf):
@@ -149,7 +149,7 @@ visualizer_look = "▗▕"
 ## $R - begin right alignment
 ##
 ## If you want to make sure that a part of the format is displayed only when
-## certain tags are present, you can archieve it by grouping them with brackets,
+## certain tags are present, you can achieve it by grouping them with brackets,
 ## e.g. '{%a - %t}' will be evaluated to 'ARTIST - TITLE' if both tags are
 ## present or '' otherwise.  It is also possible to define a list of
 ## alternatives by providing several groups and separating them with '|',
@@ -187,7 +187,7 @@ visualizer_look = "▗▕"
 ## scheme is described below in section about color definitions), it can be done
 ## with the syntax $(COLOR), e.g. to set the artist tag to one of the
 ## non-standard colors and make it have yellow background, you need to write
-## $(197_yellow)%a$(end). Note that for standard colors this is interchangable
+## $(197_yellow)%a$(end). Note that for standard colors this is interchangeable
 ## with attributes listed above.
 ##
 ## Note: colors can be nested.
@@ -332,7 +332,7 @@ playlist_shorten_total_times = yes
 #
 ##
 ## Note: You can specify third character which will be used to build 'empty'
-## part of progressbar.
+## part of progress bar.
 ##
 progressbar_look = ••
 #
@@ -385,8 +385,8 @@ allow_for_physical_item_deletion = yes
 #
 ##
 ## Note: If you set this variable, ncmpcpp will try to get info from last.fm in
-## language you set and if it fails, it will fall back to english. Otherwise it
-## will use english the first time.
+## language you set and if it fails, it will fall back to English. Otherwise it
+## will use English the first time.
 ##
 ## Note: Language has to be expressed as an ISO 639 alpha-2 code.
 ##
@@ -499,7 +499,7 @@ use_console_editor = yes
 ##### colors definitions #####
 ##
 ## It is possible to set a background color by setting a color value
-## "<foreground>_<background>", e.g. red_black will set foregound color to red
+## "<foreground>_<background>", e.g. red_black will set foreground color to red
 ## and background color to black.
 ##
 ## In addition, for terminals that support 256 colors it is possible to set one
