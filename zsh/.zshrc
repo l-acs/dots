@@ -215,8 +215,8 @@ alias lofi="mpv 'https://www.youtube.com/watch?v=5qap5aO4i9A' & disown"
 alias mdl='youtube-dl -i -f bestaudio\[ext=m4a\] --embed-thumbnail -o "$MUSIC/%(title)s.%(ext)s"'
 alias vdl-sub='youtube-dl -i -f worst -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s" --write-auto-sub'
 alias vdl='youtube-dl -i -f worst -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s"'
-alias vdl-sub='youtube-dl -i -f best -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s" --write-auto-sub'
-alias vdl='youtube-dl -i -f best -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s"'
+alias vdl-sub='yt-dlp -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s" --write-auto-sub'
+alias vdl='yt-dlp -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s"'
 
 ### configurations ###
 alias dash="rlwrap dash"
