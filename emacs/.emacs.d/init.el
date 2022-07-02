@@ -308,12 +308,11 @@ There are two things you can do about this warning:
   :config
   (centaur-tabs-mode t)
   :bind
-  ("M-<left>" . centaur-tabs-backward)
-  ("M-<right>" . centaur-tabs-forward)
-  ("<C-tab>" . centaur-tabs-backward)
-  ("<C-S-isolefttab>" . centaur-tabs-forward)
+  ("<C-tab>" . centaur-tabs-forward)
+  ("<C-S-tab>" . centaur-tabs-backward) ;; 2022-07-02
 )
 
+(setq centaur-tabs-cycle-scope 'tabs) ;; 2022-07-02
 
 (use-package helm
   :ensure t
@@ -541,6 +540,7 @@ This command assumes point is not in a string or comment."
    '("\M-Q" quoted-insert)
    '("\M-\\" just-one-space)
    '("\M-U" downcase-word)
+   '("\M-a" unfill-line)
 
 
    ;; elisp
@@ -554,13 +554,16 @@ This command assumes point is not in a string or comment."
 
    ;; windows, buffers, and files
    ;; (list (kbd "<C-tab>") 'other-window)
-   '("\M-r" other-window)
+   '("\C-r" other-window)
    ;; (list (kbd "<C-tab>") 'previous-buffer)
    ;; (list (kbd "<C-S-isolefttab>") 'next-buffer)
-   '("\M-b" previous-buffer) '("\C-b" switch-to-buffer)
+   (list (kbd "M-<left>") 'previous-buffer)
+   (list (kbd "M-<right>") 'next-buffer)
+   '("\C-b" switch-to-buffer)
 
    '("\C-w" kill-current-buffer)
    (list (kbd "C-x C-w") 'kill-buffer)
+   '("\M-C" count-words)
 
    '("\M-W" write-file)
    '("\C-t" find-file) (list (kbd "C-x t") 'find-file-at-point)
@@ -622,7 +625,7 @@ This command assumes point is not in a string or comment."
 
 
 ;; 2022-01-05: make C-S-tab tab work
-(define-key function-key-map [(control shift iso-lefttab)] [(control shift tab)])
+(define-key function-key-map [(control shift iso-lefttab)] [(control shift tab)]) ;; [(control n)]) 
 (define-key function-key-map [(meta shift iso-lefttab)] [(meta shift tab)])
 (define-key function-key-map [(meta control shift iso-lefttab)] [(meta control shift tab)])
 
