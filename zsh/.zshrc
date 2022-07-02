@@ -228,15 +228,16 @@ function emacs()
     emacsclient -create-frame --alternate-editor="" "${@}" & disown
 }
 
-grep=$(which -p grep) # force a path search so not overridden by function
+grepflags="--color --no-messages"
+alias fgrep="$(which -p grep) $grepflags" # force a path search so not overridden by function
+
 function grep()
 {
-    grepflags="--color --no-messages" # --line-number"
     # if there's no standard input, then tell grep to run recursively on its arguments
     if [ -p /dev/stdin ]; then
-        eval $grep $grepflags "$*" /dev/stdin
+        fgrep $* /dev/stdin
     else
-        eval $grep $grepflags --dereference-recursive "$*"
+        fgrep --dereference-recursive $*
     fi
 }
 
@@ -260,7 +261,7 @@ alias diff="diff --unified --color"
 alias du="du -sh"
 alias less='less -N'
 alias ls="ls --color"
-alias pgrep="pgrep -f -a"
+alias pgrep="pgrep -f -a -i"
 alias rm="rm -I"
 alias tmux="tmux -f ~/.config/tmux/tmux.conf"
 
@@ -344,6 +345,9 @@ function non-matching-containers ()
 }
 
 
+
+### music ##
+
 function m3u8tom3u()
 {
 	for playlist in "$1"/*.m3u8
@@ -355,6 +359,11 @@ function m3u8tom3u()
 
 		cp "$playlist" "$2/$newname"
 	done
+}
+
+function movedeezerplaylists()
+{
+	 ls -1 "$HOME/Music/deemix Music/"*.m3u8  | while read line; do mv "$line" "$HOME/Music/Playlists/$(basename "$line" | sed 's/m3u8$/m3u/')"; done
 }
 
 
