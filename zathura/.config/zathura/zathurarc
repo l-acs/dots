@@ -19,6 +19,15 @@
 map u feedkeys <S-J>
 map i feedkeys <S-K>
 
+map ع feedkeys <S-J>
+map ه feedkeys <S-K>
+
+map ت feedkeys <j>
+map ن feedkeys <k>
+
+map ـ feedkeys <S-J>
+map ، feedkeys <S-K>
+
 map r recolor
 map R reload
 map <C-r> rotate
