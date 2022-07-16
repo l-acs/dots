@@ -8,17 +8,7 @@ mod4 + ctrl + shift + slash
 # wm independent hotkeys
 #
 
-# terminal emulator
-mod4 + Return
-     eval ${TERMINAL}
 
-mod4 + shift + Return
-    emacsclient -create-frame --alternate-editor='' -e "(shell)"
-
-
-# make sxhkd reload its configuration files:
-mod4 + Escape
-	pkill -USR1 -x sxhkd
 
 #
 # bspwm hotkeys
@@ -177,19 +167,13 @@ mod4 + alt + shift + {h,j,k,l}
 #mod4 + {Left,Down,Up,Right}
 	#bspc node -v {-20 0,0 20,0 -20,20 0}
 
+mod4 + shift + Return
+    emacsclient -create-frame --alternate-editor='' -e "(shell)"
 
 
 
-# extra mouse buttons
-button8
-	plumb --keybind
-	
-button9 ; button{1,2,3,4,5,8}
-	{gestureclose.sh, act.sh -c, bspc node -d next.local.!occupied, bspc desktop -f next, bspc desktop -f prev, sleep 0.2 && act.sh --draw}
 
 
-button9 ; button9 ; button{1,2,3,8,9}
-	{eval $VISUAL, eval $TERMINAL, pcmanfm, firefox, #abort}
 
 button15
        urxvt
@@ -201,40 +185,30 @@ button15
 
 
 
-# file browsers
-mod4 + {b, shift + b}
-      {browse, pcmanfm}
 
 # bluetooth
 mod4 + alt + {b, shift + b}
      {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} $(bluetoothctl paired-devices | cut -f2 -d' ' | head -n 1)
-#    {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} 21:11:01:11:54:17
-#     {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} $(bluetoothctl paired-devices | cut -f2 -d' ' | head -n 1)
-
 
 # open emacs
-
 mod4 + e
-     findoropen emacs
-#     (pgrep -x -u "$USER" emacsclient && findoropen emacs)
-# || emacsclient -create-frame
+     (pgrep emacsclient && findoropen emacs) || emacsclient -create-frame
 
 mod4 + shift + e
      emacsclient -create-frame
-#      eval $VISUAL
 
 
 # pomodoro
-mod4 + p ; {p, b, c, r}
-    { pomo 25m pomodoro, pomo 5 break, pkill --newest pomo ; pkill -f ringtone.webm, notify-send "$(pomo-time.sh) remaining" "($(pomo-time.sh name))"}
+# mod4 + p ; {p, b, c, r}
+#     { pomo 25m pomodoro, pomo 5 break, pkill --newest pomo ; pkill -f ringtone.webm, notify-send "$(pomo-time.sh) remaining" "($(pomo-time.sh name))"}
 
 # reports
-mod4 + r ; {b, d, n, p, v}
-     notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
+# mod4 + r ; {b, d, n, p, v}
+#      notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
 
 
-mod4 + r ; m
-     reload-cover # this one already sends a notification
+# mod4 + r ; m
+#      reload-cover # this one already sends a notification
 
 # pause / unpause dunst
 mod4 + backslash
@@ -252,55 +226,42 @@ mod4 + shift + backslash
 
 
 #open non-duplicate programs
-mod4 + {a,c, shift + r,s,t,shift+t,v,w,shift+x}
-      findoropen {anki, chromium, rocket rocketchat-desktop /snap/bin/rocketchat-desktop, signal signal-desktop /opt/Signal/signal-desktop, thunderbird, Browser tor-browser,mpv,"$WEB",xournalpp}
+# mod4 + {a,c, shift + r,t,shift+t,v,w,shift+x}
+      # findoropen {anki, chromium, rocket rocketchat-desktop /snap/bin/rocketchat-desktop, thunderbird, Browser tor-browser,mpv,"$WEB",xournalpp}
+
+mod4 + i
+    findoropen idea
+
+# open signal
+# mod4 + s
+     # if /bin/pgrep -x signal-desktop; then \
+     	# findoropen signal signal-desktop /opt/Signal/signal-desktop; \
+     # else \
+        # signal-desktop; \
+     # fi
 
 # open ncmpcpp
-mod4 + m
-      (pgrep -x ncmpcpp || bspc rule -a '*' -o desktop='^7' follow=on); TERMINAL='urxvt -fn xft:ubuntumono:size=24' findoropen -t ncmpcpp
+# mod4 + m
+      # (pgrep -x ncmpcpp || bspc rule -a '*' -o desktop='^7' follow=on); TERMINAL='urxvt -fn xft:ubuntumono:size=24' findoropen -t ncmpcpp
 
 # find teams if it's open; otherwise, findoropen zoom
 mod4 + z
-     (pgrep teams && findoropen teams) || findoropen zoom
+     findoropen zoom
+#     (pgrep teams && findoropen teams) || findoropen zoom
+
 
 
 
 # files
-
-# cover art, notes, manpdf
-mod4 + shift + {a, p, y}
-      {bspc rule -a '*' -o state=floating; feh --auto-zoom --keep-zoom-vp --reload 1 $HOME/.scripts/output/cover.png, zathura $HOME/.scripts/output/man.pdf, td}
 
 # bg
 mod4 + alt + f
      ~/.config/.fehbg
 
 
-
-
-# open selectors
-mod4 + {n, x, shift + u, shift + v, y}
-      {echo $( find $HOME/Documents/gtd -type f \! -name '*~' \! -wholename '*gtd/capture.org' | sed "s|^$HOME/Documents/gtd/||" | sort | rofi -dmenu), rofi -show combi -combi-modi "window\,drun", unicode.py $(rofi -dmenu) | xsel -b, vsel, tdsel}
-
-
-
-
-
-# function keys
-F2
-	~/.scripts/window/act.sh -d
-
-# reload the bar
-mod4 + F3
-	bar
-
-# brightness
-{F5,F6}
-	brightnessctl set {5%-,+5%} --exponent=1.5
-
 # rotate
-{_, shift +} F8
-	~/.local/bin/rotate-script.sh {invert, normal}
+# {_, shift +} F8
+	# ~/.local/bin/rotate-script.sh {invert, normal}
 
 
 #special keys
@@ -308,47 +269,47 @@ mod4 + F3
 XF86Calculator
 	qalculate-gtk
 
-XF86Audio{LowerVolume,RaiseVolume}
-	pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
+# XF86Audio{LowerVolume,RaiseVolume}
+	# pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
 #	volume {-, +}
 
-{_, shift} + XF86AudioMute
-	volume {toggle,mute}
+# {_, shift} + XF86AudioMute
+	# volume {toggle,mute}
 
-XF86Audio{Play,Pause}
-	mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
-	if [ -n "$mpvisrunning" ]; then \
-	   echo 'mpv running' >> status ;\
-	   findoropen mpv ;\
-	   mpvc toggle || (sleep 0.1 ; xdotool key space) ;\
-	else \
-	   echo 'no mpv' >> status ;\
-	   mpc toggle ;\
-	fi
+# XF86Audio{Play,Pause}
+	# mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
+	# if [ -n "$mpvisrunning" ]; then \
+	   # echo 'mpv running' >> status ;\
+	   # findoropen mpv ;\
+	   # mpvc toggle || (sleep 0.1 ; xdotool key space) ;\
+	# else \
+	   # echo 'no mpv' >> status ;\
+	   # mpc toggle ;\
+	# fi
 
 # It works! :)
-{_, shift +} XF86AudioPrev
-	mpvisrunning="$(/bin/pgrep mpv)" ;\
-	if [ -n "$mpvisrunning" ]; then \
-	   findoropen mpv ;\
-	   {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc prev, \
- 	    mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
-	fi
-# 's/mpvc seek -60s/mpvc prev/' if you want to make use of the playlist features
+# {_, shift +} XF86AudioPrev
+	# mpvisrunning="$(/bin/pgrep mpv)" ;\
+	# if [ -n "$mpvisrunning" ]; then \
+	   # findoropen mpv ;\
+	   # {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc prev, \
+ 	    # mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
+	# fi
+# # 's/mpvc seek -60s/mpvc prev/' if you want to make use of the playlist features
+# 
 
 
+# {_, shift +} XF86AudioNext
+	# mpvisrunning="$(/bin/pgrep mpv)" ;\
+	# if [ -n "$mpvisrunning" ]; then \
+	   # findoropen mpv ;\
+	   # {mpvc seek +10s || (sleep 0.1 ; xdotool key --clearmodifiers Right); else mpc next, \
+ 	    # mpvc seek +60s || (sleep 0.1 ; xdotool key --clearmodifiers Up); else mpc random; mpc next} ;\ 
+	# fi
 
-{_, shift +} XF86AudioNext
-	mpvisrunning="$(/bin/pgrep mpv)" ;\
-	if [ -n "$mpvisrunning" ]; then \
-	   findoropen mpv ;\
-	   {mpvc seek +10s || (sleep 0.1 ; xdotool key --clearmodifiers Right); else mpc next, \
- 	    mpvc seek +60s || (sleep 0.1 ; xdotool key --clearmodifiers Up); else mpc random; mpc next} ;\ 
-	fi
 
-
-XF86{TaskPane,RotateWindows}
-	~/.local/bin/rotate-script.sh {invert, normal}
+# XF86{TaskPane,RotateWindows}
+	# ~/.local/bin/rotate-script.sh {invert, normal}
 
 
 # take screenshots to clipboard
@@ -358,51 +319,3 @@ XF86{TaskPane,RotateWindows}
 # save screenshots
 super + {_, shift} + F9
       sleep 0.2 && screenshot {--select,  } 
-
-
-{F10, F11}
-      volume {-,+}
-	
-#{XF86AudioMute, shift + XF86AudioMute}
-{F12, shift + F12}
-      volume {toggle, mute}
-
-mod4 + F12
-     plumb
-
-
-mod4 + {Up, Down, Left, shift + Left, Right, shift + Right}
-     mpc {volume +2, volume -2, prev, seek 0%, next, toggle}
-
-mod4 + ctrl + {Up, Down, Left, shift + Left, Right, shift + Right}
-     mpvc {volume +2, volume -2, prev, seek 0%, next, toggle}
-
-mod4 + alt + {Left, Right}
-        mpc seek {-,+}2
-
-mod4 + ctrl + alt + {Left, Right}
-        mpvc seek {-,+}2
-
-
-# system utils:
-
-
-# compositor, nightshift
-mod4 + {equal, plus}
-      {(pkill picom || picom -b) || (pkill compton || compton --config ~/.config/compton/compton.conf), pkill redshift || redshift -c ~/.config/redshift.conf}
-
-
-
-# change keyboard layout
-mod4 + u ; {a, e, f, i, c}
-     setxkbmap -layout {ar, es, fr, ir, us -variant colemak} ; xmodmap ~/.config/xmodmap
-
-
-# tarmak
-mod4 + u ; {u, mod4 + u, space}
-     setxkbmap -layout us ; xmodmap ~/.config/xmodmap # ; xmodmap ~/.config/layouts/tarmak
-
-# suspend
-mod4 + alt + slash ; s
-     systemctl suspend
-# not working:(
