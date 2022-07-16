@@ -117,7 +117,7 @@ alias lemon="lemonbar -p -a 50 -f 'ubuntu mono' -f 'Font Awesome 5 Free' -f 'Fon
 
 
 ### files, etc ###
-alias zrc="vim ~/.zshrc"
+alias zrc="vim ~/.zshrc && reload"
 alias cover="feh --auto-zoom --keep-zoom-vp .scripts/output/cover.png"
 playlists="$HOME/.config/mpd/playlists"
 
@@ -128,7 +128,6 @@ for folder in "$HOME/s/"*; do
 		alias -g "$base"="$folder"
 	fi
 done
-alias -g comp=component
 
 
 ### utils ###
@@ -388,7 +387,7 @@ alias condaurl='docker logs $(condacontainer) | grep http | cut -f7- -d" "  | ta
 alias condashell='docker exec -it $(condacontainer) /bin/bash'
 
 
-alias clock='tty-clock -t -c'
+alias clock='tty-clock -b -t -c'
 alias pomo='~/projects/pomo/add-date.sh >/dev/null ; pomo'
 alias pomodoro:='pomo $POMO_DEFAULT_DURATION'
 # alias pomodoro='pomodoro:'

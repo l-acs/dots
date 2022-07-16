@@ -44,3 +44,5 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # frequently used
 export bind="$HOME/.config/sxhkd/sxhkdrc"
+
+export SXHKD_SHELL="$HOME/.config/sxhkd/sxzsh"

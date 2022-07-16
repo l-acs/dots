@@ -28,4 +28,4 @@ bindkey '^n' clear-screen
 #/works
 
 
-
+bindkey '^[P' run-help
