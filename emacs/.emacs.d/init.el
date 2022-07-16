@@ -484,12 +484,25 @@ This command assumes point is not in a string or comment."
   (save-excursion
     (eval-region start end (copy-marker (point)) read-function)))
 
-
 (defun agenda ()
   "Open Org Agenda in day view"
   (interactive)
   (let '(org-agenda-span 'day)
     (org-agenda-list)))
+
+(defun check! (arg)
+  (interactive "*P")
+  (progn
+    (comment-dwim arg)
+    ;; (backward-char)
+    (end-of-line)
+    (just-one-space)
+    (insert "✅")))
+
+(def-keymap ctl-x-map
+  (list
+   (list (kbd "C-!") 'check!)))
+
 
 ;; macros
 (fset 'new-empty-line-above
@@ -501,6 +514,7 @@ This command assumes point is not in a string or comment."
 (fset 'unfill-line
    "\354\C-d\334\354")
 
+
 ;; searching
 (def-keymap isearch-mode-map
   (list
@@ -509,7 +523,7 @@ This command assumes point is not in a string or comment."
 (def-keymap global-map
   (list
    '("\C-f" isearch-forward-regexp) '("\M-f" isearch-backward-regexp)
-   
+
    ;; text movement
    '("\M-h" move-beginning-of-line) '("\M-l" move-end-of-line)
    '("\C-l" forward-char) '("\C-h" backward-char)
