@@ -5,185 +5,46 @@ mod4 + ctrl + shift + slash
      systemctl suspend
 
 
-# wm independent hotkeys
-#
+mod4 + {1-9}
+   ~/.scripts/window/act.sh --focus {1-9}
 
+mod4 + shift + {1-9}
+   ~/.scripts/window/act.sh -s {1-9}
 
-
-#
-# bspwm hotkeys
-#
-
-# quit/restart bspwm
-mod4 + alt + {q,r}
-	bspc {quit,wm -r}
-
-# close and kill
-{_,shift + }F4
-	 bspc config pointer_follows_focus false ; \
-	 ~/.scripts/window/act.sh -{c,k} ; \
-	 sleep 1 ; \
-	 bspc config pointer_follows_focus true
-
-# alternate between the tiled and monocle layout
-mod4 + shift + m
-	bspc desktop -l next
-
-# focus next monitor
-mod4 + g
-	bspc monitor --focus next
-
-# send node to next monitor
-mod4 + shift + g
-     	bspc node --to-monitor next --follow
-
-#
-# state/flags
-#
-
-# set the window state
-mod4 + {shift + @space, f}
-      bspc node -t {\~floating, \~fullscreen}
-
-
-# if it's pseudo tiled, tile it; otherwise, pseudo tile it
-mod4 + space
-	if [ -n "$(bspc query -N -n focused.pseudo_tiled)" ]; then \
-	   bspc node focused -t tiled; \
-	else \
-	     bspc node focused -t pseudo_tiled; \
-	fi
-	     
-
-
-# set the node flags
-mod4 + ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}
-
-#
-# focus/swap
-#
-
-# focus the node in the given direction
-mod4 + {_,shift + }{h,j,k,l}
-	bspc node -{f,s} {west,south,north,east}
-
-# focus the prev/next non-empty desktop in the current monitor
-mod4 + {comma, period}
-      bspc desktop -f {prev,next}.local.occupied
-
-# follow active window to prev/next desktop (whether empty or not)
-mod4 + shift + {comma, period}
-      bspc node --to-desktop {prev,next}.local --follow
-
-# focus the prev/next empty desktop in the current monitor
-mod4 + alt + {comma, period}
-      bspc desktop -f {prev,next}.local.!occupied
-
-# send active window to prev/next empty desktop and follow
-mod4 + alt + shift + {comma, period}
-       bspc node --to-desktop {prev,next}.local.!occupied --follow
-
-# cycle through nodes in desktop
-@mod4 + {_, shift+} Tab
-    bspc node -f {next,prev}.local.leaf
-
-@alt + {_, shift+} Tab
-	; (bspc desktop -f {next,prev}.local.occupied & sleep 0.2)
-
-
-# focus the older or newer node in the focus history
-mod4 + bracket{left,right}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
-
-# focus/send to the given desktop
-mod4 + {_,shift + }{1-9}
-     bspc {desktop -f, node --to-desktop} '^{1-9}'
-#	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^{1-9}'
 
 mod4 + alt + {1-9}
-	bspc node --to-desktop '^{1-9}' --follow
+   ~/.scripts/window/act.sh --carry {1-9}
 
-mod4 + {_,shift +} 0
-	bspc {desktop -f, node --to-desktop, node --to-desktop} '^10'
-#	~/.scripts/window/act.sh {--capturefocuscapture,-s} '^10'
-
-mod4 + alt + 0
-	bspc node --to-desktop '^10' --follow
-
-
-# focus next empty desktop
-mod4 + minus
-      bspc desktop -f next.local.!occupied
-
-# send/follow to next empty desktop
-mod4 + {shift, alt} minus
-      bspc node --to-desktop next.local.!occupied {_,--follow}
-
-# open next window in next empty desktop
-mod4 + semicolon
-     bspc rule -a '*' -o desktop=next.!occupied follow=on
-
-# open next window as floating
-mod4 + colon
-     bspc rule -a '*' -o state=floating
-
-
-#
-# preselect
-#
-
-# preselect the direction
-mod4 + ctrl + {h,j,k,l}
-	bspc node -p {west,south,north,east}
-
-# preselect the ratio
-mod4 + ctrl + {1-9}
-	bspc node -o 0.{1-9}
-
-# cancel the preselection for the focused node
-mod4 + ctrl + space
-	bspc node -p cancel
-
-# cancel the preselection for the focused desktop
-mod4 + ctrl + shift + space
-	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
-
-#
-# move/resize
-#
-
-# expand a window by moving one of its side outward
-mod4 + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-
-# contract a window by moving one of its side inward
-mod4 + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
-
-# move a floating window
-#mod4 + {Left,Down,Up,Right}
-	#bspc node -v {-20 0,0 20,0 -20,20 0}
+mod4 + {comma, period}
+  act.sh -f {prev, next}
 
 mod4 + shift + Return
     emacsclient -create-frame --alternate-editor='' -e "(shell)"
 
 
+# make sxhkd reload its configuration files:
+mod4 + shift + Escape
+  pkill -USR1 -x sxhkd
 
+# maximize
+mod4 + shift + m
+  act.sh -m toggle
 
+mod4 + Up
+  act.sh -Y toggle
 
+mod4 + shift + Up
+  act.sh -X toggle
 
-button15
-       urxvt
+# mod4 + Down
+#   wmctrl -r :ACTIVE: -b remove,maximized_vert 
 
+mod4 + shift + d
+  act.sh --draw
 
 # kill notifications
 ~Escape
-	 pkill 9menu ; dunstctl close-all ; pkill -f 'feh.*thumbnail' ; bspc node any.sticky -g hidden=on
-
-
+	 pkill 9menu ; (pgrep -x dunst && dunstctl close-all) ; pkill -f 'feh.*thumbnail' ; bspc node any.sticky -g hidden=on
 
 
 # bluetooth
@@ -196,6 +57,10 @@ mod4 + e
 
 mod4 + shift + e
      emacsclient -create-frame
+
+# show windows
+mod4 + x
+  rofi -show combi -combi-modi "window,drun" -modi combi -theme ~/.local/share/rofi/themes/spotlight.rasi
 
 
 # pomodoro
@@ -212,13 +77,13 @@ mod4 + shift + e
 
 # pause / unpause dunst
 mod4 + backslash
-       ;dunstctl set-paused false
+       ;(pgrep -x dunst && dunstctl set-paused false)
 
 @mod4 + backslash
-      ; sleep 0.3; [ $(dunstctl is-paused) = false ] && dunstctl set-paused true
+      ; pgrep -x dunst && (sleep 0.3; [ $(dunstctl is-paused) = false ] && dunstctl set-paused true)
 
 mod4 + shift + backslash
-     dunstctl set-paused toggle
+     pgrep -x dunst && dunstctl set-paused toggle
 
 # not working as desired but it does provide the functionality all the
 # same
@@ -250,6 +115,11 @@ mod4 + z
 #     (pgrep teams && findoropen teams) || findoropen zoom
 
 
+# rename a selected window for findoropen or rofi or otherwise
+# mod4 + shift + r
+#      wname_entry="$(rofi -dmenu)" ;\
+#      xprop -format _NET_WM_NAME 8u -set _NET_WM_NAME "$wname_entry"
+# neat but I wasn't using it
 
 
 # files
