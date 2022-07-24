@@ -193,3 +193,6 @@ XF86Calculator
 # save screenshots
 super + {_, shift} + F9
       sleep 0.2 && screenshot {--select,  } 
+
+{F10, F11, F12, shift+F12}
+   volume {-, +, toggle, mute}
