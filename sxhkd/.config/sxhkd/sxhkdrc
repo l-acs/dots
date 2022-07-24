@@ -58,6 +58,10 @@ mod4 + e
 mod4 + shift + e
      emacsclient -create-frame
 
+# new gitlab issue
+mod4 + shift + g
+  new_issue.py
+
 # show windows
 mod4 + x
   rofi -show combi -combi-modi "window,drun" -modi combi -theme ~/.local/share/rofi/themes/spotlight.rasi
