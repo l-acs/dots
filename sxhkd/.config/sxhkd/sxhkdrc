@@ -1,3 +1,9 @@
+# todo:
+# mod4 + minus
+# todo:
+# improve mod comma/period
+# --occupied flag
+
 mod4 + alt + shift + slash
      systemctl suspend
 
@@ -9,7 +15,7 @@ mod4 + {1-9}
    ~/.scripts/window/act.sh --focus {1-9}
 
 mod4 + shift + {1-9}
-   ~/.scripts/window/act.sh -s {1-9}
+   ~/.scripts/window/act.sh --send {1-9}
 
 
 mod4 + alt + {1-9}
@@ -17,6 +23,13 @@ mod4 + alt + {1-9}
 
 mod4 + {comma, period}
   act.sh -f {prev, next}
+
+mod4 + alt + {comma, period}
+  act.sh --carry {prev, next}
+
+
+mod4 + Return
+    urxvt -fn xft:ubuntumono:size=38 -g 60x17
 
 mod4 + shift + Return
     emacsclient -create-frame --alternate-editor='' -e "(shell)"
@@ -35,9 +48,6 @@ mod4 + Up
 
 mod4 + shift + Up
   act.sh -X toggle
-
-# mod4 + Down
-#   wmctrl -r :ACTIVE: -b remove,maximized_vert 
 
 mod4 + shift + d
   act.sh --draw
@@ -72,8 +82,8 @@ mod4 + x
 #     { pomo 25m pomodoro, pomo 5 break, pkill --newest pomo ; pkill -f ringtone.webm, notify-send "$(pomo-time.sh) remaining" "($(pomo-time.sh name))"}
 
 # reports
-# mod4 + r ; {b, d, n, p, v}
-#      notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
+mod4 + r ; {b, d, n, p, v}
+     notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
 
 
 # mod4 + r ; m
@@ -95,8 +105,8 @@ mod4 + shift + backslash
 
 
 #open non-duplicate programs
-# mod4 + {a,c, shift + r,t,shift+t,v,w,shift+x}
-      # findoropen {anki, chromium, rocket rocketchat-desktop /snap/bin/rocketchat-desktop, thunderbird, Browser tor-browser,mpv,"$WEB",xournalpp}
+mod4 + {a, c, s, shift + t, v, w}
+      findoropen {anki, chromium, signal-desktop, thunderbird, mpv, "$WEB"}
 
 mod4 + i
     findoropen idea
@@ -110,8 +120,12 @@ mod4 + i
      # fi
 
 # open ncmpcpp
-# mod4 + m
-      # (pgrep -x ncmpcpp || bspc rule -a '*' -o desktop='^7' follow=on); TERMINAL='urxvt -fn xft:ubuntumono:size=24' findoropen -t ncmpcpp
+mod4 + m
+      (pgrep -x ncmpcpp || bspc rule -a '*' -o desktop='^7' follow=on); TERMINAL='urxvt -fn xft:ubuntumono:size=40' findoropen -t ncmpcpp
+
+# find the pomodoro window
+mod4 + y
+  wmctrl -a pomodoro
 
 # find teams if it's open; otherwise, findoropen zoom
 mod4 + z
@@ -120,10 +134,12 @@ mod4 + z
 
 
 # rename a selected window for findoropen or rofi or otherwise
-# mod4 + shift + r
-#      wname_entry="$(rofi -dmenu)" ;\
-#      xprop -format _NET_WM_NAME 8u -set _NET_WM_NAME "$wname_entry"
-# neat but I wasn't using it
+mod4 + shift + r
+     wname_entry="$(rofi -dmenu)" ;\
+     xprop -format _NET_WM_NAME 8u -set _NET_WM_NAME "$wname_entry"
+
+mod4 + alt + m
+     mpcsel
 
 
 # files
@@ -140,46 +156,43 @@ mod4 + alt + f
 
 #special keys
 
-XF86Calculator
-	qalculate-gtk
+XF86Audio{LowerVolume,RaiseVolume}
+	pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
+	# volume {-, +}
 
-# XF86Audio{LowerVolume,RaiseVolume}
-	# pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
-#	volume {-, +}
+{_, shift} + XF86AudioMute
+	volume {toggle,mute}
 
-# {_, shift} + XF86AudioMute
-	# volume {toggle,mute}
-
-# XF86Audio{Play,Pause}
-	# mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
-	# if [ -n "$mpvisrunning" ]; then \
-	   # echo 'mpv running' >> status ;\
-	   # findoropen mpv ;\
-	   # mpvc toggle || (sleep 0.1 ; xdotool key space) ;\
-	# else \
-	   # echo 'no mpv' >> status ;\
-	   # mpc toggle ;\
-	# fi
+XF86Audio{Play,Pause}
+	mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
+	if [ -n "$mpvisrunning" ]; then \
+	   echo 'mpv running';\
+	   findoropen mpv ;\
+	   mpvc toggle || (sleep 0.1 ; xdotool key space) ;\
+	else \
+	   echo 'no mpv';\
+	   mpc toggle ;\
+	fi
 
 # It works! :)
-# {_, shift +} XF86AudioPrev
-	# mpvisrunning="$(/bin/pgrep mpv)" ;\
-	# if [ -n "$mpvisrunning" ]; then \
-	   # findoropen mpv ;\
-	   # {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc prev, \
- 	    # mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
-	# fi
+{_, shift +} XF86AudioPrev
+	mpvisrunning="$(/bin/pgrep mpv)" ;\
+	if [ -n "$mpvisrunning" ]; then \
+	   findoropen mpv ;\
+	   {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc prev, \
+ 	    mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
+	fi
 # # 's/mpvc seek -60s/mpvc prev/' if you want to make use of the playlist features
 # 
 
 
-# {_, shift +} XF86AudioNext
-	# mpvisrunning="$(/bin/pgrep mpv)" ;\
-	# if [ -n "$mpvisrunning" ]; then \
-	   # findoropen mpv ;\
-	   # {mpvc seek +10s || (sleep 0.1 ; xdotool key --clearmodifiers Right); else mpc next, \
- 	    # mpvc seek +60s || (sleep 0.1 ; xdotool key --clearmodifiers Up); else mpc random; mpc next} ;\ 
-	# fi
+{_, shift +} XF86AudioNext
+	mpvisrunning="$(/bin/pgrep mpv)" ;\
+	if [ -n "$mpvisrunning" ]; then \
+	   findoropen mpv ;\
+	   {mpvc seek +10s || (sleep 0.1 ; xdotool key --clearmodifiers Right); else mpc next, \
+ 	    mpvc seek +60s || (sleep 0.1 ; xdotool key --clearmodifiers Up); else mpc random; mpc next} ;\ 
+	fi
 
 
 # XF86{TaskPane,RotateWindows}
@@ -196,3 +209,13 @@ super + {_, shift} + F9
 
 {F10, F11, F12, shift+F12}
    volume {-, +, toggle, mute}
+
+# mpc
+mod4 + {Prior, Next}
+   mpc {prev, next}
+
+mod4 + shift + {Prior, Next}
+  mpc {seek 0, pause} 
+
+mod4 + ctrl + {Up, Down}
+  mpc volume {+2, -2}

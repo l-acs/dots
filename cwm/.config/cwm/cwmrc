@@ -3,22 +3,73 @@ color menubg  "#222222" #nice black
 color font "#fdf6e3" #sepia
 
 
-
 color selfont "#222222" 
 color menufg "#fdf6e3"
-
 
 autogroup 4 Navigator.firefox
 autogroup 8 signal.Signal
 autogroup 9
 
 
-
 sticky 	  yes
 ignore	  polybar-example_VGA-1
 ignore	  bar
-gap    	  28 6 6 6
+gap    	  50 6 6 6
 
+# unbind all
+unbind CM-Return # Spawn a terminal emulator.
+
+# CM-Delete       Lock the screen.
+# M-Return        Hide current window.
+# M-Down          Lower current window.
+# M-Up            Raise current window.
+
+
+unbind-key M-slash # Search for windows.
+unbind-key C-slash # Search for applications.
+
+
+# M-Tab          # Cycle through currently visible windows.
+bind-key 4-j window-cycle # Cycle through currently visible windows.
+bind-key 4S-j window-cycle # Cycle through currently visible windows.
+
+
+
+# MS-Tab         # Reverse cycle through currently visible windows.
+unbind-key CM-x           # Delete current window.
+unbind-key CM-[n]         # Toggle visibility of group n, where n is 1-9.
+unbind-key CM-a           # Toggle visibility of all groups.
+unbind-key CM-g           # Toggle group membership of current window.
+unbind-key M-Right        # Cycle through active groups.
+unbind-key M-Left         # Reverse cycle through active groups.
+unbind-key CMS-f          # Toggle freezing geometry of current window.
+unbind-key CM-s           # Toggle stickiness of current window.
+unbind-key CM-f           # Toggle full-screen mode of current window.
+unbind-key CM-m           # Toggle maximization of current window.
+unbind-key CM-equal       # Toggle vertical maximization of current window.
+unbind-key CMS-equal      # Toggle horizontal maximization of current window.
+unbind-key M-h            # Move window by a small amount.
+unbind-key M-j            # Move window by a small amount.
+unbind-key M-k            # Move window by a small amount.
+unbind-key M-l            # Move window by a small amount.
+unbind-key MS-h           # Move window by a large amount; see cwmrc(5).
+unbind-key MS-j           # Move window by a large amount; see cwmrc(5).
+unbind-key MS-k           # Move window by a large amount; see cwmrc(5).
+unbind-key MS-l           # Move window by a large amount; see cwmrc(5).
+unbind-key CM-h           # Resize window by a small amount.
+unbind-key CM-j           # Resize window by a small amount.
+unbind-key CM-k           # Resize window by a small amount.
+unbind-key CM-l           # Resize window by a small amount.
+unbind-key CMS-h          # Resize window by a large amount; see cwmrc(5).
+unbind-key CMS-j          # Resize window by a large amount; see cwmrc(5).
+unbind-key CMS-k          # Resize window by a large amount; see cwmrc(5).
+unbind-key CMS-l          # Resize window by a large amount; see cwmrc(5).
+unbind-key M-question     # Spawn “exec program” dialog.
+unbind-key M-period       # Spawn “ssh to” dialog.  This parses $HOME/.ssh/known_hosts to provide host auto-completion.
+                          # ssh(1) will be executed via the configured terminal emulator.
+unbind-key CM-w           # Spawn “exec WindowManager” menu, allowing a switch to another window manager.
+# CMS-r        # Restart.
+# CMS-q          # Quit.
 
 
 
@@ -44,22 +95,7 @@ bind-key 4S-8	window-movetogroup-8
 bind-key 4S-9	window-movetogroup-9
 
 
- 
 
-
-
-
-#menu
-command firefox		"urxvt& urxvt"
-command music		"wmctrl -a ncmpcpp || urxvt -e ncmpcpp"
-command fir2 		"firefox"
-
-
-
-
-#window managers
-
-
-
-wm bspwm /usr/bin/bspwm
-wm i3 /usr/bin/i3
+## window managers
+# wm bspwm /usr/bin/bspwm
+# wm i3 /usr/bin/i3
