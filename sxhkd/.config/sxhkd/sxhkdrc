@@ -1,6 +1,4 @@
 # todo:
-# mod4 + minus
-# todo:
 # improve mod comma/period
 # --occupied flag
 
@@ -20,6 +18,12 @@ mod4 + shift + {1-9}
 
 mod4 + alt + {1-9}
    ~/.scripts/window/act.sh --carry {1-9}
+
+mod4 + minus
+  act.sh --focus empty
+
+mod4 + {shift, alt} + minus
+  act.sh {--send, --carry} empty
 
 mod4 + {comma, period}
   act.sh -f {prev, next}
