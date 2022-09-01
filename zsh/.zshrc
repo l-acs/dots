@@ -5,7 +5,7 @@ zstyle ':completion:*' glob 1
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: %s
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[.-_]=** r:|=**' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[._-]=** r:|=** l:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[._-]=** r:|=** l:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} r:|[._-]=** r:|=** l:|=*'
-zstyle ':completion:*' max-errors 1
+zstyle ':completion:*' max-errors 2
 zstyle ':completion:*' menu select=1
 zstyle ':completion:*' prompt '%e error(s) found. Select a replacement:'
 zstyle ':completion:*' select-prompt %SScrolling active: %p%s
@@ -129,6 +129,12 @@ for folder in "$HOME/s/"*; do
 	fi
 done
 
+# alias for each nicknamed SSH server
+grep ^Host ~/.ssh/config | while read host; do
+    host=$(echo $host | sed 's/Host //')
+    alias $host="ssh $host"
+done
+
 
 ### utils ###
 alias reload="source ~/.zshrc"
@@ -152,6 +158,7 @@ alias sysbright='brightnessctl set'
 # rename a window for e.g. rofi -window
 alias wrename='xprop -format _NET_WM_NAME 8u -set _NET_WM_NAME'
 
+### media ###
 alias screencast='ffmpeg -f x11grab -video_size 1920x1080 -framerate 25 -i :0 -f alsa -i default -c:v libx264 -preset ultrafast -c:a aac '
 
 function flac2mp3here()
@@ -185,8 +192,6 @@ function open-if-exists() { [ -f "$1" ] && eval ${VISUAL} '"$1"' }
 
 function open-lyrics-if-exist()
 {
-    function open-if-exists() { [ -f "$1" ] && eval ${VISUAL} '"$1"' &}
-
     current="$(mpc current -f '%file%' | sed "s|^|$MUSIC/|")"
     dir="$(dirname "$current")"
     stem="$(basename "$current" | sed "s/\.\(mp3\|flac\|m4a\)$//")"
@@ -365,6 +370,7 @@ function movedeezerplaylists()
 	 ls -1 "$HOME/Music/deemix Music/"*.m3u8  | while read line; do mv "$line" "$HOME/Music/Playlists/$(basename "$line" | sed 's/m3u8$/m3u/')"; done
 }
 
+alias mpcsel='mpc playlist | cat -n | rofi -dmenu -i | cut -f1 | xargs mpc play'
 
 function kitaab-vocab ()
 {
