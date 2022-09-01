@@ -45,6 +45,20 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh # history: autosug
 # environment variables
 source ~/.config/shell/profile
 
+### parsing enhancements ###
+alias squeeze-whitespace="tr '[:blank:]' '\t' | tr -s '\t'"
+
+alias strip-newlines="tr -d '\n'"
+
+function row () {
+  cat /dev/stdin | sed -n "$1"p
+}
+
+alias col='cut -f'
+
+alias first='head -n '
+alias last='tail -n '
+
 
 ### abbreviations: ###
 alias blather="$HOME/.programs/blather/Blather.py"
@@ -94,6 +108,10 @@ function unicopy () {
     unicode.py $* | clip
 }
 
+function copy () {
+    echo -n $* | clip
+}
+
 # edit a temporary file and write its contents to stdout, copying them to the clipboard
 alias cw='cwrite =() && clip'
 
@@ -102,10 +120,10 @@ function copylast()
 {
     case $# in
        0)
-	  history | tail -n 1 | cut -f3- -d' ' | clip
+	  history | tail -n 1 | row 3- -d' ' | clip
 	  ;;
        1)
-	  history | tail -n "$1" | cut -f3- -d' ' | clip
+	  history | tail -n "$1" | row 3- -d' ' | clip
 	  ;;
        *)
           return 1
@@ -370,7 +388,7 @@ function movedeezerplaylists()
 	 ls -1 "$HOME/Music/deemix Music/"*.m3u8  | while read line; do mv "$line" "$HOME/Music/Playlists/$(basename "$line" | sed 's/m3u8$/m3u/')"; done
 }
 
-alias mpcsel='mpc playlist | cat -n | rofi -dmenu -i | cut -f1 | xargs mpc play'
+alias mpcsel='mpc playlist | cat -n | rofi -dmenu -i | col 1 | xargs mpc play'
 
 function kitaab-vocab ()
 {
