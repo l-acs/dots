@@ -32,8 +32,14 @@ mod4 + alt + {comma, period}
   act.sh --carry {prev, next}
 
 
-mod4 + Return
+# mod4 + Return
+#     urxvt -fn xft:ubuntumono:size=38 -g 60x17
+
+mod4 + alt + Return
     urxvt -fn xft:ubuntumono:size=38 -g 60x17
+
+mod4 + Return
+    kitty -o font_size=32 # urxvt -fn xft:ubuntumono:size=38 -g 60x17
 
 mod4 + shift + Return
     emacsclient -create-frame --alternate-editor='' -e "(shell)"
@@ -58,7 +64,7 @@ mod4 + shift + d
 
 # kill notifications
 ~Escape
-	 pkill 9menu ; (pgrep -x dunst && dunstctl close-all) ; pkill -f 'feh.*thumbnail' ; bspc node any.sticky -g hidden=on
+	 pkill 9menu ; dunstctl close-all ; pkill -f 'feh.*thumbnail' ; bspc node any.sticky -g hidden=on
 
 
 # bluetooth
@@ -80,11 +86,6 @@ mod4 + shift + g
 mod4 + x
   rofi -show combi -combi-modi "window,drun" -modi combi -theme ~/.local/share/rofi/themes/spotlight.rasi
 
-
-# pomodoro
-# mod4 + p ; {p, b, c, r}
-#     { pomo 25m pomodoro, pomo 5 break, pkill --newest pomo ; pkill -f ringtone.webm, notify-send "$(pomo-time.sh) remaining" "($(pomo-time.sh name))"}
-
 # reports
 mod4 + r ; {b, d, n, p, v}
      notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
@@ -94,26 +95,21 @@ mod4 + r ; {b, d, n, p, v}
 #      reload-cover # this one already sends a notification
 
 # pause / unpause dunst
+
 mod4 + backslash
-       ;(pgrep -x dunst && dunstctl set-paused false)
+     ;dunstctl set-paused false
+
 
 @mod4 + backslash
-      ; pgrep -x dunst && (sleep 0.3; [ $(dunstctl is-paused) = false ] && dunstctl set-paused true)
+      (sleep 1; [ $(dunstctl is-paused) = false ] && dunstctl set-paused true)
 
 mod4 + shift + backslash
-     pgrep -x dunst && dunstctl set-paused toggle
-
-# not working as desired but it does provide the functionality all the
-# same
-
+   dunstctl set-paused toggle
 
 
 #open non-duplicate programs
 mod4 + {a, c, s, shift + t, v, w}
-      findoropen {anki, chromium, signal-desktop, thunderbird, mpv, "$WEB"}
-
-mod4 + i
-    findoropen idea
+      findoropen {anki, chromium, signal signal-desktop /opt/Signal/signal-desktop, thunderbird, mpv, "$WEB"}
 
 # open signal
 # mod4 + s
@@ -152,13 +148,7 @@ mod4 + alt + m
 mod4 + alt + f
      ~/.config/.fehbg
 
-
-# rotate
-# {_, shift +} F8
-	# ~/.local/bin/rotate-script.sh {invert, normal}
-
-
-#special keys
+# special keys
 
 XF86Audio{LowerVolume,RaiseVolume}
 	pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
@@ -187,7 +177,6 @@ XF86Audio{Play,Pause}
  	    mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
 	fi
 # # 's/mpvc seek -60s/mpvc prev/' if you want to make use of the playlist features
-# 
 
 
 {_, shift +} XF86AudioNext
@@ -203,13 +192,20 @@ XF86Audio{Play,Pause}
 	# ~/.local/bin/rotate-script.sh {invert, normal}
 
 
+### system utilities:
+
+# load / restart the bar
+mod4 + F3
+   bar
+
 # take screenshots to clipboard
 {_, shift +} F9
-      sleep 0.2 && screenshot {clipboard --select, clipboard} 
+   sleep 0.2 && screenshot {clipboard --select, clipboard} 
 
 # save screenshots
-super + {_, shift} + F9
-      sleep 0.2 && screenshot {--select,  } 
+mod4 + {_, shift} + F9
+   sleep 0.2 && screenshot {--select,  } 
+
 mod4 + shift + u
    rofi -dmenu | xargs unicode.py | clip
 
@@ -224,7 +220,7 @@ mod4 + {Prior, Next}
    mpc {prev, next}
 
 mod4 + shift + {Prior, Next}
-  mpc {seek 0, pause} 
+  mpc {seek 0, toggle} 
 
 mod4 + ctrl + {Up, Down}
-  mpc volume {+2, -2}
+  mpc volume {+2, \-2}
