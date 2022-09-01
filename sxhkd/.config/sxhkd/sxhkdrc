@@ -210,6 +210,11 @@ XF86Audio{Play,Pause}
 # save screenshots
 super + {_, shift} + F9
       sleep 0.2 && screenshot {--select,  } 
+mod4 + shift + u
+   rofi -dmenu | xargs unicode.py | clip
+
+mod4 + alt + e
+   emojicopy $(rofi -dmenu)
 
 {F10, F11, F12, shift+F12}
    volume {-, +, toggle, mute}

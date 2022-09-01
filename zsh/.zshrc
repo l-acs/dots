@@ -240,6 +240,17 @@ alias vdl='youtube-dl -i -f worst -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(t
 alias vdl-sub='yt-dlp -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s" --write-auto-sub'
 alias vdl='yt-dlp -o "$VIDEO/yt/%(uploader)s/%(upload_date)s %(title)s.%(ext)s"'
 
+# 🤪
+function emoji()
+{
+  yeetgif emoji -l $* 2>&1 | col 2- -d\]
+}
+
+function emojicopy()
+{
+  emoji $* | squeeze-whitespace | row 2 | col 2 | strip-newlines | clip
+}
+
 ### configurations ###
 alias dash="rlwrap dash"
 alias ocaml="rlwrap ocaml"
