@@ -284,6 +284,11 @@ def_key "-"
 #
 def_key "1"
   show_playlist
+
+def_key "1"
+ toggle_display_mode
+
+
 def_key "!"
   show_playlist
 
