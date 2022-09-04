@@ -46,8 +46,9 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh # history: autosug
 source ~/.config/shell/profile
 
 ### parsing enhancements ###
+alias delete-whitespace="tr -d '[:blank:]'"
 alias squeeze-whitespace="tr '[:blank:]' '\t' | tr -s '\t'"
-
+alias shrink-tabs="tr -s '[:blank:]'"
 alias strip-newlines="tr -d '\n'"
 
 function row () {
@@ -58,6 +59,12 @@ alias col='cut -f'
 
 alias first='head -n '
 alias last='tail -n '
+
+function drop-first() {tail -n "+$1"}
+function drop-last() {head -n "-$1"}
+
+alias choose='rofi -dmenu'
+alias apply='xargs'
 
 
 ### abbreviations: ###
@@ -87,7 +94,7 @@ function z()
 
 function _myxsel()
 {
-    if [ -n "$(xsel -o | tr -d '[:blank:]')" ]; then xsel; else xsel -b; fi
+    if [ -n "$(xsel -o | delete-whitespace)" ]; then xsel; else xsel -b; fi
 }
 
 function vtmp () {
@@ -120,10 +127,10 @@ function copylast()
 {
     case $# in
        0)
-	  history | tail -n 1 | row 3- -d' ' | clip
+	  history | last 1 | col 3- -d' ' | clip
 	  ;;
        1)
-	  history | tail -n "$1" | row 3- -d' ' | clip
+	  history | last "$1" | col 3- -d' ' | clip
 	  ;;
        *)
           return 1
@@ -167,7 +174,7 @@ function cl()
 
 function space() #only a function because of quoting nightmares
 { 
-	df -h | /bin/grep '/$' | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
+    df -h | grep '/$' | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
 }
 
 alias battery='cat /sys/class/power_supply/BAT0/capacity'
@@ -249,6 +256,16 @@ function emoji()
 function emojicopy()
 {
   emoji $* | squeeze-whitespace | row 2 | col 2 | strip-newlines | clip
+}
+
+function emojisel()
+{
+  choose -i $(emojicopy)
+}
+
+function emojisel-interactive()
+{
+  emoji ' ' | choose -i | col 1 | delete-whitespace | strip-newlines | clip
 }
 
 ### configurations ###
@@ -352,13 +369,13 @@ function matching-containers ()
 {
     docker container ls --all |
 	sed '/^CONTAINER/d' |
-	cut -f1 -d' ' |
+	col 1 -d' ' |
 	while read id;
 	    do
 		[ -n "$(docker container inspect "$id" | grep -i "$*")" ] &&
 			echo Container \'"$id"\' matches "$*"\; \
 			    its image might be \
-			    "$(docker container inspect "$id" | grep image -i | cut -f4 -d'"' | tail -n 1)";
+			    "$(docker container inspect "$id" | grep image -i | col 4 -d'"' | last 1)";
             done
 }
 
@@ -367,13 +384,13 @@ function non-matching-containers ()
 {
     docker container ls --all |
 	sed '/^CONTAINER/d' |
-	cut -f1 -d' ' |
+	col 1 -d' ' |
 	while read id;
 	    do
 		[ -z "$(docker container inspect "$id" | grep -i "$*")" ] &&
 			echo Container \'"$id"\' does not match "$*"\; \
 			    its image might be \
-		  	    "$(docker container inspect "$id" | grep image -i | cut -f4 -d'"' | tail -n 1)";
+		  	    "$(docker container inspect "$id" | grep image -i | col 4 -d'"' | last 1)";
 	    done
 }
 
@@ -399,26 +416,25 @@ function movedeezerplaylists()
 	 ls -1 "$HOME/Music/deemix Music/"*.m3u8  | while read line; do mv "$line" "$HOME/Music/Playlists/$(basename "$line" | sed 's/m3u8$/m3u/')"; done
 }
 
-alias mpcsel='mpc playlist | cat -n | rofi -dmenu -i | col 1 | xargs mpc play'
+alias mpcsel='mpc playlist | cat -n | shrink-tabs | choose -i | col 1 | apply mpc play'
 
 function kitaab-vocab ()
 {
-    grep 'alkitaabtextbook.com/[-._/a-z%A-Z0-9]*/[a-zA-Z0-9\-_]*.mp3' ~/ara/alkitaabtextbook.com/part2/3e/lesson$1/index.html -o | sed "s|^|$HOME/ara/|" | xargs mpv
+    grep 'alkitaabtextbook.com/[-._/a-z%A-Z0-9]*/[a-zA-Z0-9\-_]*.mp3' ~/ara/alkitaabtextbook.com/part2/3e/lesson$1/index.html -o | sed "s|^|$HOME/ara/|" | apply mpv
 }
 
 function kitaab-vocab-mpvc ()
 {
-    grep 'alkitaabtextbook.com/[-._/a-z%A-Z0-9]*/[a-zA-Z0-9\-_]*.mp3' ~/ara/alkitaabtextbook.com/part2/3e/lesson$1/index.html -o | sed "s|^|$HOME/ara/|" | xargs mpvc add
+    grep 'alkitaabtextbook.com/[-._/a-z%A-Z0-9]*/[a-zA-Z0-9\-_]*.mp3' ~/ara/alkitaabtextbook.com/part2/3e/lesson$1/index.html -o | sed "s|^|$HOME/ara/|" | apply mpvc add
 }
 
 
 alias kitaab="z $HOME/Documents/fall-2021/fiu/al-kitaab-two.pdf"
-CONTAINER_NOTEBOOK_DIR='/opt/notebooks'
-alias jupyter='docker run -d -t -p 8888:8888 -v "$HOME/s/webapp/projects/notebooks":"$CONTAINER_NOTEBOOK_DIR" continuumio/anaconda3 /bin/bash -c "mkdir -p "$CONTAINER_NOTEBOOK_DIR" && /opt/conda/bin/jupyter notebook --notebook-dir="$CONTAINER_NOTEBOOK_DIR" --ip=\* --port=8888 --no-browser --allow-root"'
 
-alias condacontainer='docker ps | grep anaconda | cut -f1 -d\ '
+
+alias condacontainer='docker ps | grep anaconda | col 1 -d\ '
 alias condastop='docker container stop $(condacontainer)'
-alias condaurl='docker logs $(condacontainer) | grep http | cut -f7- -d" "  | tail -n 1'
+alias condaurl='docker logs $(condacontainer) | grep http | col 7- -d" "  | last 1'
 alias condashell='docker exec -it $(condacontainer) /bin/bash'
 
 
