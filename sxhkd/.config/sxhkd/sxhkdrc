@@ -209,8 +209,15 @@ mod4 + {_, shift} + F9
 mod4 + shift + u
    rofi -dmenu | xargs unicode.py | clip
 
+# mod4 + alt + e
+#    emojicopy $(rofi -dmenu)
+
 mod4 + alt + e
-   emojicopy $(rofi -dmenu)
+   emojisel-interactive
+
+mod4 + alt + i
+   ipacopy
+
 
 {F10, F11, F12, shift+F12}
    volume {-, +, toggle, mute}
@@ -224,3 +231,12 @@ mod4 + shift + {Prior, Next}
 
 mod4 + ctrl + {Up, Down}
   mpc volume {+2, \-2}
+
+mod4 + alt + {Prior, Next, shift + Prior, shift + Next}
+   mpvc seek {-5s, +5s, -30s, +30s}
+
+
+
+mod4 + ctrl + {Prior, Next, shift + Prior, shift + Next}
+   mpvc {prev, next, seek 0%, toggle}
+

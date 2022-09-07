@@ -50,6 +50,7 @@ alias delete-whitespace="tr -d '[:blank:]'"
 alias squeeze-whitespace="tr '[:blank:]' '\t' | tr -s '\t'"
 alias shrink-tabs="tr -s '[:blank:]'"
 alias strip-newlines="tr -d '\n'"
+alias number='cat -n'
 
 function row () {
   cat /dev/stdin | sed -n "$1"p
@@ -115,6 +116,18 @@ function unicopy () {
     unicode.py $* | clip
 }
 
+function ipacopy () {
+  number ~/projects/domainspeak/node_modules/ipa-parser/src/data/{vowels,consonants}.json |
+    shrink-tabs   |
+    choose -i     |
+    col 2- -d'"'  |
+    col 2 -d'['   |
+    col 1 -d ']'  |
+    col 1 -d'{'   |
+    tr -d '[",:]' |
+    clip -a
+}
+
 function copy () {
     echo -n $* | clip
 }
@@ -159,6 +172,8 @@ grep ^Host ~/.ssh/config | while read host; do
     host=$(echo $host | sed 's/Host //')
     alias $host="ssh $host"
 done
+
+alias -g ndclab="~/projects/external/ndclab"
 
 
 ### utils ###
@@ -416,7 +431,7 @@ function movedeezerplaylists()
 	 ls -1 "$HOME/Music/deemix Music/"*.m3u8  | while read line; do mv "$line" "$HOME/Music/Playlists/$(basename "$line" | sed 's/m3u8$/m3u/')"; done
 }
 
-alias mpcsel='mpc playlist | cat -n | shrink-tabs | choose -i | col 1 | apply mpc play'
+alias mpcsel='mpc playlist | number | shrink-tabs | choose -i | col 1 | apply mpc play'
 
 function kitaab-vocab ()
 {
