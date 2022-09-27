@@ -1,4 +1,4 @@
-fontname "Ubuntu:pixelsize=14"
+fontname "Ubuntu:pixelsize=40"
 color menubg  "#222222" #nice black
 color font "#fdf6e3" #sepia
 
@@ -73,27 +73,16 @@ unbind-key CM-w           # Spawn “exec WindowManager” menu, allowing a swit
 
 
 
-#keybindings :(
-bind-key 4-1	group-toggle-1
-bind-key 4-2	group-toggle-2
-bind-key 4-3	group-toggle-3
-bind-key 4-4	group-toggle-4
-bind-key 4-5	group-toggle-5
-bind-key 4-6	group-toggle-6
-bind-key 4-7	group-toggle-7
-bind-key 4-8	group-toggle-8
-bind-key 4-9	group-toggle-9
-
-bind-key 4S-1	window-movetogroup-1
-bind-key 4S-2	window-movetogroup-2
-bind-key 4S-3	window-movetogroup-3
-bind-key 4S-4	window-movetogroup-4
-bind-key 4S-5	window-movetogroup-5
-bind-key 4S-6	window-movetogroup-6
-bind-key 4S-7	window-movetogroup-7
-bind-key 4S-8	window-movetogroup-8
-bind-key 4S-9	window-movetogroup-9
-
+# keybindings :(
+bind-key 4C-1	group-toggle-1
+bind-key 4C-2	group-toggle-2
+bind-key 4C-3	group-toggle-3
+bind-key 4C-4	group-toggle-4
+bind-key 4C-5	group-toggle-5
+bind-key 4C-6	group-toggle-6
+bind-key 4C-7	group-toggle-7
+bind-key 4C-8	group-toggle-8
+bind-key 4C-9	group-toggle-9
 
 
 ## window managers
