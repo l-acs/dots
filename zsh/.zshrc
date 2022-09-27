@@ -263,17 +263,42 @@ function nav-to-current-song()
 
 function open-if-exists() { [ -f "$1" ] && eval ${VISUAL} '"$1"' }
 
-function open-lyrics-if-exist()
+
+function get-current-lyrics()
 {
     current="$(mpc current -f '%file%' | sed "s|^|$MUSIC/|")"
     dir="$(dirname "$current")"
     stem="$(basename "$current" | sed "s/\.\(mp3\|flac\|m4a\)$//")"
 
-    open-if-exists "$dir/$stem.lrc" ||
-	   open-if-exists "$dir/$stem.txt" ||
-	   open-if-exists "$MUSIC/.lyrics/$stem.lrc" ||
-	   open-if-exists "$MUSIC/$(mpc current -f '%artist% - %title%').txt" ||
-	   return 1
+    (ls "$dir/$stem.lrc"               ||
+	 ls "$MUSIC/.lyrics/$stem.lrc" ||
+	 ls "$dir/$stem.txt"           ||
+	 ls "$MUSIC/$(mpc current -f '%artist% - %title%').txt" ) 2>/dev/null
+
+}
+
+function open-lyrics-if-exist()
+{
+    open-if-exists "$(get-current-lyrics)"
+}
+
+alias mpc-position='mpc status | grep / | col 2 -d/ | squeeze-whitespace | col 2'
+
+function current-couplet()
+{
+    after_count=1
+    [ -n "$1" ] && after_count="$1"
+
+    now="0$(mpc-position)"
+    sort "$(get-current-lyrics)" <(echo "[$now]") |
+	grep "\[$now\]" -B1 -"A$after_count"      |
+	grep -v "\[$now\]"                        |
+	col 2- -d\]
+}
+
+function ntfy-current-couplet()
+{
+    current-couplet $1 | stdin-ntfy --hint=string:x-dunst-stack-tag:couplet
 }
 
 # cover art
