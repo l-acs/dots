@@ -61,11 +61,37 @@ alias col='cut -f'
 alias first='head -n '
 alias last='tail -n '
 
-function drop-first() {tail -n "+$1"}
-function drop-last() {head -n "-$1"}
+function drop-first() { n="$1"; shift 1; tail -n "+$((n + 1))" $* }
+function drop-last()  { n="$1"; shift 1; head -n "-$n" $* }
 
 alias choose='rofi -dmenu'
 alias apply='xargs'
+alias stdin-ntfy='apply -0 notify-send'
+
+# for use in conditionals
+function defined? () {
+  out="$(which "$@")"
+  result="$?"
+  echo "$out" | sed "/$@ not found/d"
+  return $result
+}
+
+
+function date-suffix () {
+   case "$(($1 % 100))" in
+      11) echo "$1th";;
+      12) echo "$1th";;
+      13) echo "$1th";;
+      *)  case "$(($1 % 10))" in
+             1) echo "$1st";;
+             2) echo "$1nd";;
+             3) echo "$1rd";;
+             *) echo "$1th";;
+          esac ;;
+   esac
+}
+
+alias today-with-suffix='echo "$(date +%A,\ %B) $(date-suffix $(date +%-d)), $(date +%Y)"'
 
 
 ### abbreviations: ###
@@ -127,6 +153,19 @@ function ipacopy () {
     tr -d '[",:]' |
     clip -a
 }
+alias ipacopy="
+    number ~/projects/domainspeak/node_modules/ipa-parser/src/data/{vowels,consonants,alternatives}.json   |
+    shrink-tabs      |
+    choose -i        |
+    col 2- -d'\"'    |
+    col 2 -d'['      |
+    col 1 -d ']'     |
+    col 1 -d'{'      |
+    tr -d '[\",:\n]' |
+    sed 's/null//'   |
+    clip"
+
+alias ipacopycycle="ipacopy -a; ipacopy -a; ipacopy -a"
 
 function copy () {
     echo -n $* | clip
@@ -170,10 +209,10 @@ done
 # alias for each nicknamed SSH server
 grep ^Host ~/.ssh/config | while read host; do
     host=$(echo $host | sed 's/Host //')
-    alias $host="ssh $host"
+    alias $host="TERM=rxvt; ssh $host"
 done
 
-alias -g ndclab="~/projects/external/ndclab"
+alias -g ndclab="~/projects/external/ndclab/git"
 
 
 ### utils ###
@@ -191,6 +230,11 @@ function space() #only a function because of quoting nightmares
 { 
     df -h | grep '/$' | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
 }
+
+function math() {
+  emacsclient -e "( $* )"
+}
+
 
 alias battery='cat /sys/class/power_supply/BAT0/capacity'
 alias sysbright='brightnessctl set'
@@ -321,6 +365,7 @@ function ping()
 
 }
 
+alias cp="cp -i"
 alias crontab="crontab -i"
 alias diff="diff --unified --color"
 alias du="du -sh"
@@ -375,6 +420,9 @@ function magit()
       emacs -eval "(magit \"$*\")"
    fi
 }
+
+# trilium exports
+alias trilium-unzip='[ -f root.zip ] && (rm -r root \!\!\!meta.json && unzip root.zip && rm root.zip && gadd .); gst'
 
 
 ### docker ###
@@ -454,6 +502,24 @@ alias condashell='docker exec -it $(condacontainer) /bin/bash'
 
 
 alias clock='tty-clock -b -t -c'
-alias pomo='~/projects/pomo/add-date.sh >/dev/null ; pomo'
+alias pomo='~/projects/python/pomo/add-date.sh >/dev/null ; pomo'
 alias pomodoro:='pomo $POMO_DEFAULT_DURATION'
-# alias pomodoro='pomodoro:'
+
+function avg-daily-pomos-in-2022 ()
+{
+    math / \
+        $(drop-first 687 ~/.scripts/output/pomo.log | grep -c ^Pomodoro).0 \
+        $(date +%j).0
+}
+
+function avg-weekly-pomos-in-2022 ()
+{
+    math / \
+        $(drop-first 687 ~/.scripts/output/pomo.log | grep -c ^Pomodoro).0 \
+        $(date +%W).0
+}
+
+
+
+## ex. # of pomos this year per day of the work week
+# math / $(avg-weekly-pomos-in-2022) 5
