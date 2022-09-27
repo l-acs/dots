@@ -1,13 +1,10 @@
-# todo:
-# improve mod comma/period
-# --occupied flag
+# theoretically wm-independent bindings
 
 mod4 + alt + shift + slash
-     systemctl suspend
+   systemctl suspend
 
 mod4 + ctrl + shift + slash
-     systemctl suspend
-
+   systemctl suspend
 
 mod4 + {1-9}
    ~/.scripts/window/act.sh --focus {1-9}
@@ -15,93 +12,95 @@ mod4 + {1-9}
 mod4 + shift + {1-9}
    ~/.scripts/window/act.sh --send {1-9}
 
-
 mod4 + alt + {1-9}
    ~/.scripts/window/act.sh --carry {1-9}
 
-mod4 + minus
-  act.sh --focus empty
-
-mod4 + {shift, alt} + minus
-  act.sh {--send, --carry} empty
+mod4 + {_, shift, alt} + minus
+   act.sh {--focus, --send, --carry} empty
 
 mod4 + {comma, period}
-  act.sh -f {prev, next}
+   act.sh --focus {prevfilled,nextfilled}
 
 mod4 + alt + {comma, period}
-  act.sh --carry {prev, next}
+   act.sh --carry {prevfilled, nextfilled}
+
+# for gesture stuff
+mod4 + {alt + shift, shift} + period
+   act.sh {--carry, --focus} empty
 
 
-# mod4 + Return
-#     urxvt -fn xft:ubuntumono:size=38 -g 60x17
+{F4, shift + F4}
+   act.sh {--close, --kill}
 
 mod4 + alt + Return
-    urxvt -fn xft:ubuntumono:size=38 -g 60x17
+   urxvt -fn xft:ubuntumono:size=38 -g 60x17
 
 mod4 + Return
-    kitty -o font_size=32 # urxvt -fn xft:ubuntumono:size=38 -g 60x17
+   kitty -o font_size=32 # urxvt -fn xft:ubuntumono:size=38 -g 60x17
 
 mod4 + shift + Return
-    emacsclient -create-frame --alternate-editor='' -e "(shell)"
+   emacsclient -create-frame --alternate-editor='' -e "(shell)"
 
 
 # make sxhkd reload its configuration files:
 mod4 + shift + Escape
-  pkill -USR1 -x sxhkd
+   pkill -USR1 -x sxhkd
 
 # maximize
 mod4 + shift + m
-  act.sh -m toggle
+   act.sh -m toggle
 
 mod4 + Up
-  act.sh -Y toggle
+   act.sh -Y toggle
 
 mod4 + shift + Up
-  act.sh -X toggle
+   act.sh -X toggle
+
+# todo: snap left, snap right
 
 mod4 + shift + d
-  act.sh --draw
+   act.sh --draw
 
 # kill notifications
 ~Escape
-	 pkill 9menu ; dunstctl close-all ; pkill -f 'feh.*thumbnail' ; bspc node any.sticky -g hidden=on
+   dunstctl close-all ; pkill -f 'feh.*thumbnail' ; bspc node any.sticky -g hidden=on
 
 
 # bluetooth
 mod4 + alt + {b, shift + b}
-     {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} $(bluetoothctl paired-devices | cut -f2 -d' ' | head -n 1)
+   {bluetoothctl power on && bluetoothctl connect, bluetoothctl power off && bluetoothctl disconnect} $(bluetoothctl paired-devices | cut -f2 -d' ' | head -n 1)
 
 # open emacs
 mod4 + e
-     (pgrep emacsclient && findoropen emacs) || emacsclient -create-frame
+   (pgrep emacsclient && findoropen emacs) || emacsclient -create-frame
 
 mod4 + shift + e
-     emacsclient -create-frame
+   emacsclient -create-frame
 
 # new gitlab issue
 mod4 + shift + g
-  new_issue.py
+   new_issue.py
 
 # show windows
 mod4 + x
-  rofi -show combi -combi-modi "window,drun" -modi combi -theme ~/.local/share/rofi/themes/spotlight.rasi
+   rofi -show combi -combi-modi "window,drun" -modi combi -theme ~/.local/share/rofi/themes/spotlight.rasi
 
 # reports
 mod4 + r ; {b, d, n, p, v}
-     notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
+   notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
 
 
-# mod4 + r ; m
-#      reload-cover # this one already sends a notification
+mod4 + r ; m
+   reload-cover # this one already sends a notification
 
 # pause / unpause dunst
 
 mod4 + backslash
-     ;dunstctl set-paused false
+   ;dunstctl set-paused false
 
 
 @mod4 + backslash
-      (sleep 1; [ $(dunstctl is-paused) = false ] && dunstctl set-paused true)
+   (sleep 1; [ $(dunstctl is-paused) = false ] && dunstctl set-paused true)
 
 mod4 + shift + backslash
    dunstctl set-paused toggle
@@ -109,87 +108,89 @@ mod4 + shift + backslash
 
 #open non-duplicate programs
 mod4 + {a, c, s, shift + t, v, w}
-      findoropen {anki, chromium, signal signal-desktop /opt/Signal/signal-desktop, thunderbird, mpv, "$WEB"}
+   findoropen {anki, chromium, signal signal-desktop /opt/Signal/signal-desktop, thunderbird, mpv, "$WEB"}
 
 # open signal
 # mod4 + s
-     # if /bin/pgrep -x signal-desktop; then \
-     	# findoropen signal signal-desktop /opt/Signal/signal-desktop; \
-     # else \
-        # signal-desktop; \
-     # fi
+   # if /bin/pgrep -x signal-desktop; then \
+      # findoropen signal signal-desktop /opt/Signal/signal-desktop; \
+   # else \
+      # signal-desktop; \
+   # fi
 
 # open ncmpcpp
 mod4 + m
-      (pgrep -x ncmpcpp || bspc rule -a '*' -o desktop='^7' follow=on); TERMINAL='urxvt -fn xft:ubuntumono:size=40' findoropen -t ncmpcpp
+   (pgrep -x ncmpcpp || bspc rule -a '*' -o desktop='^7' follow=on); TERMINAL='urxvt -fn xft:ubuntumono:size=40' findoropen -t ncmpcpp
 
-# find the pomodoro window
-mod4 + y
-  wmctrl -a pomodoro
+# find the gitlab window, the pomodoro window
+mod4 + {g, y}
+   wmctrl -a {gitlab, pomodoro}
 
-# find teams if it's open; otherwise, findoropen zoom
 mod4 + z
-     findoropen zoom
+   findoropen zoom
 #     (pgrep teams && findoropen teams) || findoropen zoom
 
 
 # rename a selected window for findoropen or rofi or otherwise
 mod4 + shift + r
-     wname_entry="$(rofi -dmenu)" ;\
-     xprop -format _NET_WM_NAME 8u -set _NET_WM_NAME "$wname_entry"
+   wname_entry="$(rofi -dmenu)" ;\
+   xprop -format _NET_WM_NAME 8u -set _NET_WM_NAME "$wname_entry"
 
 mod4 + alt + m
-     mpcsel
+   mpcsel
 
 
 # files
 
 # bg
 mod4 + alt + f
-     ~/.config/.fehbg
+   ~/.config/.fehbg
 
 # special keys
 
 XF86Audio{LowerVolume,RaiseVolume}
-	pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
-	# volume {-, +}
+   pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
+   # volume {-, +}
+
+shift + XF86Audio{LowerVolume,RaiseVolume}
+   pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
 
 {_, shift} + XF86AudioMute
-	volume {toggle,mute}
+   volume {toggle,mute}
 
 XF86Audio{Play,Pause}
-	mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
-	if [ -n "$mpvisrunning" ]; then \
-	   echo 'mpv running';\
-	   findoropen mpv ;\
-	   mpvc toggle || (sleep 0.1 ; xdotool key space) ;\
-	else \
-	   echo 'no mpv';\
-	   mpc toggle ;\
-	fi
+   mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
+   if [ -n "$mpvisrunning" ]; then \
+      echo 'mpv running';\
+      findoropen mpv ;\
+      mpvc toggle || (sleep 0.1 ; xdotool key space) ;\
+   else \
+      echo 'no mpv';\
+      mpc toggle ;\
+   fi
 
 # It works! :)
 {_, shift +} XF86AudioPrev
-	mpvisrunning="$(/bin/pgrep mpv)" ;\
-	if [ -n "$mpvisrunning" ]; then \
-	   findoropen mpv ;\
-	   {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc prev, \
- 	    mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
-	fi
+   mpvisrunning="$(/bin/pgrep mpv)" ;\
+   if [ -n "$mpvisrunning" ]; then \
+      findoropen mpv ;\
+      {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc prev, \
+       mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
+   fi
 # # 's/mpvc seek -60s/mpvc prev/' if you want to make use of the playlist features
 
 
 {_, shift +} XF86AudioNext
-	mpvisrunning="$(/bin/pgrep mpv)" ;\
-	if [ -n "$mpvisrunning" ]; then \
-	   findoropen mpv ;\
-	   {mpvc seek +10s || (sleep 0.1 ; xdotool key --clearmodifiers Right); else mpc next, \
- 	    mpvc seek +60s || (sleep 0.1 ; xdotool key --clearmodifiers Up); else mpc random; mpc next} ;\ 
-	fi
+   mpvisrunning="$(/bin/pgrep mpv)" ;\
+   if [ -n "$mpvisrunning" ]; then \
+      findoropen mpv ;\
+      {mpvc seek +10s || (sleep 0.1 ; xdotool key --clearmodifiers Right); else mpc next, \
+       mpvc seek +60s || (sleep 0.1 ; xdotool key --clearmodifiers Up); else mpc random; mpc next} ;\ 
+   fi
 
 
 # XF86{TaskPane,RotateWindows}
-	# ~/.local/bin/rotate-script.sh {invert, normal}
+   # ~/.local/bin/rotate-script.sh {invert, normal}
 
 
 ### system utilities:
@@ -218,6 +219,9 @@ mod4 + alt + e
 mod4 + alt + i
    ipacopy
 
+mod4 + alt + shift + i
+   clip -c; ipacopycycle
+
 
 {F10, F11, F12, shift+F12}
    volume {-, +, toggle, mute}
@@ -227,16 +231,16 @@ mod4 + {Prior, Next}
    mpc {prev, next}
 
 mod4 + shift + {Prior, Next}
-  mpc {seek 0, toggle} 
+   mpc {seek 0, toggle}
 
 mod4 + ctrl + {Up, Down}
-  mpc volume {+2, \-2}
+   mpc volume {+2, \-2}
 
 mod4 + alt + {Prior, Next, shift + Prior, shift + Next}
-   mpvc seek {-5s, +5s, -30s, +30s}
+   mpvc {seek -30s, seek +30s, prev, next}
 
 
 
 mod4 + ctrl + {Prior, Next, shift + Prior, shift + Next}
-   mpvc {prev, next, seek 0%, toggle}
+   mpvc {seek -2s, seek +2s, seek 0%, toggle}
 

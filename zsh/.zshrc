@@ -142,17 +142,6 @@ function unicopy () {
     unicode.py $* | clip
 }
 
-function ipacopy () {
-  number ~/projects/domainspeak/node_modules/ipa-parser/src/data/{vowels,consonants}.json |
-    shrink-tabs   |
-    choose -i     |
-    col 2- -d'"'  |
-    col 2 -d'['   |
-    col 1 -d ']'  |
-    col 1 -d'{'   |
-    tr -d '[",:]' |
-    clip -a
-}
 alias ipacopy="
     number ~/projects/domainspeak/node_modules/ipa-parser/src/data/{vowels,consonants,alternatives}.json   |
     shrink-tabs      |
