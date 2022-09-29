@@ -48,6 +48,7 @@ source ~/.config/shell/profile
 ### parsing enhancements ###
 alias delete-whitespace="tr -d '[:blank:]'"
 alias squeeze-whitespace="tr '[:blank:]' '\t' | tr -s '\t'"
+alias remove-empty="sed '/^[ 	]*$/d'"
 alias shrink-tabs="tr -s '[:blank:]'"
 alias strip-newlines="tr -d '\n'"
 alias number='cat -n'
@@ -254,11 +255,20 @@ function videotoaudio()
     ffmpeg -i "$*" -vn -acodec copy "$(echo "$*" | sed 's/\.[a-zA-Z0-9]*$/.aac/')"
 }
 
+function current-song()
+{
+    mpc current -f '%file%' | sed "s|^|$MUSIC/|"
+}
+
+function current-song-dir()
+{
+    current-song | xargs -0 dirname
+}
 
 # go to current song folder
 function nav-to-current-song()
 {
-    mpc current -f '%file%' | sed "s|^|$MUSIC/|" | xargs -0 dirname | clip ; cd xb
+    current-song-dir | clip ; cd xb
 }
 
 function open-if-exists() { [ -f "$1" ] && eval ${VISUAL} '"$1"' }
@@ -266,9 +276,8 @@ function open-if-exists() { [ -f "$1" ] && eval ${VISUAL} '"$1"' }
 
 function get-current-lyrics()
 {
-    current="$(mpc current -f '%file%' | sed "s|^|$MUSIC/|")"
-    dir="$(dirname "$current")"
-    stem="$(basename "$current" | sed "s/\.\(mp3\|flac\|m4a\)$//")"
+    dir="$(current-song-dir)"
+    stem="$(basename "$(current-song)" | sed "s/\.\(mp3\|flac\|m4a\)$//")"
 
     (ls "$dir/$stem.lrc"               ||
 	 ls "$MUSIC/.lyrics/$stem.lrc" ||
@@ -304,7 +313,7 @@ function ntfy-current-couplet()
 # cover art
 function save-current-art-to-file()
 {
-    ffmpeg -i "$MUSIC/$( mpc current -f '%file%' )" "$MUSIC/$(dirname "$(mpc current -f '%file%')")/cover.jpg"
+    ffmpeg -i "$(current-song)" "$(current-song-dir)"/cover.jpg
 }
 
 # scrobbling
