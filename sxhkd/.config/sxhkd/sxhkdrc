@@ -32,10 +32,10 @@ mod4 + {alt + shift, shift} + period
 {F4, shift + F4}
    act.sh {--close, --kill}
 
-mod4 + alt + Return
+mod4 + Return
    urxvt -fn xft:ubuntumono:size=38 -g 60x17
 
-mod4 + Return
+mod4 + alt + Return
    kitty -o font_size=32 # urxvt -fn xft:ubuntumono:size=38 -g 60x17
 
 mod4 + shift + Return
@@ -45,6 +45,14 @@ mod4 + shift + Return
 # make sxhkd reload its configuration files:
 mod4 + shift + Escape
    pkill -USR1 -x sxhkd
+
+# set keyboard as expected
+mod4 + u ; x
+   xmodmap ~/.config/xmodmap
+
+mod4 + u ; {shift + x, shift + c}
+   setxkbmap -layout {us, ca} ;\
+   xmodmap ~/.config/xmodmap
 
 # maximize
 mod4 + shift + m
@@ -82,16 +90,22 @@ mod4 + shift + g
    new_issue.py
 
 # show windows
-mod4 + x
+{mod4 + x, XF86Search}
    rofi -show combi -combi-modi "window,drun" -modi combi -theme ~/.local/share/rofi/themes/spotlight.rasi
 
 # reports
-mod4 + r ; {b, d, n, p, v}
-   notify-send {"$(acpi)", "$(date '+%A\, %B %d%n%_I:%M%P')", "$(ping -c 1 gnu.org 2>&1)", "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", "volume: $(volume query)"}
+mod4 + r ; {b, d, n, p, u, v}
+   notify-hint {battery "$(acpi)", \
+                date    "$(today-with-suffix-and-time | sed 's/ - /\n/' | \
+                           col 1-2 -d '\,')",\
+		network "$(ping -c 1 gnu.org 2>&1)", \
+		pomo    "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", \
+		uptime  "$(uptime)", \
+		volume  "volume: $(volume query)"}
 
 
-mod4 + r ; m
-   reload-cover # this one already sends a notification
+mod4 + r ; {l, m}
+   {ntfy-current-couplet 4, reload-cover} # this one already sends a notification
 
 # pause / unpause dunst
 
@@ -107,8 +121,8 @@ mod4 + shift + backslash
 
 
 #open non-duplicate programs
-mod4 + {a, c, s, shift + t, v, w}
-   findoropen {anki, chromium, signal signal-desktop /opt/Signal/signal-desktop, thunderbird, mpv, "$WEB"}
+mod4 + {a, c, shift + f, s, shift + t, v, w, z}
+   findoropen {anki, chromium, feh, signal signal-desktop /opt/Signal/signal-desktop, thunderbird, mpv, "$WEB", zathura}
 
 # open signal
 # mod4 + s
@@ -126,7 +140,7 @@ mod4 + m
 mod4 + {g, y}
    wmctrl -a {gitlab, pomodoro}
 
-mod4 + z
+mod4 + shift + z
    findoropen zoom
 #     (pgrep teams && findoropen teams) || findoropen zoom
 

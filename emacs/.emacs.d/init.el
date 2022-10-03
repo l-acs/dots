@@ -142,7 +142,7 @@ There are two things you can do about this warning:
 
 (setq org-unset
       (append
-       (list "\M-e" "\M-h" "\C-j" "\C-k" "\C-a" "\C-e")
+       (list "\M-e" "\M-h" "\C-j" "\C-k" "\C-a" "\C-e" "\M-a")
        (mapcar 'kbd
 	       (list "M-<right>" "M-S-<right>"
 		     "M-<left>" "M-S-<left>" "M-{" "M-}" "C-<up>" "C-<down>" "C-<tab>"))))
@@ -285,13 +285,26 @@ There are two things you can do about this warning:
 	  (lambda () (bind-keylist
 		      (seq-partition org-agenda-bindings 2))))
 
+(add-hook 'cider-repl-mode-hook
+	  (lambda ()
+	    (local-unset-key "\C-j")))
+
 (add-hook 'java-mode-hook
 	  (lambda ()
 	    (mapc 'local-unset-key (list "{" "}" "(" ")"))))
 
+(add-hook 'magit-mode-hook
+	  (lambda ()
+	    (mapc 'local-unset-key (list "\C-w" "\C-j"))))
+
+
 (add-hook 'tex-mode-hook
 	  (lambda ()
 	    (local-unset-key "\C-j")))
+
+(add-hook 'tex-shell-hook
+	  (lambda ()
+	    (local-unset-key "\M-r")))
 
 (add-hook 'sql-interactive-mode-hook
 	  (lambda ()
@@ -424,12 +437,10 @@ This command assumes point is not in a string or comment."
 (defun wrap-curly (&optional arg)
   (interactive "P")
   (insert-wrap ?\{ ?\}))
-  ;; (wrap-if-region ?\{ ?\}))
 
 (defun wrap-bracket (&optional arg)
   (interactive "P")
   (insert-wrap ?\[ ?\]))
-;;  (wrap-if-region ?\[ ?\]))
 
 (defun wrap-angle (&optional arg)
   (interactive "P")
@@ -569,6 +580,9 @@ This command assumes point is not in a string or comment."
    ;; windows, buffers, and files
    ;; (list (kbd "<C-tab>") 'other-window)
    '("\C-r" other-window)
+   '("\M-r" window-swap-states)
+
+
    ;; (list (kbd "<C-tab>") 'previous-buffer)
    ;; (list (kbd "<C-S-isolefttab>") 'next-buffer)
    (list (kbd "M-<left>") 'previous-buffer)
@@ -585,7 +599,7 @@ This command assumes point is not in a string or comment."
 
    ;; emoji
    '("\M-E" emojify-insert-emoji)
-   
+
    ;; centaur
    (list (kbd "C-x <right>") 'centaur-tabs-forward-tab)
 
@@ -595,6 +609,7 @@ This command assumes point is not in a string or comment."
 
    ;; emacs
    '("\C-q" delete-frame)))
+
 
 ;; give escape expected behavior
 (def-keymap key-translation-map

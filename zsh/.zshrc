@@ -69,6 +69,20 @@ alias choose='rofi -dmenu'
 alias apply='xargs'
 alias stdin-ntfy='apply -0 notify-send'
 
+function get-stdin-if-any()
+{
+    [ -p /dev/stdin ] && cat /dev/stdin
+}
+
+
+function notify-hint()
+{
+    hint="$1"; shift 1
+    if [ -z "$hint" ]; then echo 'Hint required' >&2 && return 1; fi
+    msg="$(get-stdin-if-any) $@"
+    notify-send --hint=string:x-dunst-stack-tag:"$hint" "$msg"
+}
+
 # for use in conditionals
 function defined? () {
   out="$(which "$@")"
@@ -92,14 +106,19 @@ function date-suffix () {
    esac
 }
 
-alias today-with-suffix='echo "$(date +%A,\ %B) $(date-suffix $(date +%-d)), $(date +%Y)"'
+function today-with-suffix ()
+{
+    date +"%A, %B $(date-suffix $(date +%-d)), %Y"
+}
 
+function today-with-suffix-and-time ()
+{
+    date +"%A, %B $(date-suffix $(date +%-d)), %Y - %-I:%M%P"
+}
 
 ### abbreviations: ###
-alias blather="$HOME/.programs/blather/Blather.py"
 alias clj="clojure"
 alias e="emacsclient -t"
-alias k9="kill -9"
 alias m="ncmpcpp"
 alias n="nmtui"
 alias nord="nordvpn"
@@ -130,6 +149,7 @@ function vtmp () {
          cat $1 } =() }
 
 alias -g xs='"$(_myxsel)"'
+alias -g xs:='"$(_myxsel | col 1 -d:)"'
 alias -g xb='"$(xsel -b)"'
 alias -g clip='xsel -b'
 
@@ -307,7 +327,7 @@ function current-couplet()
 
 function ntfy-current-couplet()
 {
-    current-couplet $1 | stdin-ntfy --hint=string:x-dunst-stack-tag:couplet
+    current-couplet $1 | notify-hint couplet
 }
 
 # cover art
@@ -317,8 +337,22 @@ function save-current-art-to-file()
 }
 
 # scrobbling
-alias love='mpc sendmessage mpdas love'
-alias unlove='mpc sendmessage mpdas unlove'
+function love() {
+    mpc sendmessage mpdas love
+
+    notify-send --icon=~/.scripts/output/cover.png \
+		"Loved: $(mpc current -f '%title%\n%artist%')" \
+		--hint=string:x-dunst-stack-tag:now-playing
+}
+
+function unlove() {
+    mpc sendmessage mpdas unlove
+
+    notify-send --icon=~/.scripts/output/cover.png \
+		"Unloved: $(mpc current -f '%title%\n%artist%')" \
+		--hint=string:x-dunst-stack-tag:now-playing
+}
+
 
 # youtube
 alias lofi="mpv 'https://www.youtube.com/watch?v=5qap5aO4i9A' & disown"
@@ -394,6 +428,7 @@ alias diff="diff --unified --color"
 alias du="du -sh"
 alias less='less -N'
 alias ls="ls --color"
+alias mv="mv -i"
 alias pgrep="pgrep -f -a -i"
 alias rm="rm -I"
 alias tmux="tmux -f ~/.config/tmux/tmux.conf"
@@ -407,6 +442,8 @@ alias gpush='git push'
 alias gdiff='git diff'
 alias gls='git ls-files'
 alias guntracked='git ls-files --exclude-standard --directory --others'
+
+function commit-count () { git log | grep Author: -c }
 
 function gcfg()
 {
@@ -502,7 +539,7 @@ function movedeezerplaylists()
 	 ls -1 "$HOME/Music/deemix Music/"*.m3u8  | while read line; do mv "$line" "$HOME/Music/Playlists/$(basename "$line" | sed 's/m3u8$/m3u/')"; done
 }
 
-alias mpcsel='mpc playlist | number | shrink-tabs | choose -i | col 1 | apply mpc play'
+function mpcsel() { mpc playlist | number | shrink-tabs | choose -i | col 1 | apply mpc play }
 
 function kitaab-vocab ()
 {
@@ -546,3 +583,9 @@ function avg-weekly-pomos-in-2022 ()
 
 ## ex. # of pomos this year per day of the work week
 # math / $(avg-weekly-pomos-in-2022) 5
+
+function pomos-of-last-n () {
+    last "$1" ~/.scripts/output/pomo.log |
+        grep -E '(^|Pomodoro)'
+}
+

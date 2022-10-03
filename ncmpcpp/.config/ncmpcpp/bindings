@@ -155,10 +155,10 @@
 
 
 def_key "b"
-    run_external_command "mpc sendmessage mpdas love && notify-send --icon=~/.scripts/output/cover.png \"Loved: $(mpc current -f '%title%\n%artist%')\""
+    run_external_command "zsh -c 'source /home/l-acs/.zshrc && love'  >/dev/null 2>&1 &"
 
 def_key "B"
-  run_external_command "mpc sendmessage mpdas unlove && notify-send --icon=~/.scripts/output/cover.png \"Unloved: $(mpc current -f '%title%\n%artist%')\""
+    run_external_command "zsh -c 'source /home/l-acs/.zshrc && unlove'  >/dev/null 2>&1 &"
 
 def_key "k"
   scroll_up
@@ -273,11 +273,19 @@ def_key "-"
 #def_key ":"
 #  execute_command
 #
-#def_key "tab"
-#  next_screen
-#
-#def_key "shift-tab"
-#  previous_screen
+def_key "tab"
+ next_screen
+
+def_key "alt-left"
+ previous_screen
+
+def_key "alt-right"
+ next_screen
+
+def_key "shift-tab"
+ previous_screen
+
+
 #
 #def_key "f1"
 #  show_help
