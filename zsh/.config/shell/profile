@@ -22,10 +22,8 @@ export VISUAL="emacsclient -create-frame --alternate-editor=''" #"emacs"
 export TERMINAL="urxvt -fn xft:ubuntumono:size=$font -e tmux -f ~/.config/tmux/tmux.conf"
 export WEB="firefox"
 export EMAIL="thunderbird"
-export FILEBROWSER="browse"
 
 export GTK_THEME="Adwaita:dark"
-export NINEFLAGS="-bg #fdf6e3 -fg #222222 -font 'UbuntuMono-R' -popup -teleport" #6A6B6D 181A26
 
 # for scripts
 
@@ -35,6 +33,7 @@ export PICTURE="$HOME/pictures"
 export PODCAST="$HOME/Documents/podcasts"
 export POMO_DEFAULT_DURATION="25m"
 
+export GITLAB_WEB="firefox -P GitLab!"
 
 export URXVT_PERL_LIB="$HOME/.config/urxvt/perl/"
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
@@ -44,5 +43,6 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 # frequently used
 export bind="$HOME/.config/sxhkd/sxhkdrc"
+export plog="$HOME/.scripts/output/pomo.log"
 
 export SXHKD_SHELL="$HOME/.config/sxhkd/sxzsh"

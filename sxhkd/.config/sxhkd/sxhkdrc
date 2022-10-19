@@ -94,12 +94,16 @@ mod4 + shift + g
    rofi -show combi -combi-modi "window,drun" -modi combi -theme ~/.local/share/rofi/themes/spotlight.rasi
 
 # reports
-mod4 + r ; {b, d, n, p, u, v}
-   notify-hint {battery "$(acpi)", \
+mod4 + r ; {b, d, n, p, shift + p, t, u, v}
+   notify-hint {battery "$(acpi | sed 's/%\,/%\n/')", \
                 date    "$(today-with-suffix-and-time | sed 's/ - /\n/' | \
                            col 1-2 -d '\,')",\
 		network "$(ping -c 1 gnu.org 2>&1)", \
-		pomo    "$(pomo-time.sh name)" "$(pomo-time.sh) remaining", \
+		pomo    "$(pomo-time.sh name)<br/>$(pomo-time.sh) remaining", \
+                pomo    "$(plural? $(todays-pomos | grep -cE ^Pomodoro) \
+                             pomo) today:<br/>" \
+                        "$(todays-pomos | drop-first 1)", \
+		tester  "tester<br/>tester", \
 		uptime  "$(uptime)", \
 		volume  "volume: $(volume query)"}
 
@@ -163,14 +167,18 @@ mod4 + alt + f
 # special keys
 
 XF86Audio{LowerVolume,RaiseVolume}
-   pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
+   pactl set-sink-volume @DEFAULT_SINK@ {-,+}600 ; \
+      dunst-is-shown && notify-hint volume "volume: $(volume query)"
+
    # volume {-, +}
 
 shift + XF86Audio{LowerVolume,RaiseVolume}
-   pactl set-sink-volume @DEFAULT_SINK@ {-,+}600
+   pactl set-sink-volume @DEFAULT_SINK@ {-,+}600 ; \
+      dunst-is-shown && notify-hint volume "volume: $(volume query)"
 
 {_, shift} + XF86AudioMute
-   volume {toggle,mute}
+   volume {toggle,mute} ; \
+      dunst-is-shown && notify-hint volume "volume: $(volume query)"
 
 XF86Audio{Play,Pause}
    mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
@@ -188,7 +196,7 @@ XF86Audio{Play,Pause}
    mpvisrunning="$(/bin/pgrep mpv)" ;\
    if [ -n "$mpvisrunning" ]; then \
       findoropen mpv ;\
-      {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc prev, \
+      {mpvc seek -10s || (sleep 0.1 ; xdotool key --clearmodifiers Left); else mpc-prev-or-restart 7, \
        mpvc seek -60s || (sleep 0.1 ; xdotool key --clearmodifiers Down); else mpc seek 0} ;\ 
    fi
 # # 's/mpvc seek -60s/mpvc prev/' if you want to make use of the playlist features
@@ -233,22 +241,26 @@ mod4 + alt + e
 mod4 + alt + i
    ipacopy
 
-mod4 + alt + shift + i
-   clip -c; ipacopycycle
+mod4 + u ; mod4 + alt + i
+   repeat 4 ipacopy -a
 
+mod4 + u ; mod4 + u ; mod4 + alt + i
+   clip -c; repeat 4 ipacopy -a
 
 {F10, F11, F12, shift+F12}
    volume {-, +, toggle, mute}
 
 # mpc
 mod4 + {Prior, Next}
-   mpc {prev, next}
+   {mpc-prev-or-restart 7, mpc next}
 
 mod4 + shift + {Prior, Next}
    mpc {seek 0, toggle}
 
 mod4 + ctrl + {Up, Down}
-   mpc volume {+2, \-2}
+   mpc volume {+2, \-2}; \
+      dunst-is-shown && \
+         notify-hint volume "mpc $(mpc volume)"
 
 mod4 + alt + {Prior, Next, shift + Prior, shift + Next}
    mpvc {seek -30s, seek +30s, prev, next}

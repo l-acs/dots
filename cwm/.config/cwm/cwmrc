@@ -84,6 +84,9 @@ bind-key 4C-7	group-toggle-7
 bind-key 4C-8	group-toggle-8
 bind-key 4C-9	group-toggle-9
 
+bind-key 4-Left window-snap-left
+bind-key 4-Right window-snap-right
+
 
 ## window managers
 # wm bspwm /usr/bin/bspwm

@@ -65,22 +65,39 @@ alias last='tail -n '
 function drop-first() { n="$1"; shift 1; tail -n "+$((n + 1))" $* }
 function drop-last()  { n="$1"; shift 1; head -n "-$n" $* }
 
-alias choose='rofi -dmenu'
-alias apply='xargs'
-alias stdin-ntfy='apply -0 notify-send'
-
 function get-stdin-if-any()
 {
     [ -p /dev/stdin ] && cat /dev/stdin
 }
 
+function chomp-past() {
+    # deletes everything after the last instance of the splitter
+    splitter="$1"; shift 1
+    echo "$(get-stdin-if-any)$@" | sed "s|$splitter.*$||g"
+}
+
+function chomp-til() {
+    # deletes everything before the last instance of the splitter
+    splitter="$1"; shift 1
+    echo "$(get-stdin-if-any)$@" | sed "s|^.*$splitter||g"
+}
+
+alias choose='rofi -dmenu'
+# function dotimes() { count="$1"; shift 1; for _ in {1.."$count"}; do eval $@; done } nevermind: this is just zsh `repeat`
+
+alias apply='xargs'
+alias stdin-ntfy='apply -0 notify-send'
+
+function dunst-is-shown() { pgrep -x dunst && [ $(dunstctl is-paused) = false ] }
 
 function notify-hint()
 {
     hint="$1"; shift 1
     if [ -z "$hint" ]; then echo 'Hint required' >&2 && return 1; fi
-    msg="$(get-stdin-if-any) $@"
-    notify-send --hint=string:x-dunst-stack-tag:"$hint" "$msg"
+    if echo "$1" | grep -q -- --icon; then icon="$1"; shift 1; fi
+
+    msg="$(echo "$(get-stdin-if-any) $@" | sed 's|<br/>|\n|g')"
+    [ -n "$msg" ] && notify-send $icon --hint=string:x-dunst-stack-tag:"$hint" "$msg"
 }
 
 # for use in conditionals
@@ -116,8 +133,23 @@ function today-with-suffix-and-time ()
     date +"%A, %B $(date-suffix $(date +%-d)), %Y - %-I:%M%P"
 }
 
+function plural? () { 
+    [ -z "$3" ] && 3="${2}s" # default to -s if no plural given
+    if [ "$1" = 'one' -o "$1" -eq 1 ]; then echo "$1" "$2"; else echo "$1" "$3"; fi 
+} 2>/dev/null
+
+function mm:ss-to-s () { 
+    echo "$1" | sed -e 's/^0\+//'  \
+                    -e 's/^://' \
+                    -e 's/:/ * 60 + /g' \
+                    -e 's/\( \+\|^\)0\+\([1-9]\+\)/ \2/g' \
+                    -e 's/\b00/0/g'  | 
+                xargs -I '{}' python -c 'print({})'
+}
+
+
 ### abbreviations: ###
-alias clj="clojure"
+alias clj="rlwrap clojure"
 alias e="emacsclient -t"
 alias m="ncmpcpp"
 alias n="nmtui"
@@ -153,18 +185,13 @@ alias -g xs:='"$(_myxsel | col 1 -d:)"'
 alias -g xb='"$(xsel -b)"'
 alias -g clip='xsel -b'
 
-function cwrite ()
-{
-    vim $1 -c startinsert
-    clip < $1
-}
 
 function unicopy () {
     unicode.py $* | clip
 }
 
 alias ipacopy="
-    number ~/projects/domainspeak/node_modules/ipa-parser/src/data/{vowels,consonants,alternatives}.json   |
+    number ~/projects/domainspeak/node_modules/ipa-parser/src/data/{vowels,consonants,alternatives}.json      |
     shrink-tabs      |
     choose -i        |
     col 2- -d'\"'    |
@@ -175,28 +202,20 @@ alias ipacopy="
     sed 's/null//'   |
     clip"
 
-alias ipacopycycle="ipacopy -a; ipacopy -a; ipacopy -a"
+# alias ipacopycycle="ipacopy -a; ipacopy -a; ipacopy -a"
+# use `repeat 3 ipacopy -a` instead
 
 function copy () {
     echo -n $* | clip
 }
 
-# edit a temporary file and write its contents to stdout, copying them to the clipboard
-alias cw='cwrite =() && clip'
-
 # copy last line(s) of history to clipboard
 function copylast()
 {
     case $# in
-       0)
-	  history | last 1 | col 3- -d' ' | clip
-	  ;;
-       1)
-	  history | last "$1" | col 3- -d' ' | clip
-	  ;;
-       *)
-          return 1
-	  ;;
+       0) history | last 1 | col 3- -d' ' | clip ;;
+       1) history | last "$1" | col 3- -d' ' | clip ;;
+       *) return 1 ;;
     esac
 }
 
@@ -231,11 +250,6 @@ alias anon='unset HISTFILE'
 alias leave='bg %1 ; disown ; exit'
 alias mountnosudo='sudo mount -o umask=000'
 
-function cl()
-{
-    cd "${@}" && ls --color
-}
-
 function space() #only a function because of quoting nightmares
 { 
     df -h | grep '/$' | awk '{print $3 " of " $2 " (" $5 ") used. " $4 " remaining."}'
@@ -243,6 +257,19 @@ function space() #only a function because of quoting nightmares
 
 function math() {
   emacsclient -e "( $* )"
+}
+
+function add() {
+    xargs -0 -I '{}' emacsclient -e '(+ {})'
+}
+
+function emacs-tf() {
+    case $1 in
+      "t")   return 0 ;;
+      "nil") return 1 ;;
+      "*")   echo ERROR: Undefined >&2;
+             return 2 ;;
+    esac
 }
 
 
@@ -313,6 +340,22 @@ function open-lyrics-if-exist()
 
 alias mpc-position='mpc status | grep / | col 2 -d/ | squeeze-whitespace | col 2'
 
+function is-mpd-playing() {
+     mpc status | row 2 | grep -q playing
+}
+
+function mpc-prev-or-restart() {
+    if [ "$(mm:ss-to-s $(mpc-position))" -lt "$1" ]; then mpc prev; else mpc seek 0; fi
+}
+
+function have-lyrics-started-yet() {
+    current_position_int="0$(mpc-position | tr -d :)"
+    lyrics_start_position="$(first 1 "$(get-current-lyrics)" | col 1 -d\] | col 2 -d\[ | tr -d : | sed 's/\..*//')"
+
+    is-mpd-playing &&
+	[ "$current_position_int" -ge "$lyrics_start_position" ]
+}
+
 function current-couplet()
 {
     after_count=1
@@ -327,7 +370,7 @@ function current-couplet()
 
 function ntfy-current-couplet()
 {
-    current-couplet $1 | notify-hint couplet
+    current-couplet $1 | notify-hint now-playing --icon=~/.scripts/output/cover.png
 }
 
 # cover art
@@ -340,17 +383,15 @@ function save-current-art-to-file()
 function love() {
     mpc sendmessage mpdas love
 
-    notify-send --icon=~/.scripts/output/cover.png \
-		"Loved: $(mpc current -f '%title%\n%artist%')" \
-		--hint=string:x-dunst-stack-tag:now-playing
+    notify-hint now-playing --icon=~/.scripts/output/cover.png \
+		"Loved: $(mpc current -f '%title%\n%artist%')"
 }
 
 function unlove() {
     mpc sendmessage mpdas unlove
 
-    notify-send --icon=~/.scripts/output/cover.png \
-		"Unloved: $(mpc current -f '%title%\n%artist%')" \
-		--hint=string:x-dunst-stack-tag:now-playing
+    notify-hint now-playing --icon=~/.scripts/output/cover.png \
+		"Unloved: $(mpc current -f '%title%\n%artist%')"
 }
 
 
@@ -407,19 +448,34 @@ function grep()
     fi
 }
 
+function color()
+{
+    string="$1"; shift 1
+    grep -E "(^|$string)" $@
+}
+
+function lines-after-first-match () {
+    # lines-after-first-match [exp] [file]
+    line="$(number "$2" | grep "$1" | first 1  | col 1)"
+
+    drop-first "$((line - 1))" "$2"
+}
+
+function lines-after-last-match () {
+    # lines-after-last-match [exp] [file]
+    line="$(number "$2" | grep "$1" | last 1  | col 1)"
+
+    drop-first "$((line - 1))" "$2"
+}
+
+
 ping=$(which -p ping) # force a path search so not overridden by function
 function ping()
 {
-
     case $# in
-	0)
-	    $ping gnu.org
-	    ;;
-	*)
-	    $ping $*
-	    ;;
+	0) $ping gnu.org ;;
+	*) $ping $* ;;
     esac
-
 }
 
 alias cp="cp -i"
@@ -444,23 +500,20 @@ alias gls='git ls-files'
 alias guntracked='git ls-files --exclude-standard --directory --others'
 
 function commit-count () { git log | grep Author: -c }
+function gchanged-files () { gdiff --name-only HEAD~1 }
+
+function top-commands () { col 1 -d ' ' $HISTFILE | sort | delete-whitespace | uniq -c | sort -h }
 
 function gcfg()
 {
     case $# in
-	0)
-	    name='l-acs'
-	    email='lucas.sahar@mail.mcgill.ca'
-	    ;;
-	1)
-	    echo Usage: \`gcfg\` or \`gcfg NAME EMAIL\`
-	    return 1
-	    ;;
-	2)
-	    name="$1"
-	    email="$2"
-	    ;;
+	0)  name='l-acs'; email='lucas.sahar@mail.mcgill.ca' ;;
+	2)  name="$1"; email="$2"  ;;
+
+	*)  echo Usage: \`gcfg\` or \`gcfg NAME EMAIL\`
+	    return 1 ;;
     esac
+
     git config user.name "$name"
     git config user.email "$email"
 
@@ -482,7 +535,7 @@ function magit()
 }
 
 # trilium exports
-alias trilium-unzip='[ -f root.zip ] && (rm -r root \!\!\!meta.json && unzip root.zip && rm root.zip && gadd .); gst'
+alias trilium-unzip='[ -f root.zip ] && (rm -r root \!\!\!meta.json && unzip root.zip && rm root.zip && gadd .) 2>&1; gst'
 
 
 ### docker ###
@@ -586,6 +639,12 @@ function avg-weekly-pomos-in-2022 ()
 
 function pomos-of-last-n () {
     last "$1" ~/.scripts/output/pomo.log |
-        grep -E '(^|Pomodoro)'
+        color Pomodoro
 }
+alias last-pomos=pomos-of-last-n
 
+function todays-pomos () {
+    lines-after-last-match '#' ~/.scripts/output/pomo.log | 
+        chomp-past – |
+        color Pomodoro
+}

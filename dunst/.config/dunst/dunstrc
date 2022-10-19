@@ -1,20 +1,25 @@
 [global]
 frame_color = "#222222"
 separator_color = "#586e75"
-backgound = "#222222"
-notification_limit = 5
+background = "#222222"
+notification_limit = 4
 
 
-geometry = "300x3-13+32"
-notification_height = 70
+geometry = "500x50-53+32"
+width=500
+height=400
+notification_height = 500
 alignment = center
+# min_icon_size = 4000
+# max_icon_size = 1
 
 # monitor = 1 # second monitor
 follow = keyboard
 
 
 # prevent huge images
-max_icon_size = 60
+max_icon_size = 100
+# min_icon_size = 100
 
 hide_duplicate_count = true
 show_indicators = false
@@ -28,7 +33,7 @@ corner_radius = 15
 idle_threshold = 2m
 show_age_threshold = 5m 
 
-font = Ubuntu 
+font = Ubuntu 18
 format =  "%s \n %b"
 
 
