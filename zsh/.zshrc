@@ -502,6 +502,14 @@ alias gdiff='git diff'
 alias gls='git ls-files'
 alias guntracked='git ls-files --exclude-standard --directory --others'
 
+alias gfiles-by-ext="sed 's/\(.*\)\.\(.*\)/*.\2/' | sort -u"
+
+function gnew-exts-and-dirs () {
+   /bin/diff --unchanged-group-format="" --changed-group-format="%>" \
+             <(gls | gfiles-by-ext | grep '\.') \
+             <(guntracked | gfiles-by-ext)
+}
+
 function commit-count () { git log | grep Author: -c }
 function gchanged-files () { gdiff --name-only HEAD~1 }
 
