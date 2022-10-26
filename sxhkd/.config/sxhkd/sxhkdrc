@@ -99,9 +99,8 @@ mod4 + r ; {b, d, n, p, shift + p, t, u, v}
                 date    "$(today-with-suffix-and-time | sed 's/ - /\n/' | \
                            col 1-2 -d '\,')",\
 		network "$(ping -c 1 gnu.org 2>&1)", \
-		pomo    "$(pomo-time.sh name)<br/>$(pomo-time.sh) remaining", \
-                pomo    "$(plural? $(todays-pomos | grep -cE ^Pomodoro) \
-                             pomo) today:<br/>" \
+		pomo    "$( [ "$(pgrep -c pomo)" -gt 2 ] && (echo "$(pomo-time.sh name)<br/>$(pomo-time.sh) remaining") || echo "$(todays-pomo-status):<br/>$(todays-pomos | drop-first 1)")", \
+                pomo    "$(todays-pomo-status):<br/>"\
                         "$(todays-pomos | drop-first 1)", \
 		tester  "tester<br/>tester", \
 		uptime  "$(uptime)", \
@@ -180,7 +179,8 @@ shift + XF86Audio{LowerVolume,RaiseVolume}
    volume {toggle,mute} ; \
       dunst-is-shown && notify-hint volume "volume: $(volume query)"
 
-XF86Audio{Play,Pause}
+XF86AudioPlay
+   echo trying to change music ;\
    mpvisrunning="$(/bin/pgrep -u "$USER" mpv)" ;\
    if [ -n "$mpvisrunning" ]; then \
       echo 'mpv running';\
@@ -190,6 +190,13 @@ XF86Audio{Play,Pause}
       echo 'no mpv';\
       mpc toggle ;\
    fi
+
+XF86AudioPause ; XF86AudioPlay
+   echo trying to say pomos ;\
+   is-mpd-playing && mpc toggle || [ $(pgrep -c espeak) -gt 1 ] || ( [ "$(pgrep -c pomo)" -gt 2 ] && (echo "$(pomo-time.sh name): $(pomo-time.sh) remaining") || echo "$(plural? $(todays-pomos | grep -cE ^Pomodoro) \
+            pomo) today:" \
+            "\n$(todays-pomos | drop-first 1  | sed 's/Pomodoro:/pomo/' | sort | uniq -c)" | sed 's/ *//') | espeak # && xdotool key Escape
+
 
 # It works! :)
 {_, shift +} XF86AudioPrev

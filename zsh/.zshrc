@@ -73,13 +73,13 @@ function get-stdin-if-any()
 function chomp-past() {
     # deletes everything after the last instance of the splitter
     splitter="$1"; shift 1
-    echo "$(get-stdin-if-any)$@" | sed "s|$splitter.*$||g"
+    echo "$(get-stdin-if-any)$@" | sed "s/$splitter.*$//g"
 }
 
 function chomp-til() {
     # deletes everything before the last instance of the splitter
     splitter="$1"; shift 1
-    echo "$(get-stdin-if-any)$@" | sed "s|^.*$splitter||g"
+    echo "$(get-stdin-if-any)$@" | sed "s/^.*$splitter//g"
 }
 
 alias choose='rofi -dmenu'
@@ -99,6 +99,9 @@ function notify-hint()
     msg="$(echo "$(get-stdin-if-any) $@" | sed 's|<br/>|\n|g')"
     [ -n "$msg" ] && notify-send $icon --hint=string:x-dunst-stack-tag:"$hint" "$msg"
 }
+
+alias espeak-is-running='[ $(/bin/pgrep -cx espeak) -gt 0 ]'
+alias pomo-is-running='[ "$(pgrep -c pomo)" -gt 0 ]'
 
 # for use in conditionals
 function defined? () {
@@ -645,6 +648,17 @@ alias last-pomos=pomos-of-last-n
 
 function todays-pomos () {
     lines-after-last-match '#' ~/.scripts/output/pomo.log | 
-        chomp-past – |
+        chomp-past '\(–\| - \)' |
         color Pomodoro
+}
+
+function todays-pomo-status () {
+   plural? "$(todays-pomos| grep -cE ^Pomodoro)" 'pomo today' 'pomos today'
+}
+
+function read-pomo-status () {
+   espeak-is-running ||
+      ( pomo-is-running && (echo "$(pomo-time.sh name): $(pomo-time.sh) remaining") ||
+      echo "$(todays-pomo-status):" \
+            "\n$(todays-pomos | drop-first 1  | sed 's/Pomodoro:/pomo/' | sort | uniq -c)" | sed 's/ *//') | espeak # && xdotool key Escape
 }
