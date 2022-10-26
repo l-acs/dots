@@ -349,7 +349,7 @@ function is-mpd-playing() {
 
 function mpc-prev-or-restart() {
     if [ "$(mm:ss-to-s $(mpc-position))" -lt "$1" ]; then mpc prev; else mpc seek 0; fi
-}
+} >/dev/null 2>&1
 
 function have-lyrics-started-yet() {
     current_position_int="0$(mpc-position | tr -d :)"
@@ -595,7 +595,18 @@ function movedeezerplaylists()
 	 ls -1 "$HOME/Music/deemix Music/"*.m3u8  | while read line; do mv "$line" "$HOME/Music/Playlists/$(basename "$line" | sed 's/m3u8$/m3u/')"; done
 }
 
-function mpcsel() { mpc playlist | number | shrink-tabs | choose -i | col 1 | apply mpc play }
+function mpc-current-index () { mpc current -f '%position%' }
+function mpc-prev-index () { echo $(( $(mpc current -f '%position%') - 1)) }
+
+function roll-over () {
+    stdin="$(get-stdin-if-any)"
+    echo $stdin | drop-first "$1" | cat - <(echo $stdin | first "$1")
+}
+
+function mpcsel () { # mpcsel, current at top
+    mpc playlist | number | shrink-tabs | roll-over "$(mpc-prev-index)" |
+        choose -i | col 1 | apply mpc play
+}
 
 function kitaab-vocab ()
 {

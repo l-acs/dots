@@ -381,11 +381,16 @@ def_key "\\"
 #   add_item_to_playlist_after_current_song
 
 
-#def_key ">"
-#  next
-#
-#def_key "<"
+def_key ">"
+ next
+
+def_key "<"
+ run_external_command "zsh -c '(source /home/l-acs/.zshrc; mpc-prev-or-restart 7)'"
+
+# def_key "<"
 #  previous
+
+
 #
 #def_key "ctrl-h"
 #  jump_to_parent_directory
