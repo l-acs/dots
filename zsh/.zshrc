@@ -423,10 +423,13 @@ function emojisel()
   choose -i $(emojicopy)
 }
 
-function emojisel-interactive()
-{
-  emoji ' ' | choose -i | col 1 | delete-whitespace | strip-newlines | clip
-}
+alias emojisel-interactive="
+  emoji ' ' |
+  choose -i |
+  col 1 |
+  delete-whitespace |
+  strip-newlines |
+  clip"
 
 ### configurations ###
 alias dash="rlwrap dash"

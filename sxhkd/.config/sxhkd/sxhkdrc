@@ -239,20 +239,17 @@ mod4 + {_, shift} + F9
 mod4 + shift + u
    rofi -dmenu | xargs unicode.py | clip
 
-# mod4 + alt + e
-#    emojicopy $(rofi -dmenu)
-
 mod4 + alt + e
    emojisel-interactive
 
 mod4 + alt + i
    ipacopy
 
-mod4 + u ; mod4 + alt + i
-   repeat 4 ipacopy -a
+mod4 + u ; {mod4 + alt + e, mod4 + alt + i}
+   clip -c; repeat 4 {emojisel-interactive -a, ipacopy -a}
 
-mod4 + u ; mod4 + u ; mod4 + alt + i
-   clip -c; repeat 4 ipacopy -a
+mod4 + u ; mod4 + u ; {mod4 + alt + e, mod4 + alt + i}
+   repeat 4 {emojisel-interactive -a, ipacopy -a}
 
 {F10, F11, F12, shift+F12}
    volume {-, +, toggle, mute}
